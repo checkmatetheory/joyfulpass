@@ -11,14 +11,12 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-black/10 bg-white/90 backdrop-blur dark:border-white/10 dark:bg-[#0a0a0a]/90">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight">
-          <span
-            className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-sm text-white"
-            style={{ backgroundColor: "var(--accent)" }}
-          >
-            J
-          </span>
-          JoyfulPass
+        <Link
+          href="/"
+          className="font-display text-2xl font-semibold tracking-tight"
+          style={{ color: "var(--accent)" }}
+        >
+          Joyful
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">

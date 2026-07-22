@@ -12,7 +12,7 @@ export default function HomePage() {
     <>
       <Hero
         eyebrow="A family of focused exam-prep apps"
-        headline="Unleash your inner test-taker with JoyfulPass"
+        headline="Unleash your inner test-taker with Joyful"
         subheadline="One app per exam, built from the official source material — so you study exactly what's tested and nothing you don't need."
         gradientFrom="#4F46E5"
         gradientTo="#141048"
@@ -35,7 +35,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold">Find the exam you&rsquo;re studying for</h2>
           <p className="mt-3 opacity-75">
-            Every JoyfulPass app is a self-contained study experience — practice questions, tools,
+            Every Joyful app is a self-contained study experience — practice questions, tools,
             and test-center directories built specifically for that exam.
           </p>
         </div>
@@ -47,7 +47,7 @@ export default function HomePage() {
       <section className="border-t border-black/10 bg-black/[0.02] px-4 py-20 dark:border-white/10 dark:bg-white/[0.02] sm:px-6">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="text-3xl font-bold">From the JoyfulPass blog</h2>
+            <h2 className="text-3xl font-bold">From the Joyful blog</h2>
             <Link href="/blog/" className="text-sm font-semibold" style={{ color: "var(--accent)" }}>
               View all posts →
             </Link>

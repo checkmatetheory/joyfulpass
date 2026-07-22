@@ -58,7 +58,7 @@ export default async function AppLandingPage({
     "@type": "Course",
     name: `${app.name}: ${app.examName} prep`,
     description: app.metaDescription,
-    provider: { "@type": "Organization", name: "JoyfulPass", sameAs: SITE_URL },
+    provider: { "@type": "Organization", name: "Joyful", sameAs: SITE_URL },
   };
 
   return (

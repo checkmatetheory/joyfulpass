@@ -1,12 +1,12 @@
 ---
-title: "How JoyfulPass Builds an Exam Prep App"
+title: "How Joyful Builds an Exam Prep App"
 description: "Our editorial process for turning an official government handbook into practice questions people actually trust — and why every app cites its source."
 date: "2026-01-14"
 author: "Chris Thür"
-authorCredential: "Co-founder, JoyfulPass"
+authorCredential: "Co-founder, Joyful"
 ---
 
-Every app in the JoyfulPass family — [BritPass](/britpass/), [CanadaPass](/canadapass/), and the ones we're building next — starts the same way: with the official source document, not a guess at what might be on the test.
+Every app in the Joyful family — [BritPass](/britpass/), [CanadaPass](/canadapass/), and the ones we're building next — starts the same way: with the official source document, not a guess at what might be on the test.
 
 ## 1. Start from the primary source
 
@@ -18,7 +18,7 @@ Our content is reviewed by people with direct professional experience with the e
 
 ## 3. Keep the app scoped to one exam
 
-Each JoyfulPass app does one exam well instead of many exams shallowly. That's also why the product is organized as a family of focused apps under one brand, rather than a single app trying to cover every country's test.
+Each Joyful app does one exam well instead of many exams shallowly. That's also why the product is organized as a family of focused apps under one brand, rather than a single app trying to cover every country's test.
 
 ## 4. Update when the source updates
 

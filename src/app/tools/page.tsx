@@ -16,7 +16,7 @@ export default function ToolsIndexPage() {
     <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
       <h1 className="text-4xl font-extrabold">Tools</h1>
       <p className="mt-4 max-w-2xl opacity-80">
-        Free, focused tools from across the JoyfulPass family. Each tool lives inside its own
+        Free, focused tools from across the Joyful family. Each tool lives inside its own
         app&rsquo;s directory — this page is just the map.
       </p>
 

@@ -12,7 +12,7 @@ export default function AppCard({ app }: { app: AppRecord }) {
           {app.flagEmoji}
         </span>
         <div>
-          <p className="text-xl font-bold">{app.name}</p>
+          <p className="font-display text-xl font-semibold">{app.name}</p>
           <p className="text-sm opacity-60">{app.examName}</p>
         </div>
       </div>

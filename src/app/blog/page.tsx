@@ -15,7 +15,7 @@ export default function HubBlogIndexPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
-      <h1 className="text-4xl font-extrabold">The JoyfulPass Blog</h1>
+      <h1 className="text-4xl font-extrabold">The Joyful Blog</h1>
       <p className="mt-4 max-w-2xl opacity-80">
         Cross-app comparisons and editorial standards. Looking for exam-specific guidance? Visit
         the blog inside each app — for example the{" "}

@@ -24,7 +24,7 @@ export default function AppDirectory({ apps }: { apps: AppRecord[] }) {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by country or exam name…"
           className="w-full rounded-full border border-black/15 px-5 py-3 text-sm dark:border-white/20 dark:bg-white/5"
-          aria-label="Search JoyfulPass apps"
+          aria-label="Search Joyful apps"
         />
       </div>
 

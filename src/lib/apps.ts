@@ -1,4 +1,4 @@
-// The single source of truth for every product JoyfulPass ships.
+// The single source of truth for every product Joyful ships.
 // Adding a new app (GermanyPass, CyberPass, ...) means adding one
 // record here plus its content — never new routing or layout code.
 

@@ -1,6 +1,6 @@
 ---
 title: "UK vs. Canada: How the Life in the UK Test Compares to the Canadian Citizenship Test"
-description: "A side-by-side look at format, pass marks, and study time for the Life in the UK Test and the Canadian citizenship test — and which JoyfulPass app to start with."
+description: "A side-by-side look at format, pass marks, and study time for the Life in the UK Test and the Canadian citizenship test — and which Joyful app to start with."
 date: "2026-02-10"
 author: "Priya Anand"
 authorCredential: "Immigration caseworker, 9 years advising settlement applicants"

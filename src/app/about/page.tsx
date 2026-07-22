@@ -11,16 +11,16 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-      <h1 className="text-4xl font-extrabold">About JoyfulPass</h1>
+      <h1 className="text-4xl font-extrabold">About Joyful</h1>
       <p className="mt-6 text-lg opacity-80">
-        JoyfulPass makes focused, trustworthy prep apps for the exams that change people&rsquo;s
+        Joyful makes focused, trustworthy prep apps for the exams that change people&rsquo;s
         lives — starting with citizenship and settlement tests, and expanding to certification and
         language exams next.
       </p>
 
       <h2 className="mt-12 text-2xl font-bold">Why one app per exam</h2>
       <p className="mt-4 opacity-80">
-        Most exam-prep apps try to cover many tests shallowly. We do the opposite: each JoyfulPass
+        Most exam-prep apps try to cover many tests shallowly. We do the opposite: each Joyful
         app is built for exactly one exam, sourced directly from the official study material for
         that exam, and maintained by people with direct professional experience with it.
       </p>

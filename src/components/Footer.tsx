@@ -9,7 +9,9 @@ export default function Footer() {
     <footer className="border-t border-black/10 bg-black/[0.02] dark:border-white/10 dark:bg-white/[0.02]">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div>
-          <p className="text-lg font-bold">{SITE_NAME}</p>
+          <p className="font-display text-xl font-semibold" style={{ color: "var(--accent)" }}>
+            {SITE_NAME}
+          </p>
           <p className="mt-2 max-w-xs text-sm opacity-70">
             Focused, trustworthy prep apps for the exams that change your life — citizenship,
             settlement, and beyond.
@@ -44,7 +46,7 @@ export default function Footer() {
             </li>
             <li>
               <Link href="/about/" className="hover:underline">
-                About JoyfulPass
+                About Joyful
               </Link>
             </li>
           </ul>
