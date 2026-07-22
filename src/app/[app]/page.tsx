@@ -78,7 +78,7 @@ export default async function AppLandingPage({
           gradientFrom={app.theme.gradientFrom}
           gradientTo={app.theme.gradientTo}
         />
-        <div className="relative mx-auto max-w-2xl px-4 pb-36 sm:px-6 sm:pb-44">
+        <div className="relative mx-auto max-w-2xl px-4 pb-40 sm:px-6 sm:pb-52">
           <div className="flex justify-center">
             <AppIconBadge app={app} size={88} />
           </div>
