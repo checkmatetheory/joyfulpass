@@ -13,15 +13,15 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-[#2E1065] text-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2 sm:px-6">
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-10">
           <Link href="/" className="flex items-center">
             <Image
               src={LOGO_URL}
               alt="Joyful"
-              width={560}
-              height={128}
-              className="h-32 w-auto"
+              width={210}
+              height={48}
+              className="h-12 w-auto"
               priority
             />
           </Link>

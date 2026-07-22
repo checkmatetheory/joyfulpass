@@ -10,21 +10,22 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#2E1065] text-white">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div>
-          <Image src={LOGO_URL} alt={SITE_NAME} width={140} height={32} className="h-8 w-auto" />
-          <p className="mt-3 max-w-xs text-sm text-white/70">
+          <Image src={LOGO_URL} alt={SITE_NAME} width={210} height={48} className="h-12 w-auto" />
+          <p className="mt-4 max-w-xs text-sm text-white/70">
             Focused, trustworthy prep apps for the exams that change your life — citizenship,
             settlement, and beyond.
           </p>
+          {/* Social links go here once real accounts exist — no placeholders for accounts we don't have yet. */}
         </div>
 
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-white/60">Apps</p>
-          <ul className="mt-3 space-y-2 text-sm">
+          <p className="text-base font-bold">Our apps</p>
+          <ul className="mt-4 space-y-3 text-sm">
             {apps.map((app) => (
               <li key={app.slug}>
-                <Link href={`/${app.slug}/`} className="text-white/90 hover:underline">
+                <Link href={`/${app.slug}/`} className="text-white/80 hover:text-white">
                   {app.flagEmoji} {app.name}
                 </Link>
               </li>
@@ -33,55 +34,66 @@ export default function Footer() {
         </div>
 
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-white/60">Explore</p>
-          <ul className="mt-3 space-y-2 text-sm">
+          <p className="text-base font-bold">Company</p>
+          <ul className="mt-4 space-y-3 text-sm">
             <li>
-              <Link href="/tools/" className="text-white/90 hover:underline">
-                Tools directory
+              <Link href="/about/" className="text-white/80 hover:text-white">
+                About Joyful
               </Link>
             </li>
             <li>
-              <Link href="/blog/" className="text-white/90 hover:underline">
+              <Link href="/blog/" className="text-white/80 hover:text-white">
                 Blog
               </Link>
             </li>
             <li>
-              <Link href="/about/" className="text-white/90 hover:underline">
-                About Joyful
+              <Link href="/tools/" className="text-white/80 hover:text-white">
+                Tools directory
               </Link>
             </li>
           </ul>
         </div>
 
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-white/60">Per-app</p>
-          <ul className="mt-3 space-y-2 text-sm">
+          <p className="text-base font-bold">Support</p>
+          <ul className="mt-4 space-y-3 text-sm">
             {apps.map((app) => (
               <li key={app.slug}>
-                <Link href={`/${app.slug}/blog/`} className="text-white/90 hover:underline">
-                  {app.name} blog
+                <Link href={`/${app.slug}/blog/`} className="text-white/80 hover:text-white">
+                  Help with {app.name}
                 </Link>
-                {app.hasTestCenters && (
-                  <>
-                    {" · "}
-                    <Link
-                      href={`/${app.slug}/test-centers/`}
-                      className="text-white/90 hover:underline"
-                    >
-                      Test centers
-                    </Link>
-                  </>
-                )}
               </li>
             ))}
+            {apps
+              .filter((app) => app.hasTestCenters)
+              .map((app) => (
+                <li key={`${app.slug}-test-centers`}>
+                  <Link
+                    href={`/${app.slug}/test-centers/`}
+                    className="text-white/80 hover:text-white"
+                  >
+                    {app.name} test centers
+                  </Link>
+                </li>
+              ))}
           </ul>
         </div>
       </div>
 
       <div className="border-t border-white/10 px-4 py-6 text-xs text-white/60 sm:px-6">
-        <div className="mx-auto max-w-6xl">
-          © {year} {SITE_NAME}. Not affiliated with any government body. All exam-prep content
-          references official public sources, linked from each app.
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2">
+          <Link href="/privacy-policy/" className="hover:text-white">
+            Privacy policy
+          </Link>
+          <Link href="/terms/" className="hover:text-white">
+            Terms &amp; conditions
+          </Link>
+          <Link href="/accessibility-statement/" className="hover:text-white">
+            Accessibility statement
+          </Link>
+          <span>
+            © {year} {SITE_NAME}. Not affiliated with any government body.
+          </span>
         </div>
       </div>
     </footer>
