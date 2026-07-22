@@ -76,7 +76,7 @@ export default async function AppLandingPage({
         {app.appStoreUrl && (
           <a
             href={app.appStoreUrl}
-            className="rounded-full bg-white px-6 py-3 text-sm font-semibold"
+            className="rounded-full bg-white px-6 py-3 text-sm font-bold uppercase tracking-wide"
             style={{ color: app.theme.accentDark }}
           >
             Download on the App Store
@@ -85,7 +85,7 @@ export default async function AppLandingPage({
         {app.playStoreUrl && (
           <a
             href={app.playStoreUrl}
-            className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white"
+            className="rounded-full border border-white/40 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white"
           >
             Get it on Google Play
           </a>
@@ -145,7 +145,7 @@ export default async function AppLandingPage({
             </p>
             <Link
               href={`/${app.slug}/test-centers/`}
-              className="mt-5 inline-block rounded-full px-6 py-3 text-sm font-semibold text-white"
+              className="mt-5 inline-block rounded-full px-6 py-3 text-sm font-bold uppercase tracking-wide text-white"
               style={{ backgroundColor: app.theme.accent }}
             >
               View test centers

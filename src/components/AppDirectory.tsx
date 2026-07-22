@@ -17,7 +17,8 @@ export default function AppDirectory({ apps }: { apps: AppRecord[] }) {
 
   return (
     <div>
-      <div className="mx-auto max-w-md">
+      <h2 className="text-center text-2xl font-bold">Browse by exam</h2>
+      <div className="mx-auto mt-6 max-w-md">
         <input
           type="search"
           value={query}

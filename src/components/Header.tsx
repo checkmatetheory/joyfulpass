@@ -68,7 +68,7 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <Link
             href="/#apps"
-            className="hidden rounded-full px-4 py-2 text-sm font-semibold text-white sm:inline-block"
+            className="hidden rounded-full px-4 py-2 text-sm font-bold uppercase tracking-wide text-white sm:inline-block"
             style={{ backgroundColor: "var(--accent)" }}
           >
             Get started
