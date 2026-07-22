@@ -13,12 +13,20 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-[#2E1065] text-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="flex items-center">
-          <Image src={LOGO_URL} alt="Joyful" width={140} height={32} className="h-8 w-auto" priority />
-        </Link>
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2 sm:px-6">
+        <div className="flex items-center gap-10">
+          <Link href="/" className="flex items-center">
+            <Image
+              src={LOGO_URL}
+              alt="Joyful"
+              width={560}
+              height={128}
+              className="h-32 w-auto"
+              priority
+            />
+          </Link>
 
-        <nav className="hidden items-center gap-6 text-sm font-semibold md:flex">
+          <nav className="hidden items-center gap-6 text-sm font-semibold md:flex">
           <div
             className="relative"
             onMouseEnter={() => setSwitcherOpen(true)}
@@ -62,7 +70,8 @@ export default function Header() {
           <Link href="/about/" className="py-2">
             About
           </Link>
-        </nav>
+          </nav>
+        </div>
 
         <div className="flex items-center gap-3">
           <Link
