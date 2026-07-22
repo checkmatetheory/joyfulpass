@@ -80,10 +80,9 @@ export default async function AppLandingPage({
         />
         <div className="relative mx-auto max-w-2xl px-4 pb-48 sm:px-6 sm:pb-64">
           <div className="flex justify-center">
-            <AppIconBadge app={app} size={88} />
+            <AppIconBadge app={app} size={128} />
           </div>
-          <p className="mt-4 font-display text-lg font-semibold opacity-90">{app.name}</p>
-          <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl">
+          <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl">
             {app.hero.headline}
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg text-white/85">{app.hero.subheadline}</p>

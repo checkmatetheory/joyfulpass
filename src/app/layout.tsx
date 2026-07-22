@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Analytics from "@/components/Analytics";
 import JsonLd from "@/components/JsonLd";
+import StyledComponentsRegistry from "@/components/StyledComponentsRegistry";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -47,11 +48,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <JsonLd data={organizationJsonLd} />
-        <Analytics />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <StyledComponentsRegistry>
+          <JsonLd data={organizationJsonLd} />
+          <Analytics />
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Enables styled-components SSR support in the Next.js compiler, paired
+  // with the StyledComponentsRegistry in the root layout.
+  compiler: {
+    styledComponents: true,
+  },
   // Every internal link, canonical tag, and sitemap entry in this project
   // uses a trailing slash (matching the sitemap in the design brief), so
   // trailing-slash URLs must be the canonical, directly-served ones.

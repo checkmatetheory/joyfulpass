@@ -81,7 +81,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10 px-4 py-6 text-xs text-white/60 sm:px-6">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center">
           <Link href="/privacy-policy/" className="hover:text-white">
             Privacy policy
           </Link>
