@@ -122,7 +122,7 @@ export const apps: AppRecord[] = [
       gradientFrom: "#1D4ED8",
       gradientTo: "#0B1D51",
     },
-    iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1TZg3P8DwG9rjJDoM5lNspAIZEfFeOVRmaQ0v",
+    iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1BUBTO8ufXcr6Fdb7TYlAaW1GvmhjOS0uxE42",
     hero: {
       headline: "Everything you need to pass the Life in the UK Test",
       subheadline:
@@ -211,7 +211,7 @@ export const apps: AppRecord[] = [
       gradientFrom: "#D7263D",
       gradientTo: "#4A0E14",
     },
-    iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1sGNvWb02trGJvOKdcpQuA8fbURnZis5gjV7C",
+    iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1RxP2dC7BhAYrLo1uIdltUiTFOMzbnvqC20HP",
     hero: {
       headline: "Master Discover Canada and pass your citizenship test",
       subheadline:

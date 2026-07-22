@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { AppRecord } from "@/lib/apps";
+import AppIconBadge from "@/components/AppIconBadge";
 
 export default function AppCard({ app }: { app: AppRecord }) {
   return (
@@ -8,9 +9,7 @@ export default function AppCard({ app }: { app: AppRecord }) {
       className="group flex flex-col rounded-2xl border border-black/10 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-white/10 dark:bg-white/5"
     >
       <div className="flex items-center gap-3">
-        <span className="text-3xl" aria-hidden>
-          {app.flagEmoji}
-        </span>
+        <AppIconBadge app={app} size={56} />
         <div>
           <p className="font-display text-xl font-semibold">{app.name}</p>
           <p className="text-sm opacity-60">{app.examName}</p>
