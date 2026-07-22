@@ -57,6 +57,12 @@ export type LanguageVariant = {
   slug: string;
 };
 
+export type HeroMedia = {
+  type: "image" | "video";
+  /** Path to the city-specific hero background (e.g. /media/britpass/hero.jpg). */
+  url: string;
+};
+
 export type AppRecord = {
   slug: string;
   name: string;
@@ -68,6 +74,8 @@ export type AppRecord = {
   theme: AppTheme;
   /** Path to the uploaded app icon/logo. Falls back to a themed placeholder badge when unset. */
   iconUrl?: string;
+  /** City-specific hero background (photo or video). Falls back to the gradient when unset. */
+  heroMedia?: HeroMedia;
   hero: {
     headline: string;
     subheadline: string;
@@ -114,6 +122,7 @@ export const apps: AppRecord[] = [
       gradientFrom: "#1D4ED8",
       gradientTo: "#0B1D51",
     },
+    // heroMedia: { type: "image", url: "/media/britpass/hero.jpg" }, // London-specific photo/video, once available
     hero: {
       headline: "Everything you need to pass the Life in the UK Test",
       subheadline:
@@ -202,6 +211,7 @@ export const apps: AppRecord[] = [
       gradientFrom: "#D7263D",
       gradientTo: "#4A0E14",
     },
+    // heroMedia: { type: "image", url: "/media/canadapass/hero.jpg" }, // Toronto/Ottawa-specific photo/video, once available
     hero: {
       headline: "Master Discover Canada and pass your citizenship test",
       subheadline:

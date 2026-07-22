@@ -8,6 +8,7 @@ import FaqAccordion from "@/components/FaqAccordion";
 import BlogCard from "@/components/BlogCard";
 import JsonLd from "@/components/JsonLd";
 import AppIconBadge from "@/components/AppIconBadge";
+import HeroBackground from "@/components/HeroBackground";
 import WaveDivider from "@/components/WaveDivider";
 import FeatureBlock from "@/components/FeatureBlock";
 import DownloadCta from "@/components/DownloadCta";
@@ -71,13 +72,13 @@ export default async function AppLandingPage({
       <JsonLd data={courseJsonLd} />
 
       {/* Hero */}
-      <section
-        className="relative overflow-hidden pt-20 text-center text-white"
-        style={{
-          backgroundImage: `linear-gradient(160deg, ${app.theme.gradientFrom}, ${app.theme.gradientTo})`,
-        }}
-      >
-        <div className="mx-auto max-w-2xl px-4 pb-24 sm:px-6">
+      <section className="relative overflow-hidden pt-20 text-center text-white">
+        <HeroBackground
+          media={app.heroMedia}
+          gradientFrom={app.theme.gradientFrom}
+          gradientTo={app.theme.gradientTo}
+        />
+        <div className="relative mx-auto max-w-2xl px-4 pb-36 sm:px-6 sm:pb-44">
           <div className="flex justify-center">
             <AppIconBadge app={app} size={88} />
           </div>
@@ -96,7 +97,9 @@ export default async function AppLandingPage({
             </a>
           </div>
         </div>
-        <WaveDivider color="var(--surface-cream)" />
+        <div className="relative">
+          <WaveDivider color="var(--surface-cream)" />
+        </div>
       </section>
 
       {/* Trust section */}
