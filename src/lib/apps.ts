@@ -125,7 +125,7 @@ export const apps: AppRecord[] = [
     iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1BUBTO8ufXcr6Fdb7TYlAaW1GvmhjOS0uxE42",
     heroMedia: {
       type: "image",
-      url: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1TZg3P8DwG9rjJDoM5lNspAIZEfFeOVRmaQ0v",
+      url: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1sGNvWb02trGJvOKdcpQuA8fbURnZis5gjV7C",
     },
     hero: {
       headline: "Everything you need to pass the Life in the UK Test",
@@ -218,7 +218,7 @@ export const apps: AppRecord[] = [
     iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1RxP2dC7BhAYrLo1uIdltUiTFOMzbnvqC20HP",
     heroMedia: {
       type: "image",
-      url: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1sGNvWb02trGJvOKdcpQuA8fbURnZis5gjV7C",
+      url: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1TZg3P8DwG9rjJDoM5lNspAIZEfFeOVRmaQ0v",
     },
     hero: {
       headline: "Master Discover Canada and pass your citizenship test",
