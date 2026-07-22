@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllAppSlugs, getApp } from "@/lib/apps";
-import SiloNav from "@/components/SiloNav";
 import JsonLd from "@/components/JsonLd";
 import { SITE_URL } from "@/lib/site";
 
@@ -59,7 +58,6 @@ export default async function AppLayout({
       }
     >
       <JsonLd data={educationalOrgJsonLd} />
-      <SiloNav app={app} />
       {children}
     </div>
   );

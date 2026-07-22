@@ -72,12 +72,12 @@ export default async function AppLandingPage({
 
       {/* Hero */}
       <section
-        className="relative overflow-hidden px-4 pt-20 pb-0 text-center text-white sm:px-6"
+        className="relative overflow-hidden pt-20 text-center text-white"
         style={{
           backgroundImage: `linear-gradient(160deg, ${app.theme.gradientFrom}, ${app.theme.gradientTo})`,
         }}
       >
-        <div className="mx-auto max-w-2xl pb-24">
+        <div className="mx-auto max-w-2xl px-4 pb-24 sm:px-6">
           <div className="flex justify-center">
             <AppIconBadge app={app} size={88} />
           </div>
