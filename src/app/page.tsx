@@ -16,7 +16,10 @@ export default function HomePage() {
         subheadline="One app per exam, built from the official source material — so you study exactly what's tested and nothing you don't need."
         gradientFrom="#7C3AED"
         gradientTo="#2E1065"
-        // media={{ type: "image", url: "/media/hub/hero.jpg" }} — swap in once a hero photo/video exists
+        media={{
+          type: "image",
+          url: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1LuHGI5VQaYokTvKbhGgEjf0tpBqVMArZeSOc",
+        }}
       >
         <a
           href="#apps"

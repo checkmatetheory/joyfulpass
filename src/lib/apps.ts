@@ -122,7 +122,7 @@ export const apps: AppRecord[] = [
       gradientFrom: "#1D4ED8",
       gradientTo: "#0B1D51",
     },
-    // heroMedia: { type: "image", url: "/media/britpass/hero.jpg" }, // London-specific photo/video, once available
+    iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1TZg3P8DwG9rjJDoM5lNspAIZEfFeOVRmaQ0v",
     hero: {
       headline: "Everything you need to pass the Life in the UK Test",
       subheadline:
@@ -211,7 +211,7 @@ export const apps: AppRecord[] = [
       gradientFrom: "#D7263D",
       gradientTo: "#4A0E14",
     },
-    // heroMedia: { type: "image", url: "/media/canadapass/hero.jpg" }, // Toronto/Ottawa-specific photo/video, once available
+    iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1sGNvWb02trGJvOKdcpQuA8fbURnZis5gjV7C",
     hero: {
       headline: "Master Discover Canada and pass your citizenship test",
       subheadline:
