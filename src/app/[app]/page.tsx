@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllAppSlugs, getApp } from "@/lib/apps";
-import Hero from "@/components/Hero";
 import StatBadge from "@/components/StatBadge";
 import ToolCard from "@/components/ToolCard";
 import FaqAccordion from "@/components/FaqAccordion";
 import BlogCard from "@/components/BlogCard";
 import JsonLd from "@/components/JsonLd";
+import AppIconBadge from "@/components/AppIconBadge";
+import WaveDivider from "@/components/WaveDivider";
+import FeatureBlock from "@/components/FeatureBlock";
+import DownloadCta from "@/components/DownloadCta";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { getAllPosts } from "@/lib/blog";
 import { SITE_URL } from "@/lib/site";
 
@@ -66,42 +70,95 @@ export default async function AppLandingPage({
       <JsonLd data={faqJsonLd} />
       <JsonLd data={courseJsonLd} />
 
-      <Hero
-        eyebrow={`${app.flagEmoji} ${app.examName}`}
-        headline={app.hero.headline}
-        subheadline={app.hero.subheadline}
-        gradientFrom={app.theme.gradientFrom}
-        gradientTo={app.theme.gradientTo}
+      {/* Hero */}
+      <section
+        className="relative overflow-hidden px-4 pt-20 pb-0 text-center text-white sm:px-6"
+        style={{
+          backgroundImage: `linear-gradient(160deg, ${app.theme.gradientFrom}, ${app.theme.gradientTo})`,
+        }}
       >
-        {app.appStoreUrl && (
-          <a
-            href={app.appStoreUrl}
-            className="rounded-full bg-white px-6 py-3 text-sm font-bold uppercase tracking-wide"
-            style={{ color: app.theme.accentDark }}
-          >
-            Download on the App Store
-          </a>
-        )}
-        {app.playStoreUrl && (
-          <a
-            href={app.playStoreUrl}
-            className="rounded-full border border-white/40 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white"
-          >
-            Get it on Google Play
-          </a>
-        )}
-      </Hero>
+        <div className="mx-auto max-w-2xl pb-24">
+          <div className="flex justify-center">
+            <AppIconBadge app={app} size={88} />
+          </div>
+          <p className="mt-4 font-display text-lg font-semibold opacity-90">{app.name}</p>
+          <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl">
+            {app.hero.headline}
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-lg text-white/85">{app.hero.subheadline}</p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <a
+              href="#download"
+              className="rounded-full bg-white px-6 py-3 text-sm font-bold uppercase tracking-wide"
+              style={{ color: app.theme.accentDark }}
+            >
+              Get started
+            </a>
+          </div>
+        </div>
+        <WaveDivider color="var(--surface-cream)" />
+      </section>
 
-      <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
-        <div className="grid grid-cols-3 gap-6">
+      {/* Trust section */}
+      <section className="bg-cream px-4 pb-16 text-cream-foreground sm:px-6">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-bold sm:text-4xl">{app.trustHeadline}</h2>
+          <p className="mx-auto mt-4 max-w-xl opacity-80">{app.trustBody}</p>
+        </div>
+        <div className="mx-auto mt-12 grid max-w-2xl grid-cols-3 gap-6">
           {app.stats.map((stat) => (
             <StatBadge key={stat.label} stat={stat} accent={app.theme.accent} />
           ))}
         </div>
       </section>
+      <div className="bg-cream">
+        <WaveDivider color={app.theme.accentDark} />
+      </div>
+
+      {/* Alternating feature rows */}
+      <section
+        className="space-y-20 px-4 py-20 sm:px-6"
+        style={{ backgroundColor: app.theme.accentDark }}
+      >
+        <div className="mx-auto max-w-5xl space-y-20">
+          {app.features.map((feature, i) => (
+            <FeatureBlock
+              key={feature.title}
+              feature={feature}
+              accent={app.theme.accent}
+              ctaHref={
+                feature.mockup === "tool" && app.tools[0]
+                  ? `/${app.slug}/${app.tools[0].slug}/`
+                  : "#download"
+              }
+              reverse={i % 2 === 1}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Download CTA */}
+      <section
+        id="download"
+        className="px-4 py-16 text-center sm:px-6"
+        style={{ backgroundColor: app.theme.accentDark }}
+      >
+        <h2 className="text-2xl font-bold text-white">Get {app.name}</h2>
+        <div className="mt-6">
+          <DownloadCta app={app} />
+        </div>
+      </section>
+
+      {app.testimonials.length > 0 && (
+        <section className="px-4 py-16 sm:px-6" style={{ backgroundColor: app.theme.accentDark }}>
+          <div className="mx-auto max-w-6xl">
+            <TestimonialCarousel testimonials={app.testimonials} />
+          </div>
+        </section>
+      )}
 
       {app.tools.length > 0 && (
-        <section className="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
+        <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
           <h2 className="text-2xl font-bold">Tools</h2>
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
             {app.tools.map((tool) => (

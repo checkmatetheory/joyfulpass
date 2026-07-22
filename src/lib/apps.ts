@@ -34,6 +34,22 @@ export type AppStat = {
   value: string;
 };
 
+export type AppFeature = {
+  title: string;
+  body: string;
+  ctaLabel: string;
+  /** Which illustrative phone-mockup to render next to this feature. */
+  mockup: "quiz" | "progress" | "tool" | "content";
+};
+
+export type Testimonial = {
+  quote: string;
+  name: string;
+  location: string;
+  /** Card background color, cycling through the reference site's card palette. */
+  color: string;
+};
+
 export type LanguageVariant = {
   code: string;
   label: string;
@@ -50,6 +66,8 @@ export type AppRecord = {
   country: string;
   examName: string;
   theme: AppTheme;
+  /** Path to the uploaded app icon/logo. Falls back to a themed placeholder badge when unset. */
+  iconUrl?: string;
   hero: {
     headline: string;
     subheadline: string;
@@ -62,6 +80,13 @@ export type AppRecord = {
   };
   stats: AppStat[];
   tools: AppTool[];
+  /** Headline + body for the cream "trust" section on the app landing page. */
+  trustHeadline: string;
+  trustBody: string;
+  /** Alternating feature rows on the app landing page. */
+  features: AppFeature[];
+  /** Real customer testimonials only — left empty until genuine quotes exist. */
+  testimonials: Testimonial[];
   faqs: AppFaq[];
   /** Content/topical category used to tag and filter this app's blog posts. */
   blogCategory: string;
@@ -114,6 +139,30 @@ export const apps: AppRecord[] = [
         icon: "📅",
       },
     ],
+    trustHeadline: "You've got this",
+    trustBody:
+      "Whatever stage you're at, study at your own pace with mock tests built from the official Life in the UK handbook — so you know exactly what to expect on test day.",
+    features: [
+      {
+        title: "Practice built for the real test",
+        body: "Mock tests mirror the actual 24-question, 45-minute format, drawn straight from the official handbook — not guesswork about what might come up.",
+        ctaLabel: "Start practicing",
+        mockup: "quiz",
+      },
+      {
+        title: "Track your progress",
+        body: "See your score improve chapter by chapter, and spot the topics that need another pass before you book your test.",
+        ctaLabel: "See your stats",
+        mockup: "progress",
+      },
+      {
+        title: "Know your ILR date",
+        body: "Work out your Indefinite Leave to Remain qualifying date in seconds with the built-in calculator, based on your visa route and continuous residence.",
+        ctaLabel: "Try the calculator",
+        mockup: "tool",
+      },
+    ],
+    testimonials: [],
     faqs: [
       {
         question: "How many questions are on the Life in the UK Test?",
@@ -170,6 +219,30 @@ export const apps: AppRecord[] = [
       { label: "5-star reviews", value: "6,900+" },
     ],
     tools: [],
+    trustHeadline: "You've got this",
+    trustBody:
+      "Whatever your starting point, study at your own pace with practice tests built from the official Discover Canada guide — so nothing on test day catches you off guard.",
+    features: [
+      {
+        title: "Practice built for the real test",
+        body: "Mock tests mirror the actual 20-question, 30-minute format, drawn straight from the official Discover Canada guide.",
+        ctaLabel: "Start practicing",
+        mockup: "quiz",
+      },
+      {
+        title: "Study chapter by chapter",
+        body: "Questions are grouped to match Discover Canada's own chapters, so you can focus on the sections you haven't mastered yet.",
+        ctaLabel: "See your stats",
+        mockup: "progress",
+      },
+      {
+        title: "Know exactly what's tested",
+        body: "History, government, geography, and rights and responsibilities — covered in full, with nothing left to guesswork.",
+        ctaLabel: "Explore topics",
+        mockup: "content",
+      },
+    ],
+    testimonials: [],
     faqs: [
       {
         question: "What topics are covered on the Canadian citizenship test?",
