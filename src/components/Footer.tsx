@@ -10,10 +10,17 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#2E1065] text-white">
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-24 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div>
-          <Image src={LOGO_URL} alt={SITE_NAME} width={320} height={72} className="h-[72px] w-auto" />
-          <p className="mt-5 max-w-xs text-base text-white/70">
+          <Image
+            src={LOGO_URL}
+            alt={SITE_NAME}
+            width={280}
+            height={64}
+            className="h-16 w-auto sm:h-20"
+            style={{ width: "auto" }}
+          />
+          <p className="mt-5 max-w-sm text-base leading-relaxed text-white/75">
             Focused, trustworthy prep apps for the exams that change your life — citizenship,
             settlement, and beyond.
           </p>
@@ -80,8 +87,8 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 px-4 py-6 text-xs text-white/60 sm:px-6">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center">
+      <div className="border-t border-white/10 px-4 py-7 text-sm text-white/65 sm:px-6">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center">
           <Link href="/privacy-policy/" className="hover:text-white">
             Privacy policy
           </Link>

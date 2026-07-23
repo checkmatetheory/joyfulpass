@@ -11,7 +11,7 @@ import { apps } from "@/lib/apps";
 import { getAllPosts } from "@/lib/blog";
 
 export default function HomePage() {
-  const hubPosts = getAllPosts("hub").slice(0, 3);
+  const hubPosts = getAllPosts("hub").slice(0, 4);
 
   return (
     <>
@@ -69,7 +69,7 @@ export default function HomePage() {
               View all posts →
             </Link>
           </div>
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {hubPosts.map((post) => (
               <BlogCard key={post.slug} post={post} href={`/blog/${post.slug}/`} />
             ))}

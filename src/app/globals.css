@@ -62,29 +62,3 @@ h5,
 h6 {
   font-family: var(--font-display);
 }
-
-/* Continuous horizontal marquee for the testimonial card carousel. The track
-   holds the cards twice, so translating by -50% loops seamlessly. */
-@keyframes joyful-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.marquee-track {
-  animation: joyful-marquee 40s linear infinite;
-  width: max-content;
-}
-
-.marquee-viewport:hover .marquee-track {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none;
-  }
-}

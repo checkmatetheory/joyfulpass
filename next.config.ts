@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
       // cover photos during design preview — replace with real assets later.
       { protocol: "https", hostname: "randomuser.me" },
       { protocol: "https", hostname: "picsum.photos" },
+      { protocol: "https", hostname: "hatscripts.github.io" },
     ],
   },
 };

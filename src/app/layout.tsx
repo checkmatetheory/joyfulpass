@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -53,10 +54,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: noFlashThemeScript }} />
-      </head>
       <body className="min-h-full flex flex-col">
+        <Script id="theme-initialization" strategy="beforeInteractive">
+          {noFlashThemeScript}
+        </Script>
         <ThemeProvider>
           <StyledComponentsRegistry>
             <JsonLd data={organizationJsonLd} />

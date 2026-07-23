@@ -21,16 +21,16 @@ export default function Hero({
   children?: ReactNode;
 }) {
   return (
-    <section className="relative -mt-[120px] overflow-hidden pt-[150px] text-white sm:pt-[180px]">
+    <section className="relative -mt-14 overflow-hidden pt-36 text-white sm:-mt-16 sm:pt-44">
       <HeroBackground media={media} gradientFrom={gradientFrom} gradientTo={gradientTo} />
-      <div className="relative mx-auto max-w-3xl px-4 pb-48 text-center sm:px-6 sm:pb-64">
+      <div className="relative mx-auto max-w-4xl px-4 pb-64 text-center sm:px-6 sm:pb-80">
         {eyebrow && (
           <p className="mb-4 inline-block rounded-full bg-white/15 px-4 py-1 text-sm font-semibold">
             {eyebrow}
           </p>
         )}
-        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">{headline}</h1>
-        <p className="mx-auto mt-5 max-w-2xl text-lg text-white/85">{subheadline}</p>
+        <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">{headline}</h1>
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-white/85 sm:text-xl">{subheadline}</p>
         {children && <div className="mt-8 flex flex-wrap justify-center gap-4">{children}</div>}
       </div>
       <div className="relative">

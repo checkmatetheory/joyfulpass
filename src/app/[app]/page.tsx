@@ -72,20 +72,20 @@ export default async function AppLandingPage({
       <JsonLd data={courseJsonLd} />
 
       {/* Hero */}
-      <section className="relative -mt-[120px] overflow-hidden pt-[150px] text-center text-white sm:pt-[180px]">
+      <section className="relative -mt-14 overflow-hidden pt-36 text-center text-white sm:-mt-16 sm:pt-44">
         <HeroBackground
           media={app.heroMedia}
           gradientFrom={app.theme.gradientFrom}
           gradientTo={app.theme.gradientTo}
         />
-        <div className="relative mx-auto max-w-2xl px-4 pb-48 sm:px-6 sm:pb-64">
+        <div className="relative mx-auto max-w-3xl px-4 pb-64 sm:px-6 sm:pb-80">
           <div className="flex justify-center">
             <AppIconBadge app={app} size={128} />
           </div>
-          <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl">
+          <h1 className="mt-6 text-5xl font-extrabold tracking-tight sm:text-6xl">
             {app.hero.headline}
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-lg text-white/85">{app.hero.subheadline}</p>
+          <p className="mx-auto mt-6 max-w-xl text-lg text-white/85 sm:text-xl">{app.hero.subheadline}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <a
               href="#download"

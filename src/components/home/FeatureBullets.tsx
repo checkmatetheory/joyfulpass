@@ -3,30 +3,31 @@ import PhoneMockup from "@/components/PhoneMockup";
 
 export default function FeatureBullets() {
   return (
-    <section className="mx-auto max-w-5xl px-4 py-24 sm:px-6">
+    <section className="bg-[#2E1065] px-4 py-20 text-white sm:px-6 sm:py-28">
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-3xl font-bold sm:text-4xl">Your success starts here</h2>
-        <p className="mt-3 opacity-75">
+        <p className="mt-3 text-white/75">
           We built Joyful for people with a lot riding on one exam. Here&rsquo;s how we help you walk
           in ready.
         </p>
       </div>
 
-      <div className="mt-16 space-y-20">
-        {features.map((feature, i) => (
+      <div className="mx-auto mt-16 max-w-5xl space-y-20 sm:mt-20 sm:space-y-28">
+        {features.map((feature, index) => (
           <div
             key={feature.title}
-            className={`grid items-center gap-10 sm:grid-cols-2 ${
-              i % 2 === 1 ? "sm:[&>*:first-child]:order-2" : ""
+            className={`grid items-center gap-10 sm:grid-cols-2 sm:gap-16 ${
+              index % 2 === 1 ? "sm:[&>*:first-child]:order-2" : ""
             }`}
           >
-            <div>
-              <h3 className="text-2xl font-bold sm:text-3xl">{feature.title}</h3>
-              <p className="mt-4 text-lg opacity-75">{feature.body}</p>
+            <div className="max-w-md">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-white/55">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-3 text-2xl font-bold sm:text-3xl">{feature.title}</h3>
+              <p className="mt-4 leading-relaxed text-white/75">{feature.body}</p>
             </div>
-            <div>
-              <PhoneMockup variant={feature.mockup} accent="#7c3aed" />
-            </div>
+            <PhoneMockup variant={feature.mockup} accent="#5B6EE1" />
           </div>
         ))}
       </div>

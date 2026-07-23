@@ -5,10 +5,9 @@
 // path, and let real outcomes do the persuading.
 
 export type Feature = {
+  mockup: "quiz" | "progress" | "content";
   title: string;
   body: string;
-  /** Which illustrative phone mockup to show beside this feature. */
-  mockup: "quiz" | "progress" | "content";
 };
 
 export type HowItWorksStep = {
@@ -27,27 +26,28 @@ export type HomeTestimonial = {
   quote: string;
   name: string;
   detail: string;
+  countryCode: "gb" | "ca";
   /** Placeholder portrait (mockup service). Replace with a real, permissioned photo. */
   photo: string;
   rating: number;
 };
 
-// "Your success starts here" — outcome-focused feature bullets.
+// "Your success starts here" — outcome-focused app experiences.
 export const features: Feature[] = [
   {
+    mockup: "quiz",
     title: "Study only what's on the test",
     body: "Every question is built from the official government handbook — so you spend your time on what actually comes up, not trivia you'll never be asked.",
-    mockup: "quiz",
   },
   {
+    mockup: "progress",
     title: "See your progress in real time",
     body: "Track your score chapter by chapter and know exactly when you're ready to book. No guesswork, no cramming the night before.",
-    mockup: "progress",
   },
   {
+    mockup: "content",
     title: "Prepare anywhere, on your schedule",
     body: "Short lessons and mock tests that fit around work and family — study five minutes on the bus or an hour at the kitchen table.",
-    mockup: "content",
   },
 ];
 
@@ -88,6 +88,7 @@ export const testimonials: HomeTestimonial[] = [
       "I'd put off booking my Life in the UK Test for months because I was so nervous. Two weeks with BritPass and I passed first time. I actually teared up in the car afterwards.",
     name: "Amara Okafor",
     detail: "Passed the Life in the UK Test · London",
+    countryCode: "gb",
     photo: "https://randomuser.me/api/portraits/women/68.jpg",
     rating: 5,
   },
@@ -96,6 +97,7 @@ export const testimonials: HomeTestimonial[] = [
       "The practice tests felt exactly like the real thing. By test day there were genuinely no surprises — I knew every answer before I'd finished reading the question.",
     name: "David Chen",
     detail: "Passed the Canadian Citizenship Test · Toronto",
+    countryCode: "ca",
     photo: "https://randomuser.me/api/portraits/men/32.jpg",
     rating: 5,
   },
@@ -104,6 +106,7 @@ export const testimonials: HomeTestimonial[] = [
       "Studying in five-minute bursts around a full-time job and two kids made all the difference. I actually looked forward to opening the app on the bus home.",
     name: "Priya Sharma",
     detail: "Passed the Life in the UK Test · Manchester",
+    countryCode: "gb",
     photo: "https://randomuser.me/api/portraits/women/44.jpg",
     rating: 5,
   },
@@ -112,6 +115,7 @@ export const testimonials: HomeTestimonial[] = [
       "English isn't my first language and I was terrified of the wording. The clear explanations after each question built my confidence more than any textbook did.",
     name: "Luca Rossi",
     detail: "Passed the Canadian Citizenship Test · Vancouver",
+    countryCode: "ca",
     photo: "https://randomuser.me/api/portraits/men/75.jpg",
     rating: 5,
   },
@@ -120,6 +124,7 @@ export const testimonials: HomeTestimonial[] = [
       "Worth every penny. I'd failed once using free quizzes online — with this I walked back in and passed comfortably. Thank you for making it feel doable.",
     name: "Fatima Al-Sayed",
     detail: "Passed the Life in the UK Test · Birmingham",
+    countryCode: "gb",
     photo: "https://randomuser.me/api/portraits/women/12.jpg",
     rating: 5,
   },

@@ -132,8 +132,8 @@ export const apps: AppRecord[] = [
       subheadline:
         "Bite-sized lessons, realistic mock tests, and an ILR eligibility calculator built for people preparing for settlement, citizenship, or ILR — one focused app, no wasted time.",
     },
-    appStoreUrl: "https://apps.apple.com/app/britpass",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.joyfulpass.britpass",
+    appStoreUrl: "https://apps.apple.com/gb/app/britpass-life-in-the-uk-test/id6754894750",
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.createinc.lifeinuktest&hl=en",
     officialSource: {
       name: "GOV.UK — Life in the UK Test",
       url: "https://www.gov.uk/life-in-the-uk-test",
