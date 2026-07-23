@@ -72,7 +72,7 @@ export default async function AppLandingPage({
       <JsonLd data={courseJsonLd} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden pt-20 text-center text-white">
+      <section className="relative -mt-[120px] overflow-hidden pt-[150px] text-center text-white sm:pt-[180px]">
         <HeroBackground
           media={app.heroMedia}
           gradientFrom={app.theme.gradientFrom}

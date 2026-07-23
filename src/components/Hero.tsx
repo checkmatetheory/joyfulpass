@@ -21,7 +21,7 @@ export default function Hero({
   children?: ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden pt-20 text-white sm:pt-28">
+    <section className="relative -mt-[120px] overflow-hidden pt-[150px] text-white sm:pt-[180px]">
       <HeroBackground media={media} gradientFrom={gradientFrom} gradientTo={gradientTo} />
       <div className="relative mx-auto max-w-3xl px-4 pb-48 text-center sm:px-6 sm:pb-64">
         {eyebrow && (

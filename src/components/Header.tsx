@@ -15,7 +15,7 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="sticky top-0 z-50 bg-[#2E1065] text-white">
+    <header className="sticky top-0 z-50 bg-transparent text-white transition-colors duration-300 hover:bg-[#2E1065]/80 hover:backdrop-blur-sm">
       {/* 3-column grid: logo centered in the left third (reads as center-left),
           nav links centered in the middle, and a right cell that spreads the
           Get started button (center-right) apart from the theme toggle (far right). */}
