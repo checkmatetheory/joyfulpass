@@ -6,6 +6,7 @@ import Analytics from "@/components/Analytics";
 import JsonLd from "@/components/JsonLd";
 import StyledComponentsRegistry from "@/components/StyledComponentsRegistry";
 import ThemeProvider from "@/components/ThemeProvider";
+import FloatingThemeToggle from "@/components/FloatingThemeToggle";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 // Applies the saved (or OS-preferred) theme before first paint so there's no
@@ -63,6 +64,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
+            <FloatingThemeToggle />
           </StyledComponentsRegistry>
         </ThemeProvider>
       </body>

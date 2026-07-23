@@ -16,7 +16,17 @@ export type PostMeta = {
   author: string;
   authorCredential: string;
   readingMinutes: number;
+  coverImage: string;
 };
+
+// Placeholder cover images (Lorem Picsum — free, royalty-free photos meant for
+// mockups). Deterministic per-slug seed so each post keeps the same image.
+// Replace with real, topical, licensed photography before launch by adding a
+// `coverImage:` field to a post's frontmatter.
+function coverImageFor(slug: string, frontmatter: Record<string, unknown>): string {
+  if (typeof frontmatter.coverImage === "string") return frontmatter.coverImage;
+  return `https://picsum.photos/seed/joyful-${slug}/800/500`;
+}
 
 export type Post = PostMeta & {
   contentHtml: string;
@@ -59,6 +69,7 @@ export function getAllPosts(scope: string): PostMeta[] {
         author: data.author as string,
         authorCredential: data.authorCredential as string,
         readingMinutes: estimateReadingMinutes(content),
+        coverImage: coverImageFor(slug, data),
       };
     })
     .sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -81,6 +92,7 @@ export async function getPost(scope: string, slug: string): Promise<Post | null>
     author: data.author as string,
     authorCredential: data.authorCredential as string,
     readingMinutes: estimateReadingMinutes(content),
+    coverImage: coverImageFor(slug, data),
     contentHtml: processed.toString(),
   };
 }

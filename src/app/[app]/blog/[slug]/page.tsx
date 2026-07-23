@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getAllAppSlugs, getApp } from "@/lib/apps";
 import { getPost, getPostSlugs } from "@/lib/blog";
@@ -64,6 +65,16 @@ export default async function AppBlogPostPage({
   return (
     <article className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
       <JsonLd data={articleJsonLd} />
+      <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-2xl">
+        <Image
+          src={post.coverImage}
+          alt=""
+          fill
+          sizes="(max-width: 672px) 100vw, 672px"
+          className="object-cover"
+          priority
+        />
+      </div>
       <p className="text-sm opacity-60">
         {new Date(post.date).toLocaleDateString("en-US", {
           year: "numeric",

@@ -12,10 +12,11 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "657cm7lxu0.ufs.sh",
-      },
+      { protocol: "https", hostname: "657cm7lxu0.ufs.sh" },
+      // Placeholder image services used for the testimonial portraits and blog
+      // cover photos during design preview — replace with real assets later.
+      { protocol: "https", hostname: "randomuser.me" },
+      { protocol: "https", hostname: "picsum.photos" },
     ],
   },
 };

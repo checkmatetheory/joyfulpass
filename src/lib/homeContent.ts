@@ -26,6 +26,9 @@ export type HomeTestimonial = {
   quote: string;
   name: string;
   detail: string;
+  /** Placeholder portrait (mockup service). Replace with a real, permissioned photo. */
+  photo: string;
+  rating: number;
 };
 
 // "Your success starts here" — outcome-focused feature bullets.
@@ -73,27 +76,51 @@ export const impactStats: ImpactStat[] = [
   { value: "10,000+", label: "5-star app reviews", verified: false },
 ];
 
-// PLACEHOLDER testimonials — illustrative only. Replace every entry with a
-// genuine, permission-granted customer review (or delete the section)
-// before launch. Do not ship invented quotes as real social proof.
+// PLACEHOLDER testimonials — illustrative mockup content only. The names are
+// invented and the photos come from a placeholder-portrait service
+// (randomuser.me), NOT real customers. Replace every entry with a genuine,
+// permission-granted review + photo (or delete the section) before launch.
+// Do not ship invented quotes as real social proof.
 export const testimonials: HomeTestimonial[] = [
   {
     quote:
-      "I'd put off booking my Life in the UK Test for months because I was so nervous. Two weeks with the app and I passed first time.",
-    name: "Placeholder review",
-    detail: "Replace with a real BritPass user quote",
+      "I'd put off booking my Life in the UK Test for months because I was so nervous. Two weeks with BritPass and I passed first time. I actually teared up in the car afterwards.",
+    name: "Amara Okafor",
+    detail: "Passed the Life in the UK Test · London",
+    photo: "https://randomuser.me/api/portraits/women/68.jpg",
+    rating: 5,
   },
   {
     quote:
-      "The practice tests felt exactly like the real thing. By test day there were no surprises at all.",
-    name: "Placeholder review",
-    detail: "Replace with a real CanadaPass user quote",
+      "The practice tests felt exactly like the real thing. By test day there were genuinely no surprises — I knew every answer before I'd finished reading the question.",
+    name: "David Chen",
+    detail: "Passed the Canadian Citizenship Test · Toronto",
+    photo: "https://randomuser.me/api/portraits/men/32.jpg",
+    rating: 5,
   },
   {
     quote:
-      "Being able to study in short bursts around my job made all the difference. I actually looked forward to it.",
-    name: "Placeholder review",
-    detail: "Replace with a real user quote",
+      "Studying in five-minute bursts around a full-time job and two kids made all the difference. I actually looked forward to opening the app on the bus home.",
+    name: "Priya Sharma",
+    detail: "Passed the Life in the UK Test · Manchester",
+    photo: "https://randomuser.me/api/portraits/women/44.jpg",
+    rating: 5,
+  },
+  {
+    quote:
+      "English isn't my first language and I was terrified of the wording. The clear explanations after each question built my confidence more than any textbook did.",
+    name: "Luca Rossi",
+    detail: "Passed the Canadian Citizenship Test · Vancouver",
+    photo: "https://randomuser.me/api/portraits/men/75.jpg",
+    rating: 5,
+  },
+  {
+    quote:
+      "Worth every penny. I'd failed once using free quizzes online — with this I walked back in and passed comfortably. Thank you for making it feel doable.",
+    name: "Fatima Al-Sayed",
+    detail: "Passed the Life in the UK Test · Birmingham",
+    photo: "https://randomuser.me/api/portraits/women/12.jpg",
+    rating: 5,
   },
 ];
 
