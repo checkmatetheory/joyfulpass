@@ -16,21 +16,26 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-[#2E1065] text-white">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-8">
-        {/* Left: logo + nav links grouped together */}
-        <div className="flex items-center gap-8">
+      {/* 3-column grid: logo centered in the left third (reads as center-left),
+          nav links centered in the middle, and a right cell that spreads the
+          Get started button (center-right) apart from the theme toggle (far right). */}
+      <div className="mx-auto grid h-32 max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-8">
+        {/* Left: logo, centered within its column */}
+        <div className="justify-self-center">
           <Link href="/" className="flex items-center">
             <Image
               src={LOGO_URL}
               alt="Joyful"
-              width={350}
-              height={80}
-              className="h-14 w-auto"
+              width={490}
+              height={112}
+              className="h-28 w-auto"
               priority
             />
           </Link>
+        </div>
 
-          <nav className="hidden items-center gap-6 text-sm font-semibold md:flex">
+        {/* Center: nav links */}
+        <nav className="hidden items-center gap-6 text-sm font-semibold md:flex">
             <div
               className="relative"
               onMouseEnter={() => setSwitcherOpen(true)}
@@ -74,28 +79,28 @@ export default function Header() {
             <Link href="/about/" className="py-2">
               About
             </Link>
-          </nav>
-        </div>
+        </nav>
 
-        {/* Right: theme toggle + Get started */}
-        <div className="flex items-center gap-4">
-          <div className="hidden sm:block">
+        {/* Right cell: Get started centered within the cell (reads as center-right),
+            theme toggle pinned alone to the far right edge. */}
+        <div className="relative flex items-center justify-center">
+          <Link
+            href="/#apps"
+            className="hidden rounded-full px-5 py-3 text-sm font-bold uppercase tracking-wide text-white md:inline-block"
+            style={{ backgroundColor: "var(--accent)" }}
+          >
+            Get started
+          </Link>
+          <div className="absolute right-0 hidden md:block">
             <Switch
               checked={theme === "dark"}
               onChange={toggleTheme}
               aria-label="Toggle dark mode"
             />
           </div>
-          <Link
-            href="/#apps"
-            className="hidden rounded-full px-5 py-3 text-sm font-bold uppercase tracking-wide text-white sm:inline-block"
-            style={{ backgroundColor: "var(--accent)" }}
-          >
-            Get started
-          </Link>
           <button
             type="button"
-            className="text-2xl md:hidden"
+            className="absolute right-0 text-2xl md:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-expanded={menuOpen}
             aria-label="Toggle menu"
