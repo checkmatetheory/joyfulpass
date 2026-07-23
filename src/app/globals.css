@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Drive the `dark:` variant off a `.dark` class on <html> (set by the theme
+   toggle) rather than only the OS setting, so the manual switch works. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -34,11 +38,14 @@
   --font-display: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark theme is class-based: the ThemeProvider adds `.dark` to <html>
+   (from the stored choice, or the OS setting when there's no stored choice),
+   and an inline no-flash script in the root layout applies it before paint. */
+.dark {
+  --background: #0f0b1e;
+  --foreground: #ededed;
+  --surface-cream: #1b1630;
+  --surface-cream-foreground: #ece7f7;
 }
 
 body {

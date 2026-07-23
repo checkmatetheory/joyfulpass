@@ -5,26 +5,27 @@ import Image from "next/image";
 import { useState } from "react";
 import { apps } from "@/lib/apps";
 import Switch from "@/components/ui/sky-toggle";
+import { useTheme } from "@/components/ThemeProvider";
 
 const LOGO_URL = "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1k0q8x3P0iROj6VeEqT1Kpnm728XoNfrSPHyQ";
 
 export default function Header() {
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="sticky top-0 z-50 bg-[#2E1065] text-white">
-      <div className="relative flex h-28 items-center px-4 sm:px-8">
-        {/* Absolutely-centered logo + nav group: logo sits just left of the centered nav links,
-            independent of the right-side controls so they never fight for space. */}
-        <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-8">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-8">
+        {/* Left: logo + nav links grouped together */}
+        <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center">
             <Image
               src={LOGO_URL}
               alt="Joyful"
-              width={420}
-              height={96}
-              className="h-24 w-auto"
+              width={350}
+              height={80}
+              className="h-14 w-auto"
               priority
             />
           </Link>
@@ -76,10 +77,14 @@ export default function Header() {
           </nav>
         </div>
 
-        {/* Right-side controls in normal flow (ml-auto), so the centered group floats over the row */}
-        <div className="ml-auto flex items-center gap-4">
+        {/* Right: theme toggle + Get started */}
+        <div className="flex items-center gap-4">
           <div className="hidden sm:block">
-            <Switch />
+            <Switch
+              checked={theme === "dark"}
+              onChange={toggleTheme}
+              aria-label="Toggle dark mode"
+            />
           </div>
           <Link
             href="/#apps"

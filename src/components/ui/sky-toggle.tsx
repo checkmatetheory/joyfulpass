@@ -3,11 +3,24 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Switch = () => {
+type SwitchProps = {
+  checked?: boolean;
+  onChange?: (checked: boolean) => void;
+  "aria-label"?: string;
+};
+
+const Switch = ({ checked, onChange, ...rest }: SwitchProps) => {
   return (
     <StyledWrapper>
       <label className="theme-switch">
-        <input type="checkbox" className="theme-switch__checkbox" />
+        <input
+          type="checkbox"
+          className="theme-switch__checkbox"
+          checked={checked ?? false}
+          onChange={(e) => onChange?.(e.target.checked)}
+          aria-label={rest["aria-label"]}
+          suppressHydrationWarning
+        />
         <div className="theme-switch__container">
           <div className="theme-switch__clouds" />
           <div className="theme-switch__stars-container">
@@ -32,7 +45,7 @@ const Switch = () => {
 
 const StyledWrapper = styled.div`
   .theme-switch {
-    --toggle-size: 15px;
+    --toggle-size: 8px;
     /* the size is adjusted using font-size,
        this is not transform scale,
        so you can choose any size */

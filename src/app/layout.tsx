@@ -5,7 +5,12 @@ import Footer from "@/components/Footer";
 import Analytics from "@/components/Analytics";
 import JsonLd from "@/components/JsonLd";
 import StyledComponentsRegistry from "@/components/StyledComponentsRegistry";
+import ThemeProvider from "@/components/ThemeProvider";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+
+// Applies the saved (or OS-preferred) theme before first paint so there's no
+// flash of the wrong theme. Kept tiny and inlined; runs before hydration.
+const noFlashThemeScript = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -46,15 +51,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: noFlashThemeScript }} />
+      </head>
       <body className="min-h-full flex flex-col">
-        <StyledComponentsRegistry>
-          <JsonLd data={organizationJsonLd} />
-          <Analytics />
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </StyledComponentsRegistry>
+        <ThemeProvider>
+          <StyledComponentsRegistry>
+            <JsonLd data={organizationJsonLd} />
+            <Analytics />
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </StyledComponentsRegistry>
+        </ThemeProvider>
       </body>
     </html>
   );
