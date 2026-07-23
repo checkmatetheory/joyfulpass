@@ -11,47 +11,44 @@ export default function Header() {
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastY = useRef(0);
 
-  // Disappear while actively scrolling; reappear a moment after scrolling stops.
+  // Cleaner behavior: hide when scrolling down past the hero, reveal when
+  // scrolling up, and always show near the top.
   useEffect(() => {
+    lastY.current = window.scrollY;
     const onScroll = () => {
-      if (window.scrollY < 40) {
-        setHidden(false);
-      } else {
-        setHidden(true);
-        if (idleTimer.current) clearTimeout(idleTimer.current);
-        idleTimer.current = setTimeout(() => setHidden(false), 250);
-      }
+      const y = window.scrollY;
+      if (y < 120) setHidden(false);
+      else if (y > lastY.current + 8) setHidden(true);
+      else if (y < lastY.current - 8) setHidden(false);
+      lastY.current = y;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (idleTimer.current) clearTimeout(idleTimer.current);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <header
-      className={`sticky top-0 z-50 bg-transparent text-white opacity-75 transition-[transform,opacity,background-color] duration-300 hover:bg-[#2E1065]/70 hover:opacity-100 hover:backdrop-blur-sm ${
+      className={`sticky top-0 z-50 bg-transparent text-white transition-[transform,background-color] duration-300 hover:bg-[#2E1065]/85 hover:backdrop-blur-sm ${
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      <div className="mx-auto flex h-[120px] max-w-[1600px] items-center justify-between px-4 sm:px-8">
-        {/* Far left: logo */}
-        <Link href="/" className="flex items-center">
+      <div className="mx-auto flex h-[132px] max-w-[1720px] items-center justify-between px-3 sm:px-5">
+        {/* Far left: logo — always full opacity, never dimmed */}
+        <Link href="/" className="flex items-center opacity-100">
           <Image
             src={LOGO_URL}
             alt="Joyful"
-            width={490}
-            height={112}
-            className="h-28 w-auto"
+            width={560}
+            height={128}
+            className="h-32 w-auto"
             priority
           />
         </Link>
 
-        {/* Center: nav links */}
-        <nav className="hidden items-center gap-7 text-base font-bold md:flex">
+        {/* Center: nav links (slightly translucent so the bar reads lighter) */}
+        <nav className="hidden items-center gap-7 text-base font-bold opacity-90 md:flex">
           <div
             className="relative"
             onMouseEnter={() => setSwitcherOpen(true)}
@@ -97,11 +94,11 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* Far right: Get started (desktop) / menu button (mobile) */}
+        {/* Far right: Get started (desktop) / menu (mobile) */}
         <div className="flex items-center">
           <Link
             href="/#apps"
-            className="hidden rounded-full px-5 py-3 text-sm font-bold uppercase tracking-wide text-white md:inline-block"
+            className="hidden rounded-full px-5 py-3 text-sm font-bold uppercase tracking-wide text-white opacity-90 md:inline-block"
             style={{ backgroundColor: "var(--accent)" }}
           >
             Get started

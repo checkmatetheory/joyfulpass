@@ -5,9 +5,10 @@
 // path, and let real outcomes do the persuading.
 
 export type Feature = {
-  icon: string;
   title: string;
   body: string;
+  /** Which illustrative phone mockup to show beside this feature. */
+  mockup: "quiz" | "progress" | "content";
 };
 
 export type HowItWorksStep = {
@@ -34,19 +35,19 @@ export type HomeTestimonial = {
 // "Your success starts here" — outcome-focused feature bullets.
 export const features: Feature[] = [
   {
-    icon: "🎯",
     title: "Study only what's on the test",
     body: "Every question is built from the official government handbook — so you spend your time on what actually comes up, not trivia you'll never be asked.",
+    mockup: "quiz",
   },
   {
-    icon: "📈",
     title: "See your progress in real time",
     body: "Track your score chapter by chapter and know exactly when you're ready to book. No guesswork, no cramming the night before.",
+    mockup: "progress",
   },
   {
-    icon: "🌍",
     title: "Prepare anywhere, on your schedule",
     body: "Short lessons and mock tests that fit around work and family — study five minutes on the bus or an hour at the kitchen table.",
+    mockup: "content",
   },
 ];
 
