@@ -19,7 +19,7 @@ export default function Header() {
       {/* 3-column grid: logo centered in the left third (reads as center-left),
           nav links centered in the middle, and a right cell that spreads the
           Get started button (center-right) apart from the theme toggle (far right). */}
-      <div className="mx-auto grid h-32 max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-8">
+      <div className="mx-auto grid h-[120px] max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-8">
         {/* Left: logo, centered within its column */}
         <div className="justify-self-center">
           <Link href="/" className="flex items-center">
@@ -35,7 +35,7 @@ export default function Header() {
         </div>
 
         {/* Center: nav links */}
-        <nav className="hidden items-center gap-6 text-sm font-semibold md:flex">
+        <nav className="hidden items-center gap-7 text-base font-bold md:flex">
             <div
               className="relative"
               onMouseEnter={() => setSwitcherOpen(true)}
