@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { apps } from "@/lib/apps";
 import Switch from "@/components/ui/sky-toggle";
 import { useTheme } from "@/components/ThemeProvider";
@@ -12,10 +12,30 @@ const LOGO_URL = "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1k0q8x3P0iROj6VeEqT1Kpn
 export default function Header() {
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const lastScrollY = useRef(0);
+
+  // Hide the nav when scrolling down, reveal it when scrolling back up.
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      const goingDown = y > lastScrollY.current;
+      // Ignore tiny scrolls and always show near the very top.
+      if (y < 80) setHidden(false);
+      else if (Math.abs(y - lastScrollY.current) > 6) setHidden(goingDown);
+      lastScrollY.current = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-transparent text-white transition-colors duration-300 hover:bg-[#2E1065]/80 hover:backdrop-blur-sm">
+    <header
+      className={`sticky top-0 z-50 bg-transparent text-white transition-[transform,background-color] duration-300 hover:bg-[#2E1065]/80 hover:backdrop-blur-sm ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
       {/* 3-column grid: logo centered in the left third (reads as center-left),
           nav links centered in the middle, and a right cell that spreads the
           Get started button (center-right) apart from the theme toggle (far right). */}
