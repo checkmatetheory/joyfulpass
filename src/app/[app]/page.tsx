@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllAppSlugs, getApp } from "@/lib/apps";
+import { getCurriculum } from "@/lib/curriculum";
 import StatBadge from "@/components/StatBadge";
 import ToolCard from "@/components/ToolCard";
 import FaqAccordion from "@/components/FaqAccordion";
@@ -47,6 +48,8 @@ export default async function AppLandingPage({
   if (!app) notFound();
 
   const posts = getAllPosts(app.blogCategory).slice(0, 3);
+  const curriculum = getCurriculum(app.slug);
+  const practiceHref = curriculum ? `/${app.slug}/${curriculum.testSlug}/` : "#download";
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -87,12 +90,18 @@ export default async function AppLandingPage({
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg text-white/85 sm:text-xl">{app.hero.subheadline}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a
-              href="#download"
+            <Link
+              href={practiceHref}
               className="rounded-full bg-white px-6 py-3 text-sm font-bold uppercase tracking-wide"
               style={{ color: app.theme.accentDark }}
             >
-              Get started
+              Start practising free
+            </Link>
+            <a
+              href="#download"
+              className="rounded-full border border-white/40 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white"
+            >
+              Get the app
             </a>
           </div>
         </div>

@@ -1,0 +1,125 @@
+import Link from "next/link";
+import type { AppRecord } from "@/lib/apps";
+import type { Chapter, Curriculum } from "@/lib/curriculum";
+import { freeQuestions } from "@/lib/curriculum";
+import PracticeSidebar from "@/components/practice/PracticeSidebar";
+import QuizPanel from "@/components/practice/QuizPanel";
+
+type Props = {
+  app: AppRecord;
+  curriculum: Curriculum;
+  chapter: Chapter;
+};
+
+/**
+ * Template B — chapter practice page. Sidebar (chapters, locked cores, standing
+ * upsell) + main panel with a real, functional quiz. The quiz is non-negotiable:
+ * it's what makes the page genuinely useful and the strongest protection against
+ * being read as thin/scaled content.
+ */
+export default function TemplateBChapter({ app, curriculum, chapter }: Props) {
+  const questions = freeQuestions(chapter);
+  const hasLockedContent = chapter.cores.some((c) => c.locked);
+  const idx = curriculum.chapters.findIndex((c) => c.slug === chapter.slug);
+  const prev = curriculum.chapters[idx - 1];
+  const next = curriculum.chapters[idx + 1];
+
+  return (
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      {/* Breadcrumb */}
+      <nav aria-label="Breadcrumb" className="text-sm opacity-60">
+        <ol className="flex flex-wrap items-center gap-1.5">
+          <li>
+            <Link href={`/${app.slug}/${curriculum.testSlug}/`} className="hover:underline">
+              {curriculum.testName}
+            </Link>
+          </li>
+          <li aria-hidden>/</li>
+          <li className="font-semibold opacity-90">{chapter.shortLabel}</li>
+        </ol>
+      </nav>
+
+      <div className="mt-6 grid gap-8 lg:grid-cols-[260px_1fr]">
+        <PracticeSidebar app={app} curriculum={curriculum} current={chapter} />
+
+        <main className="min-w-0">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl" aria-hidden>
+              {chapter.icon}
+            </span>
+            <h1 className="text-2xl font-extrabold sm:text-3xl">{chapter.name}</h1>
+          </div>
+          <p className="mt-3 max-w-2xl opacity-75">{chapter.intro}</p>
+
+          <div className="mt-8">
+            <QuizPanel
+              questions={questions}
+              chapterName={chapter.shortLabel}
+              hasLockedContent={hasLockedContent}
+              appName={app.name}
+              appStoreUrl={app.appStoreUrl}
+              playStoreUrl={app.playStoreUrl}
+            />
+          </div>
+
+          {/* In-context app-download banner (repeated per the brief) */}
+          <div
+            className="mt-8 flex flex-col items-start gap-3 rounded-2xl p-6 text-white sm:flex-row sm:items-center sm:justify-between"
+            style={{ backgroundColor: "var(--accent-dark)" }}
+          >
+            <div>
+              <p className="font-bold">Keep practising on the go</p>
+              <p className="text-sm text-white/80">
+                Full question bank, saved progress, and mistake review in {app.name}.
+              </p>
+            </div>
+            <div className="flex gap-2">
+              {app.appStoreUrl && (
+                <a
+                  href={app.appStoreUrl}
+                  className="rounded-lg bg-white px-4 py-2 text-sm font-bold text-black"
+                >
+                  App Store
+                </a>
+              )}
+              {app.playStoreUrl && (
+                <a
+                  href={app.playStoreUrl}
+                  className="rounded-lg border border-white/40 px-4 py-2 text-sm font-bold"
+                >
+                  Google Play
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* Sibling navigation */}
+          <div className="mt-8 flex items-stretch justify-between gap-4">
+            {prev ? (
+              <Link
+                href={`/${app.slug}/${prev.slug}/`}
+                className="group flex-1 rounded-xl border border-black/10 p-4 hover:border-[var(--accent)] dark:border-white/10"
+              >
+                <span className="text-xs opacity-50">← Previous</span>
+                <span className="mt-1 block text-sm font-bold">{prev.shortLabel}</span>
+              </Link>
+            ) : (
+              <span className="flex-1" />
+            )}
+            {next ? (
+              <Link
+                href={`/${app.slug}/${next.slug}/`}
+                className="group flex-1 rounded-xl border border-black/10 p-4 text-right hover:border-[var(--accent)] dark:border-white/10"
+              >
+                <span className="text-xs opacity-50">Next →</span>
+                <span className="mt-1 block text-sm font-bold">{next.shortLabel}</span>
+              </Link>
+            ) : (
+              <span className="flex-1" />
+            )}
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+}

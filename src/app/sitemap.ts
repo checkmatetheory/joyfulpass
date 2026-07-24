@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { apps, getApp } from "@/lib/apps";
+import { getCurriculum } from "@/lib/curriculum";
 import { getAllPosts } from "@/lib/blog";
 import { SITE_URL } from "@/lib/site";
 
@@ -43,9 +44,26 @@ export default async function sitemap({
   if (!app) return [];
 
   const posts = getAllPosts(app.blogCategory);
+  const curriculum = getCurriculum(app.slug);
 
   return [
     { url: `${SITE_URL}/${app.slug}/`, changeFrequency: "weekly", priority: 0.9 },
+    // Template A (test hub) — highest-value SEO page, the real test-name slug.
+    ...(curriculum
+      ? [
+          {
+            url: `${SITE_URL}/${app.slug}/${curriculum.testSlug}/`,
+            changeFrequency: "weekly" as const,
+            priority: 1,
+          },
+          // Template B chapter pages.
+          ...curriculum.chapters.map((chapter) => ({
+            url: `${SITE_URL}/${app.slug}/${chapter.slug}/`,
+            changeFrequency: "monthly" as const,
+            priority: 0.8,
+          })),
+        ]
+      : []),
     { url: `${SITE_URL}/${app.slug}/blog/`, changeFrequency: "weekly", priority: 0.7 },
     ...posts.map((post) => ({
       url: `${SITE_URL}/${app.slug}/blog/${post.slug}/`,

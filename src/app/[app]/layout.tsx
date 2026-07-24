@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllAppSlugs, getApp } from "@/lib/apps";
 import JsonLd from "@/components/JsonLd";
+import PromoBanner from "@/components/PromoBanner";
+import { getCurriculum } from "@/lib/curriculum";
 import { SITE_URL } from "@/lib/site";
 
 export const dynamicParams = false;
@@ -38,6 +40,11 @@ export default async function AppLayout({
   const app = getApp(appSlug);
   if (!app) notFound();
 
+  const curriculum = getCurriculum(app.slug);
+  const promoHref = curriculum
+    ? `/${app.slug}/${curriculum.testSlug}/#download`
+    : `/${app.slug}/`;
+
   const educationalOrgJsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
@@ -58,6 +65,13 @@ export default async function AppLayout({
       }
     >
       <JsonLd data={educationalOrgJsonLd} />
+      <PromoBanner
+        appSlug={app.slug}
+        appName={app.name}
+        href={promoHref}
+        message={`Get ${app.name} — 4.9★ on the App Store`}
+        ctaLabel="Get the app"
+      />
       {children}
     </div>
   );
