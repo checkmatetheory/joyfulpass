@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import Analytics from "@/components/Analytics";
 import JsonLd from "@/components/JsonLd";
 import StyledComponentsRegistry from "@/components/StyledComponentsRegistry";
 import ThemeProvider from "@/components/ThemeProvider";
-import FloatingThemeToggle from "@/components/FloatingThemeToggle";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 // Applies the saved (or OS-preferred) theme before first paint so there's no
@@ -62,10 +59,9 @@ export default function RootLayout({
           <StyledComponentsRegistry>
             <JsonLd data={organizationJsonLd} />
             <Analytics />
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <FloatingThemeToggle />
+            {/* Marketing chrome lives in (site); the dashboard in (app) brings its
+                own shell — both share this single root (html/body/providers). */}
+            {children}
           </StyledComponentsRegistry>
         </ThemeProvider>
       </body>

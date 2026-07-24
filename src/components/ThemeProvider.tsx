@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useSyncExternalStore } from "react";
 
 type Theme = "light" | "dark";
 
@@ -10,32 +10,43 @@ type ThemeContextValue = {
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
+const THEME_EVENT = "joyful-theme-change";
 
-function applyTheme(theme: Theme) {
-  const root = document.documentElement;
-  if (theme === "dark") root.classList.add("dark");
-  else root.classList.remove("dark");
+// The `.dark` class on <html> is the single source of truth. The inline no-flash
+// script sets it before hydration; we read it via useSyncExternalStore so the
+// context value always matches the DOM (no setState-in-effect, no hydration
+// mismatch, and it stays in sync even if the class changes elsewhere).
+function subscribe(callback: () => void) {
+  window.addEventListener("storage", callback);
+  window.addEventListener(THEME_EVENT, callback);
+  const observer = new MutationObserver(callback);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(THEME_EVENT, callback);
+    observer.disconnect();
+  };
+}
+
+function getSnapshot(): Theme {
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
 }
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Read whatever the inline no-flash script already applied to <html> before
-  // hydration, so the first client render matches the DOM with no effect and
-  // no flash. On the server there's no document, so it defaults to light.
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof document !== "undefined" && document.documentElement.classList.contains("dark")) {
-      return "dark";
-    }
-    return "light";
-  });
+  const theme = useSyncExternalStore(subscribe, getSnapshot, () => "light" as Theme);
 
-  const toggleTheme = () => {
-    setTheme((prev) => {
-      const next: Theme = prev === "dark" ? "light" : "dark";
-      applyTheme(next);
+  const toggleTheme = useCallback(() => {
+    const next: Theme = getSnapshot() === "dark" ? "light" : "dark";
+    const root = document.documentElement;
+    if (next === "dark") root.classList.add("dark");
+    else root.classList.remove("dark");
+    try {
       localStorage.setItem("theme", next);
-      return next;
-    });
-  };
+    } catch {
+      /* ignore */
+    }
+    window.dispatchEvent(new Event(THEME_EVENT));
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
