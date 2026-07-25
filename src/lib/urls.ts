@@ -60,12 +60,20 @@ export function cheatSheetPath(app: AppRecord): string {
   return `/${app.examSlug}/cheat-sheet/`;
 }
 
-/** Authenticated dashboard (noindex, brand-keyed): /app/britpass/ */
-export function dashboard(app: AppRecord): string {
-  return `/app/${app.slug}/`;
+// The app-flow pages live in the same silo as the SEO content, but are noindex.
+/** Numbered mock tests: /life-in-the-uk-test/mock-tests/ */
+export function mockTestsPath(app: AppRecord): string {
+  return `/${app.examSlug}/mock-tests/`;
 }
-
-/** A section within the dashboard flow, e.g. dashboardSection(app, "mock-tests"). */
-export function dashboardSection(app: AppRecord, section: string): string {
-  return `/app/${app.slug}/${section}/`;
+/** Mistakes review: /life-in-the-uk-test/mistakes/ */
+export function mistakesPath(app: AppRecord): string {
+  return `/${app.examSlug}/mistakes/`;
+}
+/** Web Pro pricing: /life-in-the-uk-test/pricing/ */
+export function pricingPath(app: AppRecord): string {
+  return `/${app.examSlug}/pricing/`;
+}
+/** Account: /life-in-the-uk-test/account/ */
+export function accountPath(app: AppRecord): string {
+  return `/${app.examSlug}/account/`;
 }

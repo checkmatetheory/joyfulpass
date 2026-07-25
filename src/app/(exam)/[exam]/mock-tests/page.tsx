@@ -1,39 +1,40 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllAppSlugs, getApp } from "@/lib/apps";
+import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import DashboardBreadcrumb from "@/components/dashboard/DashboardBreadcrumb";
-import { chapterPath, examHub } from "@/lib/urls";
+import { chapterPath, examHub, pricingPath } from "@/lib/urls";
 
 export const dynamicParams = false;
+export const metadata: Metadata = { robots: { index: false, follow: false } };
+
 export function generateStaticParams() {
-  return getAllAppSlugs().map((slug) => ({ slug }));
+  return getAllExamSlugs().map((exam) => ({ exam }));
 }
 
-// Numbered mock tests are a logged-in UX device (lesson variety, à la Duolingo)
-// and live ONLY here — never as public URLs. This surface is noindex'd and kept
-// out of every sitemap, containing the numbered-page pattern to a space Google
-// never sees.
+// Numbered mock tests are a logged-in UX device (lesson variety, à la Duolingo).
+// noindex + kept out of the sitemap, containing the numbered-page pattern.
 const TOTAL_MOCKS = 12;
 const FREE_MOCKS = 3;
 
 export default async function MockTestsPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ exam: string }>;
 }) {
-  const { slug } = await params;
-  const app = getApp(slug);
+  const { exam } = await params;
+  const app = getAppByExamSlug(exam);
   if (!app) notFound();
-  const curriculum = getCurriculum(slug);
+  const curriculum = getCurriculum(app.slug);
   const practiceHref = curriculum?.chapters[0]
     ? chapterPath(app, curriculum.chapters[0].slug)
     : examHub(app);
   const testName = curriculum?.testName ?? app.examName;
 
   return (
-    <div className="mx-auto max-w-6xl">
-      <DashboardBreadcrumb appSlug={slug} current="Mock Tests" />
+    <div className="mx-auto max-w-6xl px-5 py-8 sm:px-10">
+      <DashboardBreadcrumb app={app} current="Mock Tests" />
       <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Mock Tests</h1>
       <p className="mt-3 max-w-2xl opacity-70">
         Each mock mirrors the real {testName} — {curriculum?.fullTest.questionCount ?? 24} questions
@@ -44,7 +45,7 @@ export default async function MockTestsPage({
         {Array.from({ length: TOTAL_MOCKS }, (_, i) => {
           const n = i + 1;
           const locked = n > FREE_MOCKS;
-          const href = locked ? `/app/${slug}/pricing/` : practiceHref;
+          const href = locked ? pricingPath(app) : practiceHref;
           return (
             <Link
               key={n}

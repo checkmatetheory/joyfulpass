@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import type { AppRecord } from "@/lib/apps";
 import { useTheme } from "@/components/ThemeProvider";
 import {
-  ContactIcon,
+  AccountIcon,
+  MistakesIcon,
   MockTestIcon,
   MoonIcon,
   OverviewIcon,
@@ -18,6 +19,9 @@ import {
   blogIndex,
   cheatSheetPath,
   examHub,
+  mistakesPath,
+  mockTestsPath,
+  pricingPath,
   revisionNotesPath,
   studyGuidePath,
   topicsPath,
@@ -27,37 +31,36 @@ type Item = {
   label: string;
   href: string;
   Icon: (p: { className?: string }) => React.ReactElement;
+  /** Pro-gated app-flow item, visually de-emphasised. */
+  muted?: boolean;
 };
 
 /**
- * Persistent left-hand navigation for an exam silo — the Britizen-style shell
- * the whole app family follows. Public (indexed) links only; one consistent
- * source-of-truth nav for a learner.
+ * The exam-silo shell nav — SEO pages and the app flow in one place. The whole
+ * app family (BritPass, CanadaPass, GermanPass …) reuses this identical sidebar.
  */
 export default function ExamSidebar({ app }: { app: AppRecord }) {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const hub = examHub(app);
 
-  const items: Item[] = [
+  const primary: Item[] = [
     { label: "Overview", href: hub, Icon: OverviewIcon },
+    { label: "Mock Tests", href: mockTestsPath(app), Icon: MockTestIcon },
     { label: "Topics", href: topicsPath(app), Icon: TopicsIcon },
+    { label: "Mistakes", href: mistakesPath(app), Icon: MistakesIcon, muted: true },
     { label: "Study guide", href: studyGuidePath(app), Icon: StudyGuideIcon },
     { label: "Revision notes", href: revisionNotesPath(app), Icon: RevisionIcon },
     { label: "Cheat sheet", href: cheatSheetPath(app), Icon: MockTestIcon },
-    { label: "Blog", href: blogIndex(app), Icon: ContactIcon },
   ];
 
-  const isActive = (href: string) => {
-    // Same-page anchors (e.g. #topics) aren't a distinct active page.
-    if (href.includes("#")) return false;
-    if (href === hub) return pathname === hub;
-    return pathname.startsWith(href);
-  };
+  const isActive = (href: string) => (href === hub ? pathname === hub : pathname.startsWith(href));
 
-  const rowClass = (active: boolean) =>
+  const rowClass = (active: boolean, muted?: boolean) =>
     `flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
-      active ? "font-semibold text-white" : "opacity-80 hover:bg-black/5 dark:hover:bg-white/5"
+      active
+        ? "font-semibold text-white"
+        : `hover:bg-black/5 dark:hover:bg-white/5 ${muted ? "opacity-45" : "opacity-80"}`
     }`;
 
   return (
@@ -70,14 +73,14 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
       </Link>
 
       <nav className="mt-6 space-y-1">
-        {items.map(({ label, href, Icon }) => {
+        {primary.map(({ label, href, Icon, muted }) => {
           const active = isActive(href);
           return (
             <Link
               key={label}
               href={href}
               aria-current={active ? "page" : undefined}
-              className={rowClass(active)}
+              className={rowClass(active, muted)}
               style={active ? { backgroundColor: "var(--accent)" } : undefined}
             >
               <Icon className="shrink-0" />
@@ -90,10 +93,25 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
       <div className="my-4 border-t border-black/10 dark:border-white/10" />
 
       <nav className="space-y-1">
-        <a href={`${hub}#download`} className={rowClass(false)}>
+        <Link
+          href={blogIndex(app)}
+          aria-current={isActive(blogIndex(app)) ? "page" : undefined}
+          className={rowClass(isActive(blogIndex(app)))}
+          style={isActive(blogIndex(app)) ? { backgroundColor: "var(--accent)" } : undefined}
+        >
+          <RevisionIcon className="shrink-0" />
+          <span>Blog</span>
+        </Link>
+        <Link
+          href={pricingPath(app)}
+          aria-current={isActive(pricingPath(app)) ? "page" : undefined}
+          className={rowClass(isActive(pricingPath(app)))}
+          style={isActive(pricingPath(app)) ? { backgroundColor: "var(--accent)" } : undefined}
+        >
           <PricingIcon className="shrink-0" />
-          <span>Get the app</span>
-        </a>
+          <span>Pricing</span>
+        </Link>
+
         <button
           type="button"
           onClick={toggleTheme}
@@ -115,6 +133,19 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
           </span>
         </button>
       </nav>
+
+      <div className="mt-auto border-t border-black/10 pt-4 dark:border-white/10">
+        <Link
+          href={`/${app.examSlug}/account/`}
+          className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm opacity-80 hover:bg-black/5 dark:hover:bg-white/5"
+        >
+          <AccountIcon className="shrink-0" />
+          <span>Account</span>
+          <span className="ml-auto opacity-50" aria-hidden>
+            •••
+          </span>
+        </Link>
+      </div>
     </aside>
   );
 }

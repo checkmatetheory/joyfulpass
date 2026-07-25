@@ -1,21 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllAppSlugs, getApp } from "@/lib/apps";
+import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
 import DashboardBreadcrumb from "@/components/dashboard/DashboardBreadcrumb";
+import { mockTestsPath, pricingPath } from "@/lib/urls";
 
 export const dynamicParams = false;
+export const metadata: Metadata = { robots: { index: false, follow: false } };
+
 export function generateStaticParams() {
-  return getAllAppSlugs().map((slug) => ({ slug }));
+  return getAllExamSlugs().map((exam) => ({ exam }));
 }
 
-export default async function MistakesPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const app = getApp(slug);
+export default async function MistakesPage({ params }: { params: Promise<{ exam: string }> }) {
+  const { exam } = await params;
+  const app = getAppByExamSlug(exam);
   if (!app) notFound();
 
   return (
-    <div className="mx-auto max-w-3xl">
-      <DashboardBreadcrumb appSlug={slug} current="Mistakes" />
+    <div className="mx-auto max-w-3xl px-5 py-8 sm:px-10">
+      <DashboardBreadcrumb app={app} current="Mistakes" />
       <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Mistakes review</h1>
       <p className="mt-3 opacity-70">
         Retry only the questions you got wrong. It&rsquo;s the fastest way to turn weak spots into
@@ -33,7 +37,7 @@ export default async function MistakesPage({ params }: { params: Promise<{ slug:
           retry them.
         </p>
         <Link
-          href={`/app/${slug}/mock-tests/`}
+          href={mockTestsPath(app)}
           className="mt-6 inline-block rounded-lg px-5 py-2.5 text-sm font-bold text-white"
           style={{ backgroundColor: "var(--accent)" }}
         >
@@ -49,7 +53,7 @@ export default async function MistakesPage({ params }: { params: Promise<{ slug:
         <p className="mt-1 text-white/80">
           Free keeps your last session&rsquo;s mistakes. Pro keeps your complete history and adds
           spaced repetition so tricky questions come back until they stick.{" "}
-          <Link href={`/app/${slug}/pricing/`} className="font-bold underline">
+          <Link href={pricingPath(app)} className="font-bold underline">
             See plans
           </Link>
           .

@@ -1,19 +1,21 @@
 import Link from "next/link";
+import type { AppRecord } from "@/lib/apps";
 import { HomeIcon } from "@/components/dashboard/icons";
+import { examHub } from "@/lib/urls";
 
-/** Compact dashboard breadcrumb: home icon → current section. */
+/** Compact breadcrumb for the in-silo app-flow pages: overview home → section. */
 export default function DashboardBreadcrumb({
-  appSlug,
+  app,
   current,
 }: {
-  appSlug: string;
+  app: AppRecord;
   current: string;
 }) {
   return (
     <nav aria-label="Breadcrumb" className="mb-4">
       <ol className="flex items-center gap-2 text-sm opacity-60">
         <li>
-          <Link href={`/app/${appSlug}/`} className="hover:opacity-100" aria-label="Dashboard home">
+          <Link href={examHub(app)} className="hover:opacity-100" aria-label="Overview">
             <HomeIcon className="h-4 w-4" />
           </Link>
         </li>

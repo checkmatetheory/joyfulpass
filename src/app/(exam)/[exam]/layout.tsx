@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
 import JsonLd from "@/components/JsonLd";
-import PromoBanner from "@/components/PromoBanner";
+import ExamSidebar from "@/components/exam/ExamSidebar";
 import { examHub } from "@/lib/urls";
 import { SITE_URL } from "@/lib/site";
 
@@ -22,7 +22,6 @@ export async function generateMetadata({
   if (!app) return {};
   return {
     title: {
-      // Brand + keyword so we also rank for the brand name (BritPass/CanadaPass).
       default: `${app.examName} Practice — ${app.name}`,
       template: `%s | ${app.name}`,
     },
@@ -30,6 +29,12 @@ export async function generateMetadata({
   };
 }
 
+/**
+ * The exam silo is a self-contained dashboard shell — persistent sidebar, no
+ * marketing header/footer. This is the one layout the whole app family follows
+ * (BritPass, CanadaPass, GermanPass …): SEO content and the app flow (mock
+ * tests, pricing, account) all live under one keyword URL with one shell.
+ */
 export default async function ExamLayout({
   children,
   params,
@@ -51,6 +56,7 @@ export default async function ExamLayout({
 
   return (
     <div
+      className="flex min-h-screen"
       style={
         {
           "--accent": app.theme.accent,
@@ -62,14 +68,10 @@ export default async function ExamLayout({
       }
     >
       <JsonLd data={educationalOrgJsonLd} />
-      <PromoBanner
-        appSlug={app.slug}
-        appName={app.name}
-        href={`${examHub(app)}#download`}
-        message={`Get ${app.name} — 4.9★ on the App Store`}
-        ctaLabel="Get the app"
-      />
-      {children}
+      <div className="sticky top-0 hidden h-screen self-start md:block">
+        <ExamSidebar app={app} />
+      </div>
+      <main className="min-w-0 flex-1">{children}</main>
     </div>
   );
 }

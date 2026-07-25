@@ -6,9 +6,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      // The authenticated practice dashboard is a private, post-sign-in surface —
-      // never part of the SEO strategy. Keep it out of the index.
-      disallow: "/app/",
+      // App-flow pages (mock-tests, mistakes, pricing, account) live in-silo but
+      // set their own `noindex` meta, so they stay crawlable and Google honours it.
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };

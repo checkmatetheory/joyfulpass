@@ -1,21 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllAppSlugs, getApp } from "@/lib/apps";
+import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
 import DashboardBreadcrumb from "@/components/dashboard/DashboardBreadcrumb";
+import { pricingPath } from "@/lib/urls";
 
 export const dynamicParams = false;
+export const metadata: Metadata = { robots: { index: false, follow: false } };
+
 export function generateStaticParams() {
-  return getAllAppSlugs().map((slug) => ({ slug }));
+  return getAllExamSlugs().map((exam) => ({ exam }));
 }
 
-export default async function AccountPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const app = getApp(slug);
+export default async function AccountPage({ params }: { params: Promise<{ exam: string }> }) {
+  const { exam } = await params;
+  const app = getAppByExamSlug(exam);
   if (!app) notFound();
 
   return (
-    <div className="mx-auto max-w-xl">
-      <DashboardBreadcrumb appSlug={slug} current="Account" />
+    <div className="mx-auto max-w-xl px-5 py-8 sm:px-10">
+      <DashboardBreadcrumb app={app} current="Account" />
       <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Account</h1>
       <p className="mt-3 opacity-70">
         Sign in to save your progress across devices and carry your Pro access between the app and
@@ -44,7 +48,7 @@ export default async function AccountPage({ params }: { params: Promise<{ slug: 
 
       <p className="mt-6 text-sm opacity-70">
         Looking for plans?{" "}
-        <Link href={`/app/${slug}/pricing/`} className="font-bold" style={{ color: "var(--accent)" }}>
+        <Link href={pricingPath(app)} className="font-bold" style={{ color: "var(--accent)" }}>
           See {app.name} Pro
         </Link>
         .
