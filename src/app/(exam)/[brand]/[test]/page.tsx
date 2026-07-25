@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import TemplateAHub from "@/components/templates/TemplateAHub";
 import JsonLd from "@/components/JsonLd";
@@ -11,20 +11,20 @@ import { SITE_URL } from "@/lib/site";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllExamSlugs().map((exam) => ({ exam }));
+  return examPathParams();
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }): Promise<Metadata> {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) return {};
   return {
     // Keyword-first, brand second — ranks for the test name and the brand.
-    title: `${app.examName} Practice — Free Questions & Mock Tests | ${app.name}`,
+    title: `${app.examName} Practice — Free Questions & Mock Tests`,
     description: app.metaDescription,
     alternates: { canonical: examHub(app) },
   };
@@ -33,10 +33,10 @@ export async function generateMetadata({
 export default async function ExamHubPage({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
   const curriculum = getCurriculum(app.slug);
   if (!curriculum) notFound();

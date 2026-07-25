@@ -10,24 +10,28 @@ const nextConfig: NextConfig = {
   // uses a trailing slash (matching the sitemap in the design brief), so
   // trailing-slash URLs must be the canonical, directly-served ones.
   trailingSlash: true,
-  // Legacy brand-prefixed URLs → keyword-first exam silos. Specific hub/rename
-  // rules come before the catch-all wildcard (first match wins).
+  // Canonical silo is /[brand]/[test]/… (e.g. /britpass/life-in-the-uk-test/).
+  // Redirect any earlier test-only or bare-brand URLs onto it.
   async redirects() {
     return [
-      { source: "/britpass/life-in-the-uk-test", destination: "/life-in-the-uk-test", permanent: true },
-      { source: "/britpass/test-centers", destination: "/life-in-the-uk-test/test-centres", permanent: true },
-      { source: "/britpass/:path*", destination: "/life-in-the-uk-test/:path*", permanent: true },
+      // Earlier keyword-only silo → brand + test.
       {
-        source: "/canadapass/canadian-citizenship-test",
-        destination: "/canadian-citizenship-test",
+        source: "/life-in-the-uk-test/:path*",
+        destination: "/britpass/life-in-the-uk-test/:path*",
         permanent: true,
       },
       {
-        source: "/canadapass/test-centers",
-        destination: "/canadian-citizenship-test/test-centres",
+        source: "/canadian-citizenship-test/:path*",
+        destination: "/canadapass/canadian-citizenship-test/:path*",
         permanent: true,
       },
-      { source: "/canadapass/:path*", destination: "/canadian-citizenship-test/:path*", permanent: true },
+      // Bare brand → its test silo.
+      { source: "/britpass", destination: "/britpass/life-in-the-uk-test", permanent: true },
+      {
+        source: "/canadapass",
+        destination: "/canadapass/canadian-citizenship-test",
+        permanent: true,
+      },
     ];
   },
   images: {

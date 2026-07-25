@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import JsonLd from "@/components/JsonLd";
 import { cheatSheetPath, examHub, revisionNotesPath, studyGuidePath } from "@/lib/urls";
@@ -10,19 +10,19 @@ import { breadcrumbJsonLd, learningResourceJsonLd } from "@/lib/schema";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllExamSlugs().map((exam) => ({ exam }));
+  return examPathParams();
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }): Promise<Metadata> {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) return {};
   return {
-    title: `${app.examName} Cheat Sheet — Key Facts on One Page | ${app.name}`,
+    title: `${app.examName} Cheat Sheet — Key Facts on One Page`,
     description: `The ${app.examName} on one page: the highest-yield facts, grouped by chapter, for a last-minute cram before your test.`,
     alternates: { canonical: cheatSheetPath(app) },
   };
@@ -31,10 +31,10 @@ export async function generateMetadata({
 export default async function CheatSheetPage({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
   const curriculum = getCurriculum(app.slug);
   if (!curriculum) notFound();

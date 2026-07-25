@@ -17,7 +17,7 @@ import {
   cheatSheetPath,
   chapterPath,
   mistakesPath,
-  mockTestsPath,
+  practicePath,
   revisionNotesPath,
   studyGuidePath,
   topicsPath,
@@ -66,7 +66,7 @@ export default function TemplateAHub({ app, curriculum }: Props) {
             title="Mock Test"
             description="Sit the real format against the clock — the best indicator of test-day readiness."
             ctaLabel="View mock tests"
-            href={mockTestsPath(app)}
+            href={practicePath(app)}
           />
           <DashboardCard
             icon={<TopicsIcon />}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { apps, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum, getChapter } from "@/lib/curriculum";
 import { toolComponents } from "@/components/tools/registry";
 import TemplateBChapter from "@/components/templates/TemplateBChapter";
@@ -12,29 +12,31 @@ import { SITE_URL } from "@/lib/site";
 export const dynamicParams = false;
 
 /**
- * One dynamic segment under /[exam]/ dispatches to two page kinds:
- *   - Template B (chapter)  → a curriculum chapter slug (/life-in-the-uk-test/history/)
- *   - Tool                  → a registered tool slug (/life-in-the-uk-test/ilr-calculator/)
- * The exam hub (Template A) is the /[exam]/ index, not a topic. Static segments
- * (blog/, test-centres/) take priority over this dynamic one.
+ * One dynamic segment under /[brand]/[test]/ dispatches to two page kinds:
+ *   - Template B (chapter)  → a curriculum chapter slug (.../history/)
+ *   - Tool                  → a registered tool slug (.../ilr-calculator/)
+ * The Overview (Template A) is the /[brand]/[test]/ index, not a topic. Static
+ * segments (practice/, blog/, test-centres/) take priority over this dynamic one.
  */
 export function generateStaticParams() {
-  return getAllExamSlugs().flatMap((exam) => {
-    const app = getAppByExamSlug(exam);
-    if (!app) return [];
+  return apps.flatMap((app) => {
     const chapters = getCurriculum(app.slug)?.chapters.map((c) => c.slug) ?? [];
     const tools = app.tools.map((t) => t.slug);
-    return [...chapters, ...tools].map((topic) => ({ exam, topic }));
+    return [...chapters, ...tools].map((topic) => ({
+      brand: app.slug,
+      test: app.examSlug,
+      topic,
+    }));
   });
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ exam: string; topic: string }>;
+  params: Promise<{ brand: string; test: string; topic: string }>;
 }): Promise<Metadata> {
-  const { exam, topic } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test, topic } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) return {};
 
   const chapter = getChapter(app.slug, topic);
@@ -60,10 +62,10 @@ export async function generateMetadata({
 export default async function ExamTopicPage({
   params,
 }: {
-  params: Promise<{ exam: string; topic: string }>;
+  params: Promise<{ brand: string; test: string; topic: string }>;
 }) {
-  const { exam, topic } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test, topic } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
   const curriculum = getCurriculum(app.slug);
 

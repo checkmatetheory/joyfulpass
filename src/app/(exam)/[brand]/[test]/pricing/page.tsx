@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import DashboardBreadcrumb from "@/components/dashboard/DashboardBreadcrumb";
 
@@ -8,7 +8,7 @@ export const dynamicParams = false;
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 export function generateStaticParams() {
-  return getAllExamSlugs().map((exam) => ({ exam }));
+  return examPathParams();
 }
 
 const FREE = [
@@ -26,9 +26,9 @@ const PRO = [
   "Ad-free, offline study guide",
 ];
 
-export default async function PricingPage({ params }: { params: Promise<{ exam: string }> }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+export default async function PricingPage({ params }: { params: Promise<{ brand: string; test: string }> }) {
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
   const testName = getCurriculum(app.slug)?.testName ?? app.examName;
 

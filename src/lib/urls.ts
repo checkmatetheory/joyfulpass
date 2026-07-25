@@ -1,79 +1,90 @@
 // The single place that knows how joyfulpass.com URLs are shaped.
 //
-// Public pages live in a keyword-first silo rooted at the exam name people
-// actually search — /life-in-the-uk-test/... — never the brand. The brand
-// ("BritPass") is shown on-page, not in the URL. The one exception is the
-// authenticated dashboard, which is noindex and brand-keyed (/app/britpass/).
+// Public pages live in a brand + test silo — /britpass/life-in-the-uk-test/… —
+// so the brand namespaces its app (pricing, account, mock tests) and the test
+// name (the real search term) carries the keyword. The whole app family follows
+// the identical shape: /canadapass/canadian-citizenship-test/…, etc.
 //
 // Every internal link, canonical, and sitemap entry goes through these helpers,
-// so the URL structure can change in one file instead of ~60 call sites.
+// so the URL structure changes in one file instead of ~60 call sites.
 
 import type { AppRecord } from "@/lib/apps";
 
-/** Public exam hub (Template A): /life-in-the-uk-test/ */
+/** The silo root for an app: /britpass/life-in-the-uk-test/ */
+function root(app: AppRecord): string {
+  return `/${app.slug}/${app.examSlug}`;
+}
+
+/** Exam Overview (the silo landing): /britpass/life-in-the-uk-test/ */
 export function examHub(app: AppRecord): string {
-  return `/${app.examSlug}/`;
+  return `${root(app)}/`;
 }
 
-/** Topics index — the chapter directory: /life-in-the-uk-test/topics/ */
+/** Indexable practice & mock tests hub: /britpass/life-in-the-uk-test/practice/ */
+export function practicePath(app: AppRecord): string {
+  return `${root(app)}/practice/`;
+}
+
+/** A single indexable mock test: /britpass/life-in-the-uk-test/practice/1/ */
+export function practiceTestPath(app: AppRecord, n: number | string): string {
+  return `${root(app)}/practice/${n}/`;
+}
+
+/** Topics index — the chapter directory: …/topics/ */
 export function topicsPath(app: AppRecord): string {
-  return `/${app.examSlug}/topics/`;
+  return `${root(app)}/topics/`;
 }
 
-/** Chapter practice page (Template B): /life-in-the-uk-test/history/ */
+/** Chapter practice page (Template B): …/history/ */
 export function chapterPath(app: AppRecord, chapterSlug: string): string {
-  return `/${app.examSlug}/${chapterSlug}/`;
+  return `${root(app)}/${chapterSlug}/`;
 }
 
-/** A silo tool: /life-in-the-uk-test/ilr-calculator/ */
+/** A silo tool: …/ilr-calculator/ */
 export function toolPath(app: AppRecord, toolSlug: string): string {
-  return `/${app.examSlug}/${toolSlug}/`;
+  return `${root(app)}/${toolSlug}/`;
 }
 
-/** Blog index for the silo: /life-in-the-uk-test/blog/ */
+/** Blog index for the silo: …/blog/ */
 export function blogIndex(app: AppRecord): string {
-  return `/${app.examSlug}/blog/`;
+  return `${root(app)}/blog/`;
 }
 
-/** A blog post: /life-in-the-uk-test/blog/how-many-questions/ */
+/** A blog post: …/blog/how-many-questions/ */
 export function blogPost(app: AppRecord, slug: string): string {
-  return `/${app.examSlug}/blog/${slug}/`;
+  return `${root(app)}/blog/${slug}/`;
 }
 
-/** Test-centre directory: /life-in-the-uk-test/test-centres/ */
+/** Test-centre directory: …/test-centres/ */
 export function testCentresPath(app: AppRecord): string {
-  return `/${app.examSlug}/test-centres/`;
+  return `${root(app)}/test-centres/`;
 }
 
-/** Public study guide: /life-in-the-uk-test/study-guide/ */
+/** Public study guide: …/study-guide/ */
 export function studyGuidePath(app: AppRecord): string {
-  return `/${app.examSlug}/study-guide/`;
+  return `${root(app)}/study-guide/`;
 }
 
-/** Public revision notes: /life-in-the-uk-test/revision-notes/ */
+/** Public revision notes: …/revision-notes/ */
 export function revisionNotesPath(app: AppRecord): string {
-  return `/${app.examSlug}/revision-notes/`;
+  return `${root(app)}/revision-notes/`;
 }
 
-/** Public cheat sheet: /life-in-the-uk-test/cheat-sheet/ */
+/** Public cheat sheet: …/cheat-sheet/ */
 export function cheatSheetPath(app: AppRecord): string {
-  return `/${app.examSlug}/cheat-sheet/`;
+  return `${root(app)}/cheat-sheet/`;
 }
 
-// The app-flow pages live in the same silo as the SEO content, but are noindex.
-/** Numbered mock tests: /life-in-the-uk-test/mock-tests/ */
-export function mockTestsPath(app: AppRecord): string {
-  return `/${app.examSlug}/mock-tests/`;
-}
-/** Mistakes review: /life-in-the-uk-test/mistakes/ */
+// App-flow pages — same silo, but noindex.
+/** Mistakes review: …/mistakes/ */
 export function mistakesPath(app: AppRecord): string {
-  return `/${app.examSlug}/mistakes/`;
+  return `${root(app)}/mistakes/`;
 }
-/** Web Pro pricing: /life-in-the-uk-test/pricing/ */
+/** Web Pro pricing: …/pricing/ */
 export function pricingPath(app: AppRecord): string {
-  return `/${app.examSlug}/pricing/`;
+  return `${root(app)}/pricing/`;
 }
-/** Account: /life-in-the-uk-test/account/ */
+/** Account: …/account/ */
 export function accountPath(app: AppRecord): string {
-  return `/${app.examSlug}/account/`;
+  return `${root(app)}/account/`;
 }

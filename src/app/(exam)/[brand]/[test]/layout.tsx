@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import JsonLd from "@/components/JsonLd";
 import ExamSidebar from "@/components/exam/ExamSidebar";
 import { examHub } from "@/lib/urls";
@@ -9,16 +9,16 @@ import { SITE_URL } from "@/lib/site";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllExamSlugs().map((exam) => ({ exam }));
+  return examPathParams();
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }): Promise<Metadata> {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) return {};
   return {
     title: {
@@ -40,10 +40,10 @@ export default async function ExamLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
 
   const educationalOrgJsonLd = {

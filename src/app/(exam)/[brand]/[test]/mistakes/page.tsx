@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import DashboardBreadcrumb from "@/components/dashboard/DashboardBreadcrumb";
-import { mockTestsPath, pricingPath } from "@/lib/urls";
+import { practicePath, pricingPath } from "@/lib/urls";
 
 export const dynamicParams = false;
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 export function generateStaticParams() {
-  return getAllExamSlugs().map((exam) => ({ exam }));
+  return examPathParams();
 }
 
-export default async function MistakesPage({ params }: { params: Promise<{ exam: string }> }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+export default async function MistakesPage({ params }: { params: Promise<{ brand: string; test: string }> }) {
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
 
   return (
@@ -37,7 +37,7 @@ export default async function MistakesPage({ params }: { params: Promise<{ exam:
           retry them.
         </p>
         <Link
-          href={mockTestsPath(app)}
+          href={practicePath(app)}
           className="mt-6 inline-block rounded-lg px-5 py-2.5 text-sm font-bold text-white"
           style={{ backgroundColor: "var(--accent)" }}
         >

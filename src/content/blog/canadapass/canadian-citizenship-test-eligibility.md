@@ -31,7 +31,7 @@ Focus on:
 - **Voting and civic responsibilities**
 - **Rights, freedoms, and national symbols**
 
-Read our guide to the [Canadian citizenship test pass mark and format](/canadian-citizenship-test/blog/canadian-citizenship-test-pass-mark/) for a detailed breakdown.
+Read our guide to the [Canadian citizenship test pass mark and format](/canadapass/canadian-citizenship-test/blog/canadian-citizenship-test-pass-mark/) for a detailed breakdown.
 
 ## Keep your preparation official
 

@@ -27,7 +27,7 @@ You won't know in advance which topics come up, so the safest approach is to be 
 
 The pass mark leaves room for a handful of mistakes, but not many. In practice, people who pass first time are usually scoring **above 90% on mock tests** before they book. That buffer matters on the day, when nerves can cost you an easy question or two.
 
-[BritPass](/life-in-the-uk-test/) mock tests mirror the real 24-question, 45-minute format exactly, so by the time you sit the official test the structure feels familiar and you can focus on the answers.
+[BritPass](/britpass/life-in-the-uk-test/) mock tests mirror the real 24-question, 45-minute format exactly, so by the time you sit the official test the structure feels familiar and you can focus on the answers.
 
 ## Ready to practise?
 

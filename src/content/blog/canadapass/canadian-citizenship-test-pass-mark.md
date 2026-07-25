@@ -43,6 +43,6 @@ Aim to score comfortably above 15 out of 20 in several different mock tests. A s
 
 You do need a solid grasp of factual information, but memorising isolated lists is rarely the fastest route. Connect facts to the wider story of Canada: how provinces fit together, why institutions exist, and how rights are balanced by responsibilities.
 
-CanadaPass turns the official material into focused practice sessions and explains answers, so you can keep a clear record of what to revisit. Explore [CanadaPass](/canadian-citizenship-test/) when you are ready to practise.
+CanadaPass turns the official material into focused practice sessions and explains answers, so you can keep a clear record of what to revisit. Explore [CanadaPass](/canadapass/canadian-citizenship-test/) when you are ready to practise.
 
 CanadaPass is independent and is not affiliated with IRCC or the Government of Canada. Always follow the instructions in your official notice to appear.

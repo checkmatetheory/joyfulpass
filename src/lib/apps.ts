@@ -330,3 +330,12 @@ export function getAllAppSlugs(): string[] {
 export function getAllExamSlugs(): string[] {
   return apps.map((app) => app.examSlug);
 }
+
+/**
+ * Static params for the two-segment silo root /[brand]/[test]/, e.g.
+ * { brand: "britpass", test: "life-in-the-uk-test" }. dynamicParams=false plus
+ * this list means only real brand+test pairs render — a mismatched pair 404s.
+ */
+export function examPathParams(): { brand: string; test: string }[] {
+  return apps.map((app) => ({ brand: app.slug, test: app.examSlug }));
+}

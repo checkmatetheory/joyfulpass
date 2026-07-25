@@ -18,7 +18,7 @@ Do not rely on a general timeline from a friend or social media post. Processing
 
 Usually, yes. The process and timing for a second attempt are set by IRCC. Read every message carefully and keep your contact details current so you do not miss a deadline.
 
-Review the official [citizenship test information from IRCC](https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/citizenship-test.html) for current rules. For what to expect during an appointment, see our guide to [Canadian citizenship test day](/canadian-citizenship-test/blog/citizenship-test-day-tips/).
+Review the official [citizenship test information from IRCC](https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/citizenship-test.html) for current rules. For what to expect during an appointment, see our guide to [Canadian citizenship test day](/canadapass/canadian-citizenship-test/blog/citizenship-test-day-tips/).
 
 ## How to prepare differently for a retest
 
@@ -30,7 +30,7 @@ Simply repeating the same random quizzes may not solve the issue. Instead, use y
 - **Review explanations.** Understanding why an answer is correct matters more than memorising a letter choice.
 - **Use spaced revision.** Revisit difficult facts over several days instead of trying to learn everything in one evening.
 
-The pass mark is 15 out of 20. Aim to score higher than that consistently in practice, so a few unfamiliar questions on the day do not derail you. Our overview of the [Canadian citizenship test pass mark and format](/canadian-citizenship-test/blog/canadian-citizenship-test-pass-mark/) can help you set that target.
+The pass mark is 15 out of 20. Aim to score higher than that consistently in practice, so a few unfamiliar questions on the day do not derail you. Our overview of the [Canadian citizenship test pass mark and format](/canadapass/canadian-citizenship-test/blog/canadian-citizenship-test-pass-mark/) can help you set that target.
 
 ## Stay focused on the official process
 

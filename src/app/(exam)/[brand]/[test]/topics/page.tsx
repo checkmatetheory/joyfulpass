@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import ChapterCard from "@/components/templates/ChapterCard";
 import JsonLd from "@/components/JsonLd";
@@ -11,19 +11,19 @@ import { breadcrumbJsonLd } from "@/lib/schema";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllExamSlugs().map((exam) => ({ exam }));
+  return examPathParams();
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }): Promise<Metadata> {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) return {};
   return {
-    title: `${app.examName} Topics — Practise by Chapter | ${app.name}`,
+    title: `${app.examName} Topics — Practise by Chapter`,
     description: `Practise the ${app.examName} one topic at a time. Every official chapter with its own free quiz.`,
     alternates: { canonical: topicsPath(app) },
   };
@@ -32,10 +32,10 @@ export async function generateMetadata({
 export default async function TopicsPage({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
   const curriculum = getCurriculum(app.slug);
   if (!curriculum) notFound();

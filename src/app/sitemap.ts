@@ -2,12 +2,15 @@ import type { MetadataRoute } from "next";
 import { apps, getApp } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import { getAllPosts } from "@/lib/blog";
+import { getMockTests } from "@/lib/mockTests";
 import {
   blogIndex,
   blogPost,
   chapterPath,
   cheatSheetPath,
   examHub,
+  practicePath,
+  practiceTestPath,
   revisionNotesPath,
   studyGuidePath,
   testCentresPath,
@@ -72,6 +75,19 @@ export default async function sitemap({
       changeFrequency: "weekly",
       priority: 1,
     },
+    // Practice hub + each indexable mock test.
+    {
+      url: `${SITE_URL}${practicePath(app)}`,
+      lastModified: CONTENT_LAST_MODIFIED,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+    ...getMockTests(app).map((mock) => ({
+      url: `${SITE_URL}${practiceTestPath(app, mock.slug)}`,
+      lastModified: CONTENT_LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     // Topics index — the chapter directory.
     ...(curriculum
       ? [

@@ -16,7 +16,7 @@ When you book, make sure the name on your booking matches your identification ex
 
 ## Choose a test centre and date
 
-You can choose from approved test centres across the UK. Start with our [Life in the UK Test centre directory](/life-in-the-uk-test/test-centres/) to see locations, then confirm availability in the official booking service.
+You can choose from approved test centres across the UK. Start with our [Life in the UK Test centre directory](/britpass/life-in-the-uk-test/test-centres/) to see locations, then confirm availability in the official booking service.
 
 Before selecting the earliest available date, ask yourself whether you can consistently pass timed mock tests. Booking first and hoping to catch up can make preparation feel much harder. A realistic date gives you time to work through weak topics without cramming.
 
@@ -42,7 +42,7 @@ A simple preparation routine can help:
 3. Study one handbook topic at a time.
 4. Repeat full mock tests until your scores are consistently above the pass mark.
 
-BritPass is designed to make that cycle easier with topic-based practice and progress tracking. Visit [BritPass](/life-in-the-uk-test/) when you are ready to build a study plan.
+BritPass is designed to make that cycle easier with topic-based practice and progress tracking. Visit [BritPass](/britpass/life-in-the-uk-test/) when you are ready to build a study plan.
 
 ## If you need to change your test date
 

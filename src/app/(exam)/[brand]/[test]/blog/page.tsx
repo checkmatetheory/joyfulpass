@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getAllPosts } from "@/lib/blog";
 import BlogCard from "@/components/BlogCard";
 import { blogIndex, blogPost } from "@/lib/urls";
@@ -8,16 +8,16 @@ import { blogIndex, blogPost } from "@/lib/urls";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllExamSlugs().map((exam) => ({ exam }));
+  return examPathParams();
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }): Promise<Metadata> {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) return {};
   return {
     title: "Blog",
@@ -29,10 +29,10 @@ export async function generateMetadata({
 export default async function ExamBlogIndexPage({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
 
   const posts = getAllPosts(app.blogCategory);

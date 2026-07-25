@@ -16,11 +16,12 @@ import {
   TopicsIcon,
 } from "@/components/dashboard/icons";
 import {
+  accountPath,
   blogIndex,
   cheatSheetPath,
   examHub,
   mistakesPath,
-  mockTestsPath,
+  practicePath,
   pricingPath,
   revisionNotesPath,
   studyGuidePath,
@@ -46,7 +47,7 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
 
   const primary: Item[] = [
     { label: "Overview", href: hub, Icon: OverviewIcon },
-    { label: "Mock Tests", href: mockTestsPath(app), Icon: MockTestIcon },
+    { label: "Mock Tests", href: practicePath(app), Icon: MockTestIcon },
     { label: "Topics", href: topicsPath(app), Icon: TopicsIcon },
     { label: "Mistakes", href: mistakesPath(app), Icon: MistakesIcon, muted: true },
     { label: "Study guide", href: studyGuidePath(app), Icon: StudyGuideIcon },
@@ -136,7 +137,7 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
 
       <div className="mt-auto border-t border-black/10 pt-4 dark:border-white/10">
         <Link
-          href={`/${app.examSlug}/account/`}
+          href={accountPath(app)}
           className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm opacity-80 hover:bg-black/5 dark:hover:bg-white/5"
         >
           <AccountIcon className="shrink-0" />

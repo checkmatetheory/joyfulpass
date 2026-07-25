@@ -12,7 +12,7 @@ The Life in the UK Test is not a test of your personal immigration history. It c
 
 You answer 24 multiple-choice questions in 45 minutes. To pass, you need 18 correct answers. Questions are based on the official handbook and cover the UK's history, values, laws, government, and everyday society.
 
-For the latest details on format and eligibility, use [GOV.UK's Life in the UK Test guidance](https://www.gov.uk/life-in-the-uk-test). For an overview of the exam structure, read our guide to the [Life in the UK Test format](/life-in-the-uk-test/blog/life-in-the-uk-test-format/).
+For the latest details on format and eligibility, use [GOV.UK's Life in the UK Test guidance](https://www.gov.uk/life-in-the-uk-test). For an overview of the exam structure, read our guide to the [Life in the UK Test format](/britpass/life-in-the-uk-test/blog/life-in-the-uk-test-format/).
 
 ## Topics that deserve extra revision
 
@@ -49,6 +49,6 @@ Repeat mixed mock tests until you are regularly scoring above 75%, ideally with 
 
 Free question banks can be useful, but they may contain outdated facts or invented questions. Check that your study material follows the current official handbook. BritPass organises practice by topic and gives explanations, so you can turn errors into a revision list instead of simply retaking the same quiz.
 
-When you feel ready, use our guide on [booking the Life in the UK Test](/life-in-the-uk-test/blog/how-to-book-life-in-the-uk-test/) and find an approved [test centre](/life-in-the-uk-test/test-centres/).
+When you feel ready, use our guide on [booking the Life in the UK Test](/britpass/life-in-the-uk-test/blog/how-to-book-life-in-the-uk-test/) and find an approved [test centre](/britpass/life-in-the-uk-test/test-centres/).
 
 BritPass is independent and not affiliated with the UK government. This article is for study guidance only; official rules and handbook updates are published through [GOV.UK](https://www.gov.uk/life-in-the-uk-test).

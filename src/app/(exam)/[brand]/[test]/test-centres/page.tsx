@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { apps, getAppByExamSlug } from "@/lib/apps";
 import { getTestCenters } from "@/lib/testCenters";
 import TestCenterList from "@/components/TestCenterList";
 import { testCentresPath } from "@/lib/urls";
@@ -8,18 +8,18 @@ import { testCentresPath } from "@/lib/urls";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllExamSlugs()
-    .filter((exam) => getAppByExamSlug(exam)?.hasTestCenters)
-    .map((exam) => ({ exam }));
+  return apps
+    .filter((app) => app.hasTestCenters)
+    .map((app) => ({ brand: app.slug, test: app.examSlug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }): Promise<Metadata> {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) return {};
   return {
     title: "Test Centres",
@@ -31,10 +31,10 @@ export async function generateMetadata({
 export default async function ExamTestCentresPage({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app || !app.hasTestCenters) notFound();
 
   const centers = getTestCenters(app.slug);

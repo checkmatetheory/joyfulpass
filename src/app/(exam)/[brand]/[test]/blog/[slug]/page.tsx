@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { apps, getAppByExamSlug } from "@/lib/apps";
 import { getPost, getPostSlugs } from "@/lib/blog";
 import JsonLd from "@/components/JsonLd";
 import { blogPost } from "@/lib/urls";
@@ -10,20 +10,22 @@ import { SITE_URL } from "@/lib/site";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllExamSlugs().flatMap((exam) => {
-    const app = getAppByExamSlug(exam);
-    if (!app) return [];
-    return getPostSlugs(app.blogCategory).map((slug) => ({ exam, slug }));
-  });
+  return apps.flatMap((app) =>
+    getPostSlugs(app.blogCategory).map((slug) => ({
+      brand: app.slug,
+      test: app.examSlug,
+      slug,
+    })),
+  );
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ exam: string; slug: string }>;
+  params: Promise<{ brand: string; test: string; slug: string }>;
 }): Promise<Metadata> {
-  const { exam, slug } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test, slug } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) return {};
   const post = await getPost(app.blogCategory, slug);
   if (!post) return {};
@@ -44,10 +46,10 @@ export async function generateMetadata({
 export default async function ExamBlogPostPage({
   params,
 }: {
-  params: Promise<{ exam: string; slug: string }>;
+  params: Promise<{ brand: string; test: string; slug: string }>;
 }) {
-  const { exam, slug } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test, slug } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
 
   const post = await getPost(app.blogCategory, slug);

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import DashboardBreadcrumb from "@/components/dashboard/DashboardBreadcrumb";
 import { pricingPath } from "@/lib/urls";
 
@@ -9,12 +9,12 @@ export const dynamicParams = false;
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 export function generateStaticParams() {
-  return getAllExamSlugs().map((exam) => ({ exam }));
+  return examPathParams();
 }
 
-export default async function AccountPage({ params }: { params: Promise<{ exam: string }> }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+export default async function AccountPage({ params }: { params: Promise<{ brand: string; test: string }> }) {
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
 
   return (

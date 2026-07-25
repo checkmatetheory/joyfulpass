@@ -23,6 +23,6 @@ For most routes, you can't be outside the UK for more than **180 days in any rol
 
 ## Use the calculator before you book anything
 
-Rather than counting manually, use the [BritPass ILR Eligibility Calculator](/life-in-the-uk-test/ilr-calculator/) — enter your visa route and start date and it will estimate your qualifying date and flag if your absences put you at risk.
+Rather than counting manually, use the [BritPass ILR Eligibility Calculator](/britpass/life-in-the-uk-test/ilr-calculator/) — enter your visa route and start date and it will estimate your qualifying date and flag if your absences put you at risk.
 
 This is a planning tool, not legal advice. Always confirm your specific case against current Home Office guidance or with a qualified immigration adviser before submitting an ILR application.

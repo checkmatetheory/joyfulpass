@@ -21,7 +21,7 @@ Questions come from four chapters of the handbook: the values and principles of 
 
 ## Booking your test
 
-You book directly through [GOV.UK](https://www.gov.uk/life-in-the-uk-test), not through BritPass or any third-party app. Test fees and center locations are set by the official test provider — see our [test center directory](/life-in-the-uk-test/test-centres/) for a searchable list.
+You book directly through [GOV.UK](https://www.gov.uk/life-in-the-uk-test), not through BritPass or any third-party app. Test fees and center locations are set by the official test provider — see our [test center directory](/britpass/life-in-the-uk-test/test-centres/) for a searchable list.
 
 ## How to prepare
 

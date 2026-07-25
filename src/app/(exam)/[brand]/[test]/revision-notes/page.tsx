@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import JsonLd from "@/components/JsonLd";
 import {
@@ -16,19 +16,19 @@ import { breadcrumbJsonLd, learningResourceJsonLd } from "@/lib/schema";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllExamSlugs().map((exam) => ({ exam }));
+  return examPathParams();
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }): Promise<Metadata> {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) return {};
   return {
-    title: `${app.examName} Revision Notes — Free Quick Recap | ${app.name}`,
+    title: `${app.examName} Revision Notes — Free Quick Recap`,
     description: `Condensed ${app.examName} revision notes — the key facts for every chapter in one place, for a fast recap before your test.`,
     alternates: { canonical: revisionNotesPath(app) },
   };
@@ -37,10 +37,10 @@ export async function generateMetadata({
 export default async function RevisionNotesPage({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
   const curriculum = getCurriculum(app.slug);
   if (!curriculum) notFound();

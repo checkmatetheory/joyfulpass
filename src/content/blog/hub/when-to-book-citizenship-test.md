@@ -26,7 +26,7 @@ Use the gap between your current score and the pass mark to plan:
 
 The official booking process may have date, location, and document requirements. Check the relevant government service before committing to an appointment.
 
-For the Life in the UK Test, see our [booking guide](/life-in-the-uk-test/blog/how-to-book-life-in-the-uk-test/). For the Canadian citizenship test, follow the instructions in your IRCC notice and review our [test-day guide](/canadian-citizenship-test/blog/citizenship-test-day-tips/).
+For the Life in the UK Test, see our [booking guide](/britpass/life-in-the-uk-test/blog/how-to-book-life-in-the-uk-test/). For the Canadian citizenship test, follow the instructions in your IRCC notice and review our [test-day guide](/canadapass/canadian-citizenship-test/blog/citizenship-test-day-tips/).
 
 ## Keep revising after you book
 

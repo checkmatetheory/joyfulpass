@@ -39,6 +39,6 @@ Aim to score above 15 out of 20 consistently. Repeated good results are a better
 - **Memorising answers without context:** question wording can change
 - **Waiting until test week:** short, regular sessions give you more time to retain facts
 
-CanadaPass helps organise official-material practice into manageable sessions and explains each answer. For more detail on the test itself, see our [Canadian citizenship test pass-mark guide](/canadian-citizenship-test/blog/canadian-citizenship-test-pass-mark/).
+CanadaPass helps organise official-material practice into manageable sessions and explains each answer. For more detail on the test itself, see our [Canadian citizenship test pass-mark guide](/canadapass/canadian-citizenship-test/blog/canadian-citizenship-test-pass-mark/).
 
 CanadaPass is independent and not affiliated with IRCC or the Government of Canada. Follow the instructions in your official notice to appear.

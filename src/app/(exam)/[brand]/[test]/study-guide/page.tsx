@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
+import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import JsonLd from "@/components/JsonLd";
 import {
@@ -16,19 +16,19 @@ import { breadcrumbJsonLd, learningResourceJsonLd } from "@/lib/schema";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllExamSlugs().map((exam) => ({ exam }));
+  return examPathParams();
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }): Promise<Metadata> {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) return {};
   return {
-    title: `${app.examName} Study Guide — Free Online Notes | ${app.name}`,
+    title: `${app.examName} Study Guide — Free Online Notes`,
     description: `A free, chaptered ${app.examName} study guide covering every topic on the test, with a practice quiz on each chapter. Read online — no sign-up.`,
     alternates: { canonical: studyGuidePath(app) },
   };
@@ -37,10 +37,10 @@ export async function generateMetadata({
 export default async function StudyGuidePage({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ brand: string; test: string }>;
 }) {
-  const { exam } = await params;
-  const app = getAppByExamSlug(exam);
+  const { test } = await params;
+  const app = getAppByExamSlug(test);
   if (!app) notFound();
   const curriculum = getCurriculum(app.slug);
   if (!curriculum) notFound();
