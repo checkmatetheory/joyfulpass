@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import JsonLd from "@/components/JsonLd";
-import FlagAccentBar from "@/components/FlagAccentBar";
 import {
   cheatSheetPath,
   chapterPath,
@@ -79,7 +78,6 @@ export default async function RevisionNotesPage({
       <h1 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">
         {curriculum.testName} Revision Notes
       </h1>
-      <FlagAccentBar colors={app.theme.flagColors} className="mt-4 w-24" />
       <p className="mt-5 opacity-75">
         The essential facts for the {curriculum.testName}, condensed chapter by chapter — a fast
         recap for the days before your test. For the full explanations, see the{" "}

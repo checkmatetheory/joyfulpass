@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import JsonLd from "@/components/JsonLd";
-import FlagAccentBar from "@/components/FlagAccentBar";
 import { cheatSheetPath, examHub, revisionNotesPath, studyGuidePath } from "@/lib/urls";
 import { breadcrumbJsonLd, learningResourceJsonLd } from "@/lib/schema";
 
@@ -73,7 +72,6 @@ export default async function CheatSheetPage({
       <h1 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">
         {curriculum.testName} Cheat Sheet
       </h1>
-      <FlagAccentBar colors={app.theme.flagColors} className="mt-4 w-24" />
       <p className="mt-5 max-w-2xl opacity-75">
         Every high-yield fact for the {curriculum.testName} on one page — grouped by chapter for a
         last-minute cram. Want more depth? Read the{" "}

@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import JsonLd from "@/components/JsonLd";
-import FlagAccentBar from "@/components/FlagAccentBar";
 import {
   cheatSheetPath,
   chapterPath,
@@ -80,7 +79,6 @@ export default async function StudyGuidePage({
       <h1 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">
         {curriculum.testName} Study Guide
       </h1>
-      <FlagAccentBar colors={app.theme.flagColors} className="mt-4 w-24" />
       <p className="mt-5 max-w-2xl text-lg opacity-75">
         A free, chaptered study guide covering everything the {curriculum.testName} can ask. Read a
         chapter, then test yourself with its quiz — the fastest way to find your gaps before you
