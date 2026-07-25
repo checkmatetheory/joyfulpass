@@ -4,6 +4,7 @@ import type { Curriculum } from "@/lib/curriculum";
 import ChapterCard from "@/components/templates/ChapterCard";
 import FaqAccordion from "@/components/FaqAccordion";
 import DownloadCta from "@/components/DownloadCta";
+import CtaBanner from "@/components/CtaBanner";
 
 type Props = {
   app: AppRecord;
@@ -124,19 +125,14 @@ export default function TemplateAHub({ app, curriculum }: Props) {
       </section>
 
       {/* App download banner — the natural upgrade moment, after the practice CTAs */}
-      <section
-        id="download"
-        className="mt-14 rounded-3xl p-8 text-center text-white"
-        style={{ background: `linear-gradient(135deg, var(--accent), var(--accent-dark))` }}
-      >
-        <h2 className="text-2xl font-bold">Get {app.name}</h2>
-        <p className="mx-auto mt-2 max-w-md text-white/80">
-          The full {curriculum.testName} question bank, saved progress across devices, mistake
-          review, and an offline study guide.
-        </p>
-        <div className="mt-6">
+      <section id="download" className="mt-14 scroll-mt-24">
+        <CtaBanner
+          app={app}
+          heading={`Get ${app.name}`}
+          body={`The full ${curriculum.testName} question bank, saved progress across devices, mistake review, and an offline study guide.`}
+        >
           <DownloadCta app={app} />
-        </div>
+        </CtaBanner>
       </section>
 
       {/* Long-form content stack (rewritten per app, not templated) */}

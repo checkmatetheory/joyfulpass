@@ -13,6 +13,7 @@ import HeroBackground from "@/components/HeroBackground";
 import WaveDivider from "@/components/WaveDivider";
 import FeatureBlock from "@/components/FeatureBlock";
 import DownloadCta from "@/components/DownloadCta";
+import CtaBanner from "@/components/CtaBanner";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { getAllPosts } from "@/lib/blog";
 import { SITE_URL } from "@/lib/site";
@@ -148,15 +149,16 @@ export default async function AppLandingPage({
         </div>
       </section>
 
-      {/* Download CTA */}
-      <section
-        id="download"
-        className="px-4 py-16 text-center sm:px-6"
-        style={{ backgroundColor: app.theme.accentDark }}
-      >
-        <h2 className="text-2xl font-bold text-white">Get {app.name}</h2>
-        <div className="mt-6">
-          <DownloadCta app={app} />
+      {/* Download CTA — branded per-app banner */}
+      <section id="download" className="px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-5xl">
+          <CtaBanner
+            app={app}
+            heading={`Get ${app.name}`}
+            body={`Practice questions from the official ${app.examName} material, progress tracking, and everything you need to walk in ready — in your pocket.`}
+          >
+            <DownloadCta app={app} />
+          </CtaBanner>
         </div>
       </section>
 

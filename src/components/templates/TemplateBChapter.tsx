@@ -4,6 +4,7 @@ import type { Chapter, Curriculum } from "@/lib/curriculum";
 import { freeQuestions } from "@/lib/curriculum";
 import PracticeSidebar from "@/components/practice/PracticeSidebar";
 import QuizPanel from "@/components/practice/QuizPanel";
+import CtaBanner from "@/components/CtaBanner";
 
 type Props = {
   app: AppRecord;
@@ -63,35 +64,30 @@ export default function TemplateBChapter({ app, curriculum, chapter }: Props) {
           </div>
 
           {/* In-context app-download banner (repeated per the brief) */}
-          <div
-            className="mt-8 flex flex-col items-start gap-3 rounded-2xl p-6 text-white sm:flex-row sm:items-center sm:justify-between"
-            style={{ backgroundColor: "var(--accent-dark)" }}
+          <CtaBanner
+            app={app}
+            variant="split"
+            className="mt-8"
+            heading="Keep practising on the go"
+            body={`Full question bank, saved progress, and mistake review in ${app.name}.`}
           >
-            <div>
-              <p className="font-bold">Keep practising on the go</p>
-              <p className="text-sm text-white/80">
-                Full question bank, saved progress, and mistake review in {app.name}.
-              </p>
-            </div>
-            <div className="flex gap-2">
-              {app.appStoreUrl && (
-                <a
-                  href={app.appStoreUrl}
-                  className="rounded-lg bg-white px-4 py-2 text-sm font-bold text-black"
-                >
-                  App Store
-                </a>
-              )}
-              {app.playStoreUrl && (
-                <a
-                  href={app.playStoreUrl}
-                  className="rounded-lg border border-white/40 px-4 py-2 text-sm font-bold"
-                >
-                  Google Play
-                </a>
-              )}
-            </div>
-          </div>
+            {app.appStoreUrl && (
+              <a
+                href={app.appStoreUrl}
+                className="rounded-lg bg-white px-4 py-2 text-sm font-bold text-black"
+              >
+                App Store
+              </a>
+            )}
+            {app.playStoreUrl && (
+              <a
+                href={app.playStoreUrl}
+                className="rounded-lg border border-white/40 px-4 py-2 text-sm font-bold"
+              >
+                Google Play
+              </a>
+            )}
+          </CtaBanner>
 
           {/* Sibling navigation */}
           <div className="mt-8 flex items-stretch justify-between gap-4">

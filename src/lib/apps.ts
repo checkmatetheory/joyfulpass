@@ -76,6 +76,12 @@ export type AppRecord = {
   iconUrl?: string;
   /** City-specific hero background (photo or video). Falls back to the gradient when unset. */
   heroMedia?: HeroMedia;
+  /**
+   * Dedicated background image for CTA banners across this app's templates.
+   * Gives each silo a distinct branded banner look. Falls back to `heroMedia`,
+   * then to the accent gradient, when unset.
+   */
+  ctaBannerImage?: string;
   hero: {
     headline: string;
     subheadline: string;
