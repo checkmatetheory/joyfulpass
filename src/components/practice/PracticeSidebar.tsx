@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { AppRecord } from "@/lib/apps";
 import type { Chapter, Curriculum } from "@/lib/curriculum";
+import { chapterPath, examHub } from "@/lib/urls";
 
 type Props = {
   app: AppRecord;
@@ -25,7 +26,7 @@ export default function PracticeSidebar({ app, curriculum, current }: Props) {
         <span className="text-xl" aria-hidden>
           {app.flagEmoji}
         </span>
-        <Link href={`/${app.slug}/${curriculum.testSlug}/`} className="font-bold hover:underline">
+        <Link href={examHub(app)} className="font-bold hover:underline">
           {app.name}
         </Link>
       </div>
@@ -39,7 +40,7 @@ export default function PracticeSidebar({ app, curriculum, current }: Props) {
             return (
               <li key={ch.slug}>
                 <Link
-                  href={`/${app.slug}/${ch.slug}/`}
+                  href={chapterPath(app, ch.slug)}
                   aria-current={active ? "page" : undefined}
                   className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors ${
                     active
@@ -112,7 +113,7 @@ export default function PracticeSidebar({ app, curriculum, current }: Props) {
             </a>
           )}
           <Link
-            href={`/${app.slug}/${curriculum.testSlug}/#pricing`}
+            href={`${examHub(app)}#pricing`}
             className="rounded-lg border border-white/40 px-3 py-2 text-center text-xs font-bold"
           >
             Go Pro on the web

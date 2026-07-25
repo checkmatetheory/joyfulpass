@@ -18,7 +18,7 @@ Discover Canada is the official study guide for the Canadian citizenship test, a
 ## A study approach that works
 
 1. Read one chapter of Discover Canada at a time.
-2. Immediately take a [CanadaPass](/canadapass/) practice set covering just that chapter.
+2. Immediately take a [CanadaPass](/canadian-citizenship-test/) practice set covering just that chapter.
 3. Note which questions you missed and reread only that section.
 4. Move to the next chapter once you're above 90% on the current one.
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { apps } from "@/lib/apps";
+import { blogIndex, examHub, testCentresPath } from "@/lib/urls";
 import { SITE_NAME } from "@/lib/site";
 
 const LOGO_URL = "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1k0q8x3P0iROj6VeEqT1Kpnm728XoNfrSPHyQ";
@@ -32,7 +33,7 @@ export default function Footer() {
           <ul className="mt-5 space-y-3 text-base">
             {apps.map((app) => (
               <li key={app.slug}>
-                <Link href={`/${app.slug}/`} className="text-white/80 hover:text-white">
+                <Link href={examHub(app)} className="text-white/80 hover:text-white">
                   {app.flagEmoji} {app.name}
                 </Link>
               </li>
@@ -66,7 +67,7 @@ export default function Footer() {
           <ul className="mt-5 space-y-3 text-base">
             {apps.map((app) => (
               <li key={app.slug}>
-                <Link href={`/${app.slug}/blog/`} className="text-white/80 hover:text-white">
+                <Link href={blogIndex(app)} className="text-white/80 hover:text-white">
                   Help with {app.name}
                 </Link>
               </li>
@@ -74,12 +75,12 @@ export default function Footer() {
             {apps
               .filter((app) => app.hasTestCenters)
               .map((app) => (
-                <li key={`${app.slug}-test-centers`}>
+                <li key={`${app.slug}-test-centres`}>
                   <Link
-                    href={`/${app.slug}/test-centers/`}
+                    href={testCentresPath(app)}
                     className="text-white/80 hover:text-white"
                   >
-                    {app.name} test centers
+                    {app.name} test centres
                   </Link>
                 </li>
               ))}

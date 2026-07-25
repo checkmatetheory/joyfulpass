@@ -26,16 +26,20 @@ type NavItem = {
 
 export default function DashboardSidebar({
   appSlug,
+  examSlug,
   appName,
   flagEmoji,
 }: {
   appSlug: string;
+  /** Public keyword-silo slug, for links out to the indexed pages. */
+  examSlug: string;
   appName: string;
   flagEmoji: string;
 }) {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const base = `/app/${appSlug}`;
+  const publicHub = `/${examSlug}`;
 
   const primary: NavItem[] = [
     { label: "Overview", href: `${base}/`, Icon: OverviewIcon },
@@ -59,7 +63,7 @@ export default function DashboardSidebar({
   return (
     <aside className="flex h-full w-60 shrink-0 flex-col border-r border-black/10 bg-[var(--surface-cream)] px-3 py-5 dark:border-white/10">
       {/* Brand */}
-      <Link href={`/${appSlug}/`} className="flex items-center gap-2 px-2">
+      <Link href={`${publicHub}/`} className="flex items-center gap-2 px-2">
         <span className="text-xl" aria-hidden>
           {flagEmoji}
         </span>
@@ -98,7 +102,7 @@ export default function DashboardSidebar({
           <PricingIcon className="shrink-0" />
           <span>Pricing</span>
         </Link>
-        <Link href={`/${appSlug}/blog/`} className={itemClass(false)}>
+        <Link href={`${publicHub}/blog/`} className={itemClass(false)}>
           <ContactIcon className="shrink-0" />
           <span>Contact Us</span>
         </Link>

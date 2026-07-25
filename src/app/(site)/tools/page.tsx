@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { apps } from "@/lib/apps";
 import ToolCard from "@/components/ToolCard";
+import { toolPath } from "@/lib/urls";
 import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -31,7 +32,7 @@ export default function ToolsIndexPage() {
                 <ToolCard
                   key={tool.slug}
                   tool={tool}
-                  href={`/${app.slug}/${tool.slug}/`}
+                  href={toolPath(app, tool.slug)}
                   accent={app.theme.accent}
                 />
               ))}

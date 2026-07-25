@@ -37,7 +37,7 @@ Most applicants take the test online or in person, depending on how IRCC schedul
 
 The pass mark leaves room for five mistakes, but the strongest candidates don't lean on that. People who pass first time are usually scoring **17 or 18 out of 20 on mock tests** before their appointment, which absorbs the odd nervous slip on the day.
 
-[CanadaPass](/canadapass/) mock tests mirror the real 20-question, 30-minute, 75%-to-pass format, so by the time you sit the official test the structure already feels familiar.
+[CanadaPass](/canadian-citizenship-test/) mock tests mirror the real 20-question, 30-minute, 75%-to-pass format, so by the time you sit the official test the structure already feels familiar.
 
 ## Before your appointment
 

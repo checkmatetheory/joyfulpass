@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getAllAppSlugs, getApp } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import DashboardBreadcrumb from "@/components/dashboard/DashboardBreadcrumb";
+import { chapterPath } from "@/lib/urls";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -30,7 +31,7 @@ export default async function TopicsPage({ params }: { params: Promise<{ slug: s
           return (
             <Link
               key={chapter.slug}
-              href={`/${slug}/${chapter.slug}/`}
+              href={chapterPath(app, chapter.slug)}
               className="group flex flex-col rounded-2xl border border-black/10 p-5 transition-colors hover:border-[var(--accent)] dark:border-white/10"
             >
               <div className="flex items-center gap-3">

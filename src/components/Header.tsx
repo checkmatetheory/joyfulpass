@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { apps } from "@/lib/apps";
+import { examHub } from "@/lib/urls";
 
 const LOGO_URL = "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1k0q8x3P0iROj6VeEqT1Kpnm728XoNfrSPHyQ";
 const HEADER_REVEAL_DELAY_MS = 750;
@@ -82,7 +83,7 @@ export default function Header() {
                 {apps.map((app) => (
                   <Link
                     key={app.slug}
-                    href={`/${app.slug}/`}
+                    href={examHub(app)}
                     className="flex items-center gap-3 rounded-lg px-3 py-2 outline-none hover:bg-black/5 focus-visible:bg-black/5"
                     onClick={() => setSwitcherOpen(false)}
                   >
@@ -138,7 +139,7 @@ export default function Header() {
           aria-label="Mobile navigation"
         >
           {apps.map((app) => (
-            <Link key={app.slug} href={`/${app.slug}/`} className="py-2" onClick={() => setMenuOpen(false)}>
+            <Link key={app.slug} href={examHub(app)} className="py-2" onClick={() => setMenuOpen(false)}>
               {app.flagEmoji} {app.name}
             </Link>
           ))}

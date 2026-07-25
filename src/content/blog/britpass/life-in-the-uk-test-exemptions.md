@@ -28,10 +28,10 @@ The Home Office guidance for your application is more important than general sum
 
 ## Should you book before checking?
 
-No. Confirm that you need the test before paying for an appointment. If you do need it, start with our guide on [how to book the Life in the UK Test](/britpass/blog/how-to-book-life-in-the-uk-test/) and use the official service to make the booking.
+No. Confirm that you need the test before paying for an appointment. If you do need it, start with our guide on [how to book the Life in the UK Test](/life-in-the-uk-test/blog/how-to-book-life-in-the-uk-test/) and use the official service to make the booking.
 
 ## If you are unsure
 
 Immigration rules can change and individual cases vary. For a decision about your own application, use GOV.UK guidance or seek advice from a qualified immigration adviser. BritPass is an independent study app and does not provide legal advice.
 
-If the test does apply to you, focus your preparation on the official handbook and practise consistently. Our [Life in the UK Test study guide](/britpass/blog/life-in-the-uk-test-study-guide/) explains how to build a reliable revision routine.
+If the test does apply to you, focus your preparation on the official handbook and practise consistently. Our [Life in the UK Test study guide](/life-in-the-uk-test/blog/life-in-the-uk-test-study-guide/) explains how to build a reliable revision routine.

@@ -10,6 +10,26 @@ const nextConfig: NextConfig = {
   // uses a trailing slash (matching the sitemap in the design brief), so
   // trailing-slash URLs must be the canonical, directly-served ones.
   trailingSlash: true,
+  // Legacy brand-prefixed URLs → keyword-first exam silos. Specific hub/rename
+  // rules come before the catch-all wildcard (first match wins).
+  async redirects() {
+    return [
+      { source: "/britpass/life-in-the-uk-test", destination: "/life-in-the-uk-test", permanent: true },
+      { source: "/britpass/test-centers", destination: "/life-in-the-uk-test/test-centres", permanent: true },
+      { source: "/britpass/:path*", destination: "/life-in-the-uk-test/:path*", permanent: true },
+      {
+        source: "/canadapass/canadian-citizenship-test",
+        destination: "/canadian-citizenship-test",
+        permanent: true,
+      },
+      {
+        source: "/canadapass/test-centers",
+        destination: "/canadian-citizenship-test/test-centres",
+        permanent: true,
+      },
+      { source: "/canadapass/:path*", destination: "/canadian-citizenship-test/:path*", permanent: true },
+    ];
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "657cm7lxu0.ufs.sh" },

@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { AppRecord } from "@/lib/apps";
 import AppIconBadge from "@/components/AppIconBadge";
+import { examHub } from "@/lib/urls";
 
 export default function AppCard({ app }: { app: AppRecord }) {
   return (
     <Link
-      href={`/${app.slug}/`}
+      href={examHub(app)}
       className="group flex flex-col rounded-2xl border border-black/10 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-white/10 dark:bg-white/5"
     >
       <div className="flex items-center gap-3">

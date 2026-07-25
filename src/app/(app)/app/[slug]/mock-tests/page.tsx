@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getAllAppSlugs, getApp } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import DashboardBreadcrumb from "@/components/dashboard/DashboardBreadcrumb";
+import { chapterPath, examHub } from "@/lib/urls";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -26,8 +27,8 @@ export default async function MockTestsPage({
   if (!app) notFound();
   const curriculum = getCurriculum(slug);
   const practiceHref = curriculum?.chapters[0]
-    ? `/${slug}/${curriculum.chapters[0].slug}/`
-    : `/${slug}/`;
+    ? chapterPath(app, curriculum.chapters[0].slug)
+    : examHub(app);
   const testName = curriculum?.testName ?? app.examName;
 
   return (

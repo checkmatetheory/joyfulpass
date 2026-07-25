@@ -1,55 +1,51 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllAppSlugs, getApp } from "@/lib/apps";
+import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
 import JsonLd from "@/components/JsonLd";
 import PromoBanner from "@/components/PromoBanner";
-import { getCurriculum } from "@/lib/curriculum";
+import { examHub } from "@/lib/urls";
 import { SITE_URL } from "@/lib/site";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllAppSlugs().map((app) => ({ app }));
+  return getAllExamSlugs().map((exam) => ({ exam }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ app: string }>;
+  params: Promise<{ exam: string }>;
 }): Promise<Metadata> {
-  const { app: appSlug } = await params;
-  const app = getApp(appSlug);
+  const { exam } = await params;
+  const app = getAppByExamSlug(exam);
   if (!app) return {};
   return {
     title: {
-      default: `${app.name} — ${app.tagline}`,
+      // Brand + keyword so we also rank for the brand name (BritPass/CanadaPass).
+      default: `${app.examName} Practice — ${app.name}`,
       template: `%s | ${app.name}`,
     },
     description: app.metaDescription,
   };
 }
 
-export default async function AppLayout({
+export default async function ExamLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ app: string }>;
+  params: Promise<{ exam: string }>;
 }) {
-  const { app: appSlug } = await params;
-  const app = getApp(appSlug);
+  const { exam } = await params;
+  const app = getAppByExamSlug(exam);
   if (!app) notFound();
-
-  const curriculum = getCurriculum(app.slug);
-  const promoHref = curriculum
-    ? `/${app.slug}/${curriculum.testSlug}/#download`
-    : `/${app.slug}/`;
 
   const educationalOrgJsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     name: app.name,
-    url: `${SITE_URL}/${app.slug}/`,
+    url: `${SITE_URL}${examHub(app)}`,
     description: app.metaDescription,
   };
 
@@ -61,6 +57,7 @@ export default async function AppLayout({
           "--accent-dark": app.theme.accentDark,
           "--accent-soft": app.theme.accentSoft,
           "--accent-foreground": app.theme.accentForeground,
+          "--accent-secondary": app.theme.accentSecondary,
         } as React.CSSProperties
       }
     >
@@ -68,7 +65,7 @@ export default async function AppLayout({
       <PromoBanner
         appSlug={app.slug}
         appName={app.name}
-        href={promoHref}
+        href={`${examHub(app)}#download`}
         message={`Get ${app.name} — 4.9★ on the App Store`}
         ctaLabel="Get the app"
       />

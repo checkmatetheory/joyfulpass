@@ -32,7 +32,7 @@ The test itself is **20 questions in 30 minutes, with 15 correct needed to pass*
 
 If you don't pass the first time, it isn't the end of your application — IRCC typically offers another opportunity. Still, the calmer path is to walk in ready the first time by practising until the format feels routine.
 
-[CanadaPass](/canadapass/) mock tests match the real 20-question, 30-minute format, so when your invitation date arrives you're rehearsing the exact test, not guessing at it.
+[CanadaPass](/canadian-citizenship-test/) mock tests match the real 20-question, 30-minute format, so when your invitation date arrives you're rehearsing the exact test, not guessing at it.
 
 ## Always use the official source
 

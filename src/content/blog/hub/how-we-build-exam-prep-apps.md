@@ -6,7 +6,7 @@ author: "Chris Thür"
 authorCredential: "Co-founder, Joyful"
 ---
 
-Every app in the Joyful family — [BritPass](/britpass/), [CanadaPass](/canadapass/), and the ones we're building next — starts the same way: with the official source document, not a guess at what might be on the test.
+Every app in the Joyful family — [BritPass](/life-in-the-uk-test/), [CanadaPass](/canadian-citizenship-test/), and the ones we're building next — starts the same way: with the official source document, not a guess at what might be on the test.
 
 ## 1. Start from the primary source
 

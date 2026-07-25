@@ -1,37 +1,38 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllAppSlugs, getApp } from "@/lib/apps";
+import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
 import { getAllPosts } from "@/lib/blog";
 import BlogCard from "@/components/BlogCard";
+import { blogIndex, blogPost } from "@/lib/urls";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllAppSlugs().map((app) => ({ app }));
+  return getAllExamSlugs().map((exam) => ({ exam }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ app: string }>;
+  params: Promise<{ exam: string }>;
 }): Promise<Metadata> {
-  const { app: appSlug } = await params;
-  const app = getApp(appSlug);
+  const { exam } = await params;
+  const app = getAppByExamSlug(exam);
   if (!app) return {};
   return {
     title: "Blog",
     description: `Guides and study tips for the ${app.examName}, from the ${app.name} team.`,
-    alternates: { canonical: `/${app.slug}/blog/` },
+    alternates: { canonical: blogIndex(app) },
   };
 }
 
-export default async function AppBlogIndexPage({
+export default async function ExamBlogIndexPage({
   params,
 }: {
-  params: Promise<{ app: string }>;
+  params: Promise<{ exam: string }>;
 }) {
-  const { app: appSlug } = await params;
-  const app = getApp(appSlug);
+  const { exam } = await params;
+  const app = getAppByExamSlug(exam);
   if (!app) notFound();
 
   const posts = getAllPosts(app.blogCategory);
@@ -45,7 +46,7 @@ export default async function AppBlogIndexPage({
 
       <div className="mt-10 grid gap-5 sm:grid-cols-2">
         {posts.map((post) => (
-          <BlogCard key={post.slug} post={post} href={`/${app.slug}/blog/${post.slug}/`} />
+          <BlogCard key={post.slug} post={post} href={blogPost(app, post.slug)} />
         ))}
         {posts.length === 0 && <p className="opacity-60">No posts published yet.</p>}
       </div>

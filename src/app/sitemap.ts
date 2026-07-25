@@ -2,12 +2,19 @@ import type { MetadataRoute } from "next";
 import { apps, getApp } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import { getAllPosts } from "@/lib/blog";
+import { blogIndex, blogPost, chapterPath, examHub, testCentresPath, toolPath } from "@/lib/urls";
 import { SITE_URL } from "@/lib/site";
 
 // One sitemap file per silo (hub + each app), auto-assembled by Next.js into
-// a single sitemap index at /sitemap.xml. Adding a new app to src/lib/apps.ts
-// automatically gets its own sitemap file here — no config elsewhere.
+// a single sitemap index at /sitemap.xml. Public URLs use the keyword-first
+// exam silo (examHub/chapterPath/...). The authenticated dashboard (/app/...)
+// is deliberately excluded — it's noindex and not a ranking surface.
 const silos = ["hub", ...apps.map((app) => app.slug)];
+
+// A stable, real content date for the evergreen exam pages. Unlike the Britizen
+// sitemap (every URL identical daily/lastmod — the "batch-generated" fingerprint),
+// we set an honest date and vary changeFrequency by page type.
+const CONTENT_LAST_MODIFIED = "2026-07-25";
 
 export function generateSitemaps() {
   return silos.map((_, id) => ({ id }));
@@ -47,26 +54,23 @@ export default async function sitemap({
   const curriculum = getCurriculum(app.slug);
 
   return [
-    { url: `${SITE_URL}/${app.slug}/`, changeFrequency: "weekly", priority: 0.9 },
-    // Template A (test hub) — highest-value SEO page, the real test-name slug.
-    ...(curriculum
-      ? [
-          {
-            url: `${SITE_URL}/${app.slug}/${curriculum.testSlug}/`,
-            changeFrequency: "weekly" as const,
-            priority: 1,
-          },
-          // Template B chapter pages.
-          ...curriculum.chapters.map((chapter) => ({
-            url: `${SITE_URL}/${app.slug}/${chapter.slug}/`,
-            changeFrequency: "monthly" as const,
-            priority: 0.8,
-          })),
-        ]
-      : []),
-    { url: `${SITE_URL}/${app.slug}/blog/`, changeFrequency: "weekly", priority: 0.7 },
+    // Exam hub (Template A) — the highest-value page, the real test-name slug.
+    {
+      url: `${SITE_URL}${examHub(app)}`,
+      lastModified: CONTENT_LAST_MODIFIED,
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+    // Chapter practice pages (Template B).
+    ...(curriculum?.chapters.map((chapter) => ({
+      url: `${SITE_URL}${chapterPath(app, chapter.slug)}`,
+      lastModified: CONTENT_LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })) ?? []),
+    { url: `${SITE_URL}${blogIndex(app)}`, changeFrequency: "weekly", priority: 0.7 },
     ...posts.map((post) => ({
-      url: `${SITE_URL}/${app.slug}/blog/${post.slug}/`,
+      url: `${SITE_URL}${blogPost(app, post.slug)}`,
       lastModified: post.date,
       changeFrequency: "monthly" as const,
       priority: 0.6,
@@ -74,14 +78,16 @@ export default async function sitemap({
     ...(app.hasTestCenters
       ? [
           {
-            url: `${SITE_URL}/${app.slug}/test-centers/`,
+            url: `${SITE_URL}${testCentresPath(app)}`,
+            lastModified: CONTENT_LAST_MODIFIED,
             changeFrequency: "monthly" as const,
             priority: 0.6,
           },
         ]
       : []),
     ...app.tools.map((tool) => ({
-      url: `${SITE_URL}/${app.slug}/${tool.slug}/`,
+      url: `${SITE_URL}${toolPath(app, tool.slug)}`,
+      lastModified: CONTENT_LAST_MODIFIED,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),

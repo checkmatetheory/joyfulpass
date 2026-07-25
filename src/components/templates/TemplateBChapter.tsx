@@ -5,6 +5,7 @@ import { freeQuestions } from "@/lib/curriculum";
 import PracticeSidebar from "@/components/practice/PracticeSidebar";
 import QuizPanel from "@/components/practice/QuizPanel";
 import CtaBanner from "@/components/CtaBanner";
+import { chapterPath, examHub } from "@/lib/urls";
 
 type Props = {
   app: AppRecord;
@@ -31,7 +32,7 @@ export default function TemplateBChapter({ app, curriculum, chapter }: Props) {
       <nav aria-label="Breadcrumb" className="text-sm opacity-60">
         <ol className="flex flex-wrap items-center gap-1.5">
           <li>
-            <Link href={`/${app.slug}/${curriculum.testSlug}/`} className="hover:underline">
+            <Link href={examHub(app)} className="hover:underline">
               {curriculum.testName}
             </Link>
           </li>
@@ -93,7 +94,7 @@ export default function TemplateBChapter({ app, curriculum, chapter }: Props) {
           <div className="mt-8 flex items-stretch justify-between gap-4">
             {prev ? (
               <Link
-                href={`/${app.slug}/${prev.slug}/`}
+                href={chapterPath(app, prev.slug)}
                 className="group flex-1 rounded-xl border border-black/10 p-4 hover:border-[var(--accent)] dark:border-white/10"
               >
                 <span className="text-xs opacity-50">← Previous</span>
@@ -104,7 +105,7 @@ export default function TemplateBChapter({ app, curriculum, chapter }: Props) {
             )}
             {next ? (
               <Link
-                href={`/${app.slug}/${next.slug}/`}
+                href={chapterPath(app, next.slug)}
                 className="group flex-1 rounded-xl border border-black/10 p-4 text-right hover:border-[var(--accent)] dark:border-white/10"
               >
                 <span className="text-xs opacity-50">Next →</span>

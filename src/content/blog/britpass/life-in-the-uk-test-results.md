@@ -33,6 +33,6 @@ Use your next study period to target the cause rather than simply repeating the 
 
 ## Prepare for a stronger next attempt
 
-Read our [Life in the UK Test study guide](/britpass/blog/life-in-the-uk-test-study-guide/) for a practical revision structure. Once your timed mock-test scores are consistently above the 75% pass mark, book a new slot through the [official GOV.UK service](https://www.gov.uk/life-in-the-uk-test).
+Read our [Life in the UK Test study guide](/life-in-the-uk-test/blog/life-in-the-uk-test-study-guide/) for a practical revision structure. Once your timed mock-test scores are consistently above the 75% pass mark, book a new slot through the [official GOV.UK service](https://www.gov.uk/life-in-the-uk-test).
 
 BritPass is independent and not affiliated with the UK government. This article is general information, not immigration or legal advice.

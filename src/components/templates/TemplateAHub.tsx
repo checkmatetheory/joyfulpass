@@ -1,10 +1,17 @@
 import Link from "next/link";
 import type { AppRecord } from "@/lib/apps";
 import type { Curriculum } from "@/lib/curriculum";
+import { freeQuestions } from "@/lib/curriculum";
 import ChapterCard from "@/components/templates/ChapterCard";
 import FaqAccordion from "@/components/FaqAccordion";
 import DownloadCta from "@/components/DownloadCta";
 import CtaBanner from "@/components/CtaBanner";
+import AppIconBadge from "@/components/AppIconBadge";
+import FlagAccentBar from "@/components/FlagAccentBar";
+import DashboardCard from "@/components/dashboard/DashboardCard";
+import QuizPanel from "@/components/practice/QuizPanel";
+import { MockTestIcon, StudyGuideIcon, TopicsIcon } from "@/components/dashboard/icons";
+import { chapterPath, dashboard } from "@/lib/urls";
 
 type Props = {
   app: AppRecord;
@@ -12,13 +19,16 @@ type Props = {
 };
 
 /**
- * Template A — the app hub page living at the real test-name slug
- * (/britpass/life-in-the-uk-test/). Keyword-rich, chapter grid into Template B,
- * practice CTAs with real numbers, download banner at the natural upgrade moment,
- * then a long-form content stack + FAQ (schema emitted by the route).
+ * Template A — the exam hub at the keyword-silo root (/life-in-the-uk-test/).
+ * App-first: it opens with instant value (a live diagnostic quiz + practice
+ * route cards), the way SEO and paid traffic both want, then carries the
+ * long-form, keyword-rich SEO body below. Branding is national-flag-accented
+ * (buttons in the flag-primary accent, a FlagAccentBar under titles, the app
+ * logo in the header) so each silo feels country-specific.
  */
 export default function TemplateAHub({ app, curriculum }: Props) {
   const firstChapter = curriculum.chapters[0];
+  const diagnostic = firstChapter ? freeQuestions(firstChapter).slice(0, 3) : [];
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
@@ -31,100 +41,116 @@ export default function TemplateAHub({ app, curriculum }: Props) {
             </Link>
           </li>
           <li aria-hidden>/</li>
-          <li>
-            <Link href={`/${app.slug}/`} className="hover:underline">
-              {app.name}
-            </Link>
-          </li>
-          <li aria-hidden>/</li>
           <li className="font-semibold opacity-90">{curriculum.testName}</li>
         </ol>
       </nav>
 
-      {/* Header + real-number "official record" stats */}
+      {/* App-first hero: brand + logo, keyword H1, flag bar, real-number chips */}
       <header className="mt-6">
-        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-          {curriculum.testName} — free practice
+        <div className="flex items-center gap-3">
+          <AppIconBadge app={app} size={48} />
+          <span className="text-sm font-bold opacity-70">
+            {app.flagEmoji} {app.name}
+          </span>
+        </div>
+        <h1 className="mt-5 text-3xl font-extrabold tracking-tight sm:text-5xl">
+          {curriculum.testName} Practice
         </h1>
-        <p className="mt-4 max-w-2xl text-lg opacity-75">{curriculum.intro}</p>
+        <FlagAccentBar colors={app.theme.flagColors} className="mt-4 w-24" />
+        <p className="mt-5 max-w-2xl text-lg opacity-75">{curriculum.intro}</p>
         <dl className="mt-6 flex flex-wrap gap-3">
-          {[
-            curriculum.facts.questions,
-            curriculum.facts.toPass,
-            curriculum.facts.timeLimit,
-          ].map((fact) => (
-            <div
-              key={fact}
-              className="rounded-full border border-black/10 px-4 py-1.5 font-mono text-sm dark:border-white/15"
-            >
-              {fact}
-            </div>
-          ))}
+          {[curriculum.facts.questions, curriculum.facts.toPass, curriculum.facts.timeLimit].map(
+            (fact) => (
+              <div
+                key={fact}
+                className="rounded-full border border-black/10 px-4 py-1.5 font-mono text-sm dark:border-white/15"
+              >
+                {fact}
+              </div>
+            ),
+          )}
         </dl>
+        <div className="mt-7 flex flex-wrap gap-3">
+          <a
+            href="#quiz"
+            className="rounded-full px-7 py-3 text-sm font-bold uppercase tracking-wide text-white"
+            style={{ backgroundColor: "var(--accent)" }}
+          >
+            Start practising free
+          </a>
+          <a
+            href="#download"
+            className="rounded-full border-2 px-7 py-3 text-sm font-bold uppercase tracking-wide"
+            style={{ borderColor: "var(--accent)", color: "var(--accent)" }}
+          >
+            Get the app
+          </a>
+        </div>
       </header>
 
-      {/* Practice CTAs — diagnostic (low commitment) + full-length (real numbers) */}
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        {firstChapter && (
-          <Link
-            href={`/${app.slug}/${firstChapter.slug}/`}
-            className="rounded-2xl border-2 p-6"
-            style={{ borderColor: "var(--accent)" }}
-          >
-            <p className="text-sm font-bold" style={{ color: "var(--accent)" }}>
-              Quick start
-            </p>
-            <p className="mt-1 text-lg font-bold">Take a diagnostic set</p>
-            <p className="mt-1 text-sm opacity-70">
-              A short sampler from Chapter 1 — see where you stand in two minutes.
-            </p>
-          </Link>
-        )}
-        <div
-          className="rounded-2xl p-6 text-white"
-          style={{ backgroundColor: "var(--accent-dark)" }}
-        >
-          <p className="text-sm font-bold opacity-80">Full-length mock</p>
-          <p className="mt-1 text-lg font-bold">
-            {curriculum.fullTest.questionCount} questions · {curriculum.fullTest.minutes} min
-          </p>
-          <p className="mt-1 text-sm text-white/75">
-            Mirrors the real test: {curriculum.fullTest.passMark} correct to pass. Sit it in the
-            app.
-          </p>
-          <div className="mt-3">
-            {app.appStoreUrl && (
-              <a
-                href={app.appStoreUrl}
-                className="inline-block rounded-lg bg-white px-4 py-2 text-sm font-bold text-black"
-              >
-                Practise in {app.name}
-              </a>
-            )}
-          </div>
+      {/* Instant value: a real diagnostic quiz, above the fold */}
+      <section id="quiz" className="mt-12 scroll-mt-24">
+        <h2 className="text-2xl font-bold">Try a few questions right now</h2>
+        <p className="mt-2 max-w-2xl opacity-70">
+          A quick taster of the real {curriculum.testName}. No sign-up — just start.
+        </p>
+        <div className="mt-6">
+          <QuizPanel
+            questions={diagnostic}
+            chapterName="starter"
+            hasLockedContent
+            appName={app.name}
+            appStoreUrl={app.appStoreUrl}
+            playStoreUrl={app.playStoreUrl}
+          />
         </div>
-      </div>
+      </section>
+
+      {/* Route picker — how do you want to prepare? */}
+      <section className="mt-14">
+        <h2 className="text-2xl font-bold">Choose how to prepare</h2>
+        <FlagAccentBar colors={app.theme.flagColors} className="mt-3" />
+        <div className="mt-6 grid gap-5 md:grid-cols-3">
+          <DashboardCard
+            icon={<TopicsIcon />}
+            title="Practise by chapter"
+            description="Work through the official chapters one at a time, each with its own quiz."
+            ctaLabel="See chapters"
+            href="#chapters"
+          />
+          <DashboardCard
+            icon={<MockTestIcon />}
+            title="Full mock tests"
+            description={`Sit the real ${curriculum.fullTest.questionCount}-question, ${curriculum.fullTest.minutes}-minute format against the clock.`}
+            ctaLabel="Get the app"
+            href="#download"
+          />
+          <DashboardCard
+            icon={<StudyGuideIcon />}
+            title="Study guide & notes"
+            description="Read the essentials, then track your progress across every chapter."
+            ctaLabel="Open the app"
+            href={dashboard(app)}
+          />
+        </div>
+      </section>
 
       {/* Chapter grid → Template B */}
-      <section className="mt-14">
+      <section id="chapters" className="mt-14 scroll-mt-24">
         <h2 className="text-2xl font-bold">Practise by chapter</h2>
-        <p className="mt-2 max-w-2xl opacity-70">
+        <FlagAccentBar colors={app.theme.flagColors} className="mt-3" />
+        <p className="mt-3 max-w-2xl opacity-70">
           The {curriculum.testName} handbook is organised into these chapters. Each has its own
           practice quiz — work through them in order, or jump to the ones you find hardest.
         </p>
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {curriculum.chapters.map((chapter, i) => (
-            <ChapterCard
-              key={chapter.slug}
-              chapter={chapter}
-              appSlug={app.slug}
-              number={i + 1}
-            />
+            <ChapterCard key={chapter.slug} chapter={chapter} app={app} number={i + 1} />
           ))}
         </div>
       </section>
 
-      {/* App download banner — the natural upgrade moment, after the practice CTAs */}
+      {/* Branded, per-app download banner */}
       <section id="download" className="mt-14 scroll-mt-24">
         <CtaBanner
           app={app}
@@ -135,12 +161,14 @@ export default function TemplateAHub({ app, curriculum }: Props) {
         </CtaBanner>
       </section>
 
-      {/* Long-form content stack (rewritten per app, not templated) */}
+      {/* Long-form SEO body */}
       <section className="mt-14 max-w-3xl">
         <h2 className="text-2xl font-bold">About the {curriculum.testName}</h2>
+        <FlagAccentBar colors={app.theme.flagColors} className="mt-3" />
         <p className="mt-4 opacity-80">{curriculum.about}</p>
 
         <h2 className="mt-12 text-2xl font-bold">How to prepare</h2>
+        <FlagAccentBar colors={app.theme.flagColors} className="mt-3" />
         <div className="mt-4 space-y-5">
           {curriculum.prep.map((step, i) => (
             <div key={step.title} className="flex gap-4">
@@ -159,12 +187,13 @@ export default function TemplateAHub({ app, curriculum }: Props) {
         </div>
 
         <h2 className="mt-12 text-2xl font-bold">What&rsquo;s covered</h2>
+        <FlagAccentBar colors={app.theme.flagColors} className="mt-3" />
         <p className="mt-4 opacity-80">
           The {curriculum.testName} draws its questions from every chapter of the official
           material. In practice that means being comfortable across{" "}
           {curriculum.chapters.map((c, i) => (
             <span key={c.slug}>
-              <Link href={`/${app.slug}/${c.slug}/`} className="font-semibold hover:underline">
+              <Link href={chapterPath(app, c.slug)} className="font-semibold hover:underline">
                 {c.shortLabel.toLowerCase()}
               </Link>
               {i < curriculum.chapters.length - 1
@@ -179,9 +208,10 @@ export default function TemplateAHub({ app, curriculum }: Props) {
         </p>
       </section>
 
-      {/* FAQ (visible content mirrors the FAQPage schema emitted by the route) */}
+      {/* FAQ (mirrors the FAQPage schema emitted by the route) */}
       <section className="mt-14 max-w-3xl">
         <h2 className="text-2xl font-bold">Frequently asked questions</h2>
+        <FlagAccentBar colors={app.theme.flagColors} className="mt-3" />
         <div className="mt-6">
           <FaqAccordion faqs={app.faqs} accent={app.theme.accent} />
         </div>
@@ -195,15 +225,13 @@ export default function TemplateAHub({ app, curriculum }: Props) {
 
       {/* Closing CTA */}
       <section className="mt-14 text-center">
-        {firstChapter && (
-          <Link
-            href={`/${app.slug}/${firstChapter.slug}/`}
-            className="inline-block rounded-full px-8 py-4 text-sm font-bold uppercase tracking-wide text-white"
-            style={{ backgroundColor: "var(--accent)" }}
-          >
-            Start practising free
-          </Link>
-        )}
+        <a
+          href="#quiz"
+          className="inline-block rounded-full px-8 py-4 text-sm font-bold uppercase tracking-wide text-white"
+          style={{ backgroundColor: "var(--accent)" }}
+        >
+          Start practising free
+        </a>
       </section>
     </div>
   );

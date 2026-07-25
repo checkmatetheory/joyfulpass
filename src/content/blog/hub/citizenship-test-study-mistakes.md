@@ -36,4 +36,4 @@ One good practice score can be luck. Aim for a consistent margin above the offic
 
 Rules, fees, and test-day procedures can change. Check official government guidance whenever you are making a booking or submitting an application.
 
-For exam-specific study, explore [BritPass](/britpass/) for the Life in the UK Test or [CanadaPass](/canadapass/) for the Canadian citizenship test. Both are independent study tools, not government services.
+For exam-specific study, explore [BritPass](/life-in-the-uk-test/) for the Life in the UK Test or [CanadaPass](/canadian-citizenship-test/) for the Canadian citizenship test. Both are independent study tools, not government services.

@@ -20,8 +20,8 @@ If you're weighing up a move to the UK or Canada — or helping someone else pre
 
 ## Which app should you start with?
 
-If you're applying for settlement, ILR, or naturalisation in the UK, start with [BritPass](/britpass/) — it includes an ILR eligibility calculator alongside the practice questions, so you can confirm your qualifying date before you even book a test.
+If you're applying for settlement, ILR, or naturalisation in the UK, start with [BritPass](/life-in-the-uk-test/) — it includes an ILR eligibility calculator alongside the practice questions, so you can confirm your qualifying date before you even book a test.
 
-If you're on the path to Canadian citizenship, [CanadaPass](/canadapass/) mirrors the Discover Canada guide chapter by chapter, which is how IRCC actually writes the exam questions.
+If you're on the path to Canadian citizenship, [CanadaPass](/canadian-citizenship-test/) mirrors the Discover Canada guide chapter by chapter, which is how IRCC actually writes the exam questions.
 
 Both apps are independent study tools built from the official government source material — neither BritPass nor CanadaPass is affiliated with GOV.UK or IRCC. Always confirm booking details and eligibility rules on the official sites linked from each app.

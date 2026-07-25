@@ -1,13 +1,15 @@
 import Link from "next/link";
+import type { AppRecord } from "@/lib/apps";
 import type { Chapter } from "@/lib/curriculum";
+import { chapterPath } from "@/lib/urls";
 
 export default function ChapterCard({
   chapter,
-  appSlug,
+  app,
   number,
 }: {
   chapter: Chapter;
-  appSlug: string;
+  app: AppRecord;
   number: number;
 }) {
   const questionCount = chapter.cores
@@ -16,7 +18,7 @@ export default function ChapterCard({
 
   return (
     <Link
-      href={`/${appSlug}/${chapter.slug}/`}
+      href={chapterPath(app, chapter.slug)}
       className="group flex flex-col rounded-2xl border border-black/10 bg-white p-6 transition-colors hover:border-[var(--accent)] dark:border-white/10 dark:bg-white/5"
     >
       <div className="flex items-center gap-3">

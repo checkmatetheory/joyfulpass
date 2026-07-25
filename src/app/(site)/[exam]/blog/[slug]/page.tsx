@@ -1,35 +1,36 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getAllAppSlugs, getApp } from "@/lib/apps";
+import { getAllExamSlugs, getAppByExamSlug } from "@/lib/apps";
 import { getPost, getPostSlugs } from "@/lib/blog";
 import JsonLd from "@/components/JsonLd";
+import { blogPost } from "@/lib/urls";
 import { SITE_URL } from "@/lib/site";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllAppSlugs().flatMap((appSlug) => {
-    const app = getApp(appSlug);
+  return getAllExamSlugs().flatMap((exam) => {
+    const app = getAppByExamSlug(exam);
     if (!app) return [];
-    return getPostSlugs(app.blogCategory).map((slug) => ({ app: appSlug, slug }));
+    return getPostSlugs(app.blogCategory).map((slug) => ({ exam, slug }));
   });
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ app: string; slug: string }>;
+  params: Promise<{ exam: string; slug: string }>;
 }): Promise<Metadata> {
-  const { app: appSlug, slug } = await params;
-  const app = getApp(appSlug);
+  const { exam, slug } = await params;
+  const app = getAppByExamSlug(exam);
   if (!app) return {};
   const post = await getPost(app.blogCategory, slug);
   if (!post) return {};
   return {
     title: post.title,
     description: post.description,
-    alternates: { canonical: `/${app.slug}/blog/${slug}/` },
+    alternates: { canonical: blogPost(app, slug) },
     openGraph: {
       type: "article",
       title: post.title,
@@ -40,13 +41,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function AppBlogPostPage({
+export default async function ExamBlogPostPage({
   params,
 }: {
-  params: Promise<{ app: string; slug: string }>;
+  params: Promise<{ exam: string; slug: string }>;
 }) {
-  const { app: appSlug, slug } = await params;
-  const app = getApp(appSlug);
+  const { exam, slug } = await params;
+  const app = getAppByExamSlug(exam);
   if (!app) notFound();
 
   const post = await getPost(app.blogCategory, slug);
@@ -59,7 +60,7 @@ export default async function AppBlogPostPage({
     description: post.description,
     datePublished: post.date,
     author: { "@type": "Person", name: post.author },
-    mainEntityOfPage: `${SITE_URL}/${app.slug}/blog/${slug}/`,
+    mainEntityOfPage: `${SITE_URL}${blogPost(app, slug)}`,
   };
 
   return (

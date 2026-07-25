@@ -38,7 +38,12 @@ export default async function DashboardLayout({
       }
     >
       <div className="sticky top-0 hidden h-screen md:block">
-        <DashboardSidebar appSlug={app.slug} appName={app.name} flagEmoji={app.flagEmoji} />
+        <DashboardSidebar
+          appSlug={app.slug}
+          examSlug={app.examSlug}
+          appName={app.name}
+          flagEmoji={app.flagEmoji}
+        />
       </div>
       <main className="min-w-0 flex-1 px-6 py-8 sm:px-10">{children}</main>
     </div>

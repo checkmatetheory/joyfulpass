@@ -3,7 +3,7 @@
 // record here plus its content — never new routing or layout code.
 
 export type AppTheme = {
-  /** Primary brand color for this app, used for CTAs, links, and accents. */
+  /** Primary brand color for this app, used for CTAs, links, and accents. Flag-primary. */
   accent: string;
   /** Darker shade of the accent, used for hover states and text on light backgrounds. */
   accentDark: string;
@@ -11,6 +11,14 @@ export type AppTheme = {
   accentSoft: string;
   /** Text color to place on top of a solid `accent` background. */
   accentForeground: string;
+  /** Secondary flag color, used sparingly for national cues (e.g. UK red on blue). */
+  accentSecondary: string;
+  /**
+   * The country's flag colors, left-to-right, for the subtle FlagAccentBar under
+   * titles. Gives each silo a national feel without recoloring the whole UI.
+   * e.g. UK ["#012169","#FFFFFF","#C8102E"], Canada ["#FF0000","#FFFFFF","#FF0000"].
+   */
+  flagColors: string[];
   /** Hero gradient stops. */
   gradientFrom: string;
   gradientTo: string;
@@ -64,7 +72,14 @@ export type HeroMedia = {
 };
 
 export type AppRecord = {
+  /** Brand/product slug (britpass). Used only for the noindex dashboard: /app/[slug]/. */
   slug: string;
+  /**
+   * The public, keyword-first silo segment — the real test name people search.
+   * This is the URL root for every indexed page: /life-in-the-uk-test/... .
+   * Never the brand ("britpass" isn't a search term).
+   */
+  examSlug: string;
   name: string;
   shortName: string;
   tagline: string;
@@ -114,6 +129,7 @@ export type AppRecord = {
 export const apps: AppRecord[] = [
   {
     slug: "britpass",
+    examSlug: "life-in-the-uk-test",
     name: "BritPass",
     shortName: "BritPass",
     tagline: "Pass the Life in the UK Test with confidence",
@@ -125,6 +141,8 @@ export const apps: AppRecord[] = [
       accentDark: "#1E3A8A",
       accentSoft: "#DBE6FE",
       accentForeground: "#FFFFFF",
+      accentSecondary: "#C8102E", // Union Jack red
+      flagColors: ["#012169", "#FFFFFF", "#C8102E"], // Union Jack: blue, white, red
       gradientFrom: "#1D4ED8",
       gradientTo: "#0B1D51",
     },
@@ -207,6 +225,7 @@ export const apps: AppRecord[] = [
   },
   {
     slug: "canadapass",
+    examSlug: "canadian-citizenship-test",
     name: "CanadaPass",
     shortName: "CanadaPass",
     tagline: "Study smarter for the Canadian citizenship test",
@@ -218,6 +237,8 @@ export const apps: AppRecord[] = [
       accentDark: "#8C1023",
       accentSoft: "#FBDDE1",
       accentForeground: "#FFFFFF",
+      accentSecondary: "#D7263D", // Canadian red (flag is red/white/red)
+      flagColors: ["#FF0000", "#FFFFFF", "#FF0000"], // Maple Leaf: red, white, red
       gradientFrom: "#D7263D",
       gradientTo: "#4A0E14",
     },
@@ -296,6 +317,16 @@ export function getApp(slug: string): AppRecord | undefined {
   return apps.find((app) => app.slug === slug);
 }
 
+/** Resolve an app by its public keyword silo segment (e.g. "life-in-the-uk-test"). */
+export function getAppByExamSlug(examSlug: string): AppRecord | undefined {
+  return apps.find((app) => app.examSlug === examSlug);
+}
+
 export function getAllAppSlugs(): string[] {
   return apps.map((app) => app.slug);
+}
+
+/** Every public exam-silo segment, for routing + sitemap generation. */
+export function getAllExamSlugs(): string[] {
+  return apps.map((app) => app.examSlug);
 }

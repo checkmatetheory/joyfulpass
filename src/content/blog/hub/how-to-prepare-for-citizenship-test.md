@@ -29,7 +29,7 @@ This makes progress visible and reduces the feeling that you have to learn every
 
 Once you know the material, introduce timed mock tests. They show whether you can recall information under pressure, not simply recognise it while reading.
 
-If you are preparing for the UK test, [BritPass](/britpass/) provides focused Life in the UK Test practice. If you are preparing in Canada, [CanadaPass](/canadapass/) helps you work through citizenship-test topics in manageable sessions.
+If you are preparing for the UK test, [BritPass](/life-in-the-uk-test/) provides focused Life in the UK Test practice. If you are preparing in Canada, [CanadaPass](/canadian-citizenship-test/) helps you work through citizenship-test topics in manageable sessions.
 
 ## Build confidence through consistency
 

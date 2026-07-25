@@ -37,7 +37,7 @@ Candidates who pass first time almost always score **above 90% on their mock tes
 - Track which chapters you miss most and revise those specifically.
 - Don't book the real test until you're clearing **22 out of 24** consistently.
 
-[BritPass](/britpass/) mock tests match the real 24-question, 45-minute, 75%-to-pass format exactly, so the number you see in practice is the number that counts on the day.
+[BritPass](/life-in-the-uk-test/) mock tests match the real 24-question, 45-minute, 75%-to-pass format exactly, so the number you see in practice is the number that counts on the day.
 
 ## Before you book
 

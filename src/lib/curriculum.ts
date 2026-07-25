@@ -80,7 +80,7 @@ const britpass: Curriculum = {
   fullTest: { questionCount: 24, passMark: 18, minutes: 45 },
   chapters: [
     {
-      slug: "uk-values-life-in-the-uk-test",
+      slug: "british-values",
       name: "The values and principles of the UK",
       shortLabel: "Values & principles",
       icon: "⚖️",
@@ -150,7 +150,7 @@ const britpass: Curriculum = {
       ],
     },
     {
-      slug: "what-is-the-uk-life-in-the-uk-test",
+      slug: "what-is-the-uk",
       name: "What is the UK?",
       shortLabel: "What is the UK",
       icon: "🗺️",
@@ -187,7 +187,7 @@ const britpass: Curriculum = {
       ],
     },
     {
-      slug: "uk-history-life-in-the-uk-test",
+      slug: "history",
       name: "A long and illustrious history",
       shortLabel: "History",
       icon: "🏰",
@@ -239,7 +239,7 @@ const britpass: Curriculum = {
       ],
     },
     {
-      slug: "modern-uk-society-life-in-the-uk-test",
+      slug: "modern-society",
       name: "A modern, thriving society",
       shortLabel: "Modern society",
       icon: "🎭",
@@ -270,7 +270,7 @@ const britpass: Curriculum = {
       ],
     },
     {
-      slug: "uk-government-law-life-in-the-uk-test",
+      slug: "government-and-law",
       name: "The UK government, the law and your role",
       shortLabel: "Government & law",
       icon: "🏛️",
@@ -342,7 +342,7 @@ const canadapass: Curriculum = {
   fullTest: { questionCount: 20, passMark: 15, minutes: 30 },
   chapters: [
     {
-      slug: "citizenship-rights-canadian-citizenship-test",
+      slug: "rights-and-responsibilities",
       name: "Rights and responsibilities of citizenship",
       shortLabel: "Rights & responsibilities",
       icon: "🍁",
@@ -378,7 +378,7 @@ const canadapass: Curriculum = {
       ],
     },
     {
-      slug: "who-we-are-canadian-citizenship-test",
+      slug: "who-we-are",
       name: "Who we are",
       shortLabel: "Who we are",
       icon: "👥",
@@ -419,7 +419,7 @@ const canadapass: Curriculum = {
       ],
     },
     {
-      slug: "canada-history-canadian-citizenship-test",
+      slug: "history",
       name: "Canada's history",
       shortLabel: "History",
       icon: "📜",
@@ -455,7 +455,7 @@ const canadapass: Curriculum = {
       ],
     },
     {
-      slug: "canada-government-canadian-citizenship-test",
+      slug: "how-canada-is-governed",
       name: "How Canadians govern themselves",
       shortLabel: "Government",
       icon: "🏛️",
@@ -490,7 +490,7 @@ const canadapass: Curriculum = {
       ],
     },
     {
-      slug: "canada-symbols-canadian-citizenship-test",
+      slug: "symbols-and-regions",
       name: "Canadian symbols and regions",
       shortLabel: "Symbols & regions",
       icon: "🎽",

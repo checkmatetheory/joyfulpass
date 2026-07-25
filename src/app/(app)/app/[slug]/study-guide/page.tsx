@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getAllAppSlugs, getApp } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import DashboardBreadcrumb from "@/components/dashboard/DashboardBreadcrumb";
+import { chapterPath } from "@/lib/urls";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -58,7 +59,7 @@ export default async function StudyGuidePage({ params }: { params: Promise<{ slu
                 ))}
               </ul>
               <Link
-                href={`/${slug}/${chapter.slug}/`}
+                href={chapterPath(app, chapter.slug)}
                 className="mt-3 inline-block text-sm font-bold"
                 style={{ color: "var(--accent)" }}
               >

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { apps } from "@/lib/apps";
+import { examHub } from "@/lib/urls";
 import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -30,7 +31,7 @@ export default function AboutPage() {
         {apps.map((app) => (
           <li key={app.slug}>
             <span aria-hidden>{app.flagEmoji}</span>{" "}
-            <a href={`/${app.slug}/`} className="font-semibold hover:underline">
+            <a href={examHub(app)} className="font-semibold hover:underline">
               {app.name}
             </a>{" "}
             — {app.examName}
