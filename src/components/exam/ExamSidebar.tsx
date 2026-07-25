@@ -20,6 +20,7 @@ import {
   examHub,
   revisionNotesPath,
   studyGuidePath,
+  topicsPath,
 } from "@/lib/urls";
 
 type Item = {
@@ -40,7 +41,7 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
 
   const items: Item[] = [
     { label: "Overview", href: hub, Icon: OverviewIcon },
-    { label: "Topics", href: `${hub}#topics`, Icon: TopicsIcon },
+    { label: "Topics", href: topicsPath(app), Icon: TopicsIcon },
     { label: "Study guide", href: studyGuidePath(app), Icon: StudyGuideIcon },
     { label: "Revision notes", href: revisionNotesPath(app), Icon: RevisionIcon },
     { label: "Cheat sheet", href: cheatSheetPath(app), Icon: MockTestIcon },

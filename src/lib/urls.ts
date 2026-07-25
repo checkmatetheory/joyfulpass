@@ -15,6 +15,11 @@ export function examHub(app: AppRecord): string {
   return `/${app.examSlug}/`;
 }
 
+/** Topics index — the chapter directory: /life-in-the-uk-test/topics/ */
+export function topicsPath(app: AppRecord): string {
+  return `/${app.examSlug}/topics/`;
+}
+
 /** Chapter practice page (Template B): /life-in-the-uk-test/history/ */
 export function chapterPath(app: AppRecord, chapterSlug: string): string {
   return `/${app.examSlug}/${chapterSlug}/`;

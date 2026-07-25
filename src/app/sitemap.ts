@@ -12,6 +12,7 @@ import {
   studyGuidePath,
   testCentresPath,
   toolPath,
+  topicsPath,
 } from "@/lib/urls";
 import { SITE_URL } from "@/lib/site";
 
@@ -71,6 +72,17 @@ export default async function sitemap({
       changeFrequency: "weekly",
       priority: 1,
     },
+    // Topics index — the chapter directory.
+    ...(curriculum
+      ? [
+          {
+            url: `${SITE_URL}${topicsPath(app)}`,
+            lastModified: CONTENT_LAST_MODIFIED,
+            changeFrequency: "monthly" as const,
+            priority: 0.8,
+          },
+        ]
+      : []),
     // Chapter practice pages (Template B).
     ...(curriculum?.chapters.map((chapter) => ({
       url: `${SITE_URL}${chapterPath(app, chapter.slug)}`,

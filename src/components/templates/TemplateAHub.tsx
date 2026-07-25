@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { AppRecord } from "@/lib/apps";
 import type { Curriculum } from "@/lib/curriculum";
-import ChapterCard from "@/components/templates/ChapterCard";
 import FaqAccordion from "@/components/FaqAccordion";
 import DownloadCta from "@/components/DownloadCta";
 import CtaBanner from "@/components/CtaBanner";
@@ -20,6 +19,7 @@ import {
   chapterPath,
   revisionNotesPath,
   studyGuidePath,
+  topicsPath,
 } from "@/lib/urls";
 
 type Props = {
@@ -78,7 +78,7 @@ export default function TemplateAHub({ app, curriculum }: Props) {
               title="Topics"
               description="Practise one chapter at a time, with questions only from the topic you pick."
               ctaLabel="View topics"
-              href="#topics"
+              href={topicsPath(app)}
             />
             <DashboardCard
               icon={<MistakesIcon />}
@@ -119,19 +119,6 @@ export default function TemplateAHub({ app, curriculum }: Props) {
               />
             </div>
           </div>
-
-          {/* Topics deep-dive — the chapter grid the "Topics" card points to */}
-          <section id="topics" className="mt-12 scroll-mt-6">
-            <h2 className="text-2xl font-bold">Practise by topic</h2>
-            <p className="mt-2 max-w-2xl opacity-60">
-              Each chapter of the {curriculum.testName} has its own practice quiz.
-            </p>
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {curriculum.chapters.map((chapter, i) => (
-                <ChapterCard key={chapter.slug} chapter={chapter} app={app} number={i + 1} />
-              ))}
-            </div>
-          </section>
 
           {/* Branded, per-app download banner */}
           <section id="download" className="mt-12 scroll-mt-6">
