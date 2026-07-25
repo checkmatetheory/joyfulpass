@@ -45,6 +45,16 @@ export type Chapter = {
   icon: string;
   /** One-sentence intro shown on the Template A card and Template B header. */
   intro: string;
+  /**
+   * Original teaching summary (2-4 sentences) for the public study-guide page.
+   * Written from common-knowledge facts — NOT copied from the official handbook.
+   */
+  summary: string;
+  /**
+   * Concise, original recall facts. Power the revision-notes bullets and the
+   * cheat-sheet. Each is a standalone fact a candidate should know.
+   */
+  keyFacts: string[];
   cores: Core[];
 };
 
@@ -86,6 +96,14 @@ const britpass: Curriculum = {
       icon: "⚖️",
       intro:
         "The fundamental principles of British life and the responsibilities that come with settling in the UK.",
+      summary:
+        "This chapter sets out the shared values that underpin life in the UK and what is expected of people who settle here. It covers the principles that hold British society together and the everyday responsibilities that come with building a life in the country.",
+      keyFacts: [
+        "The fundamental British values are democracy, the rule of law, individual liberty, and mutual respect and tolerance of those with different faiths and beliefs.",
+        "Residents are expected to respect and obey the law, treat others with fairness, and look after themselves and their family.",
+        "Passing the Life in the UK Test is required for Indefinite Leave to Remain (ILR) and for British citizenship.",
+        "At a citizenship ceremony you pledge to respect the rights, freedoms and laws of the UK.",
+      ],
       cores: [
         {
           slug: "fundamental-values",
@@ -155,6 +173,14 @@ const britpass: Curriculum = {
       shortLabel: "What is the UK",
       icon: "🗺️",
       intro: "The nations, capitals and make-up of the United Kingdom.",
+      summary:
+        "The United Kingdom is made up of four nations, each with its own capital and character. This chapter explains what the UK is, how it differs from 'Great Britain', and the basic geography every candidate should be able to recognise.",
+      keyFacts: [
+        "The UK is made up of England, Scotland, Wales and Northern Ireland.",
+        "'Great Britain' means England, Scotland and Wales only — it does not include Northern Ireland.",
+        "The capital cities are London (England), Edinburgh (Scotland), Cardiff (Wales) and Belfast (Northern Ireland).",
+        "The Isle of Man and the Channel Islands are Crown Dependencies, not part of the UK.",
+      ],
       cores: [
         {
           slug: "nations-and-capitals",
@@ -193,6 +219,15 @@ const britpass: Curriculum = {
       icon: "🏰",
       intro:
         "From the Norman Conquest to the modern era — the events, people and dates that shaped Britain.",
+      summary:
+        "British history runs from the Norman Conquest of 1066 through the Middle Ages, the Tudors and Stuarts, the Industrial Revolution and two World Wars. This chapter picks out the events, dates and figures most likely to come up on the test.",
+      keyFacts: [
+        "The Battle of Hastings (1066) began Norman rule under William the Conqueror.",
+        "Magna Carta (1215) established the principle that the monarch was subject to the law.",
+        "The Tudors ruled from 1485; Henry VIII broke with Rome and founded the Church of England.",
+        "The first Union Flag was created in 1606, joining the crowns of England and Scotland.",
+        "William Shakespeare (1564–1616) is the most celebrated English playwright and poet.",
+      ],
       cores: [
         {
           slug: "early-britain",
@@ -244,6 +279,14 @@ const britpass: Curriculum = {
       shortLabel: "Modern society",
       icon: "🎭",
       intro: "Culture, traditions, sport and the customs of everyday life across the UK.",
+      summary:
+        "Modern British society is diverse and shaped by its customs, sports, arts and traditions. This chapter covers the everyday culture of the UK — from patron saints and national days to the sports and institutions people care about.",
+      keyFacts: [
+        "The patron saints are St George (England), St Andrew (Scotland), St David (Wales) and St Patrick (Northern Ireland).",
+        "Cricket, football, rugby and tennis are traditional British sports; Wimbledon is the world's oldest tennis tournament.",
+        "The UK has a long tradition of poetry, theatre, music and film, from Shakespeare to the present day.",
+        "Widely observed dates include Bonfire Night (5 November) and Remembrance Day (11 November).",
+      ],
       cores: [
         {
           slug: "customs-and-culture",
@@ -275,6 +318,14 @@ const britpass: Curriculum = {
       shortLabel: "Government & law",
       icon: "🏛️",
       intro: "How the UK is governed, how laws are made, and the role you play as a resident.",
+      summary:
+        "The UK is a parliamentary democracy and a constitutional monarchy. This chapter explains how Parliament, government and the courts work, and the part residents play through voting, jury service and respecting the law.",
+      keyFacts: [
+        "The UK is a constitutional monarchy: the monarch is head of state, while Parliament makes the laws.",
+        "MPs are elected to the House of Commons; the House of Lords is the second, unelected chamber.",
+        "A general election is held at least every five years, and you must register in order to vote.",
+        "The most serious criminal cases are tried in the Crown Court before a judge and jury.",
+      ],
       cores: [
         {
           slug: "how-government-works",
@@ -347,6 +398,14 @@ const canadapass: Curriculum = {
       shortLabel: "Rights & responsibilities",
       icon: "🍁",
       intro: "The rights Canadian citizens enjoy and the responsibilities that come with them.",
+      summary:
+        "Canadian citizenship carries both rights and responsibilities. This chapter sets out the freedoms protected by the Charter of Rights and Freedoms and the duties — like obeying the law and serving on a jury — that citizens share.",
+      keyFacts: [
+        "The Canadian Charter of Rights and Freedoms (1982) is part of the Constitution.",
+        "Responsibilities of citizenship include obeying the law, serving on a jury, voting, and helping others in the community.",
+        "Fundamental freedoms include freedom of conscience and religion, thought and expression, and peaceful assembly.",
+        "Canadian citizens have the right to enter, remain in, and leave Canada, and to live and work anywhere in the country.",
+      ],
       cores: [
         {
           slug: "rights-and-duties",
@@ -383,6 +442,14 @@ const canadapass: Curriculum = {
       shortLabel: "Who we are",
       icon: "👥",
       intro: "Canada's peoples, languages and the make-up of the country today.",
+      summary:
+        "Canada is built on three founding peoples and two official languages, and is home to a highly diverse population. This chapter covers who Canadians are and the roots of the country's identity.",
+      keyFacts: [
+        "Canada's three founding peoples are Aboriginal, French and British.",
+        "The two official languages are English and French, with equal status in the Government of Canada.",
+        "Aboriginal peoples are grouped as First Nations, Inuit and Métis.",
+        "Quebec is the mainly French-speaking province, where most French Canadians live.",
+      ],
       cores: [
         {
           slug: "peoples-and-languages",
@@ -424,6 +491,14 @@ const canadapass: Curriculum = {
       shortLabel: "History",
       icon: "📜",
       intro: "Confederation, the building of the nation, and the events that shaped modern Canada.",
+      summary:
+        "Canada's history runs from its Aboriginal peoples and early European settlement to Confederation in 1867 and the building of a modern nation. This chapter covers the milestones that shaped the country.",
+      keyFacts: [
+        "Confederation created the Dominion of Canada on 1 July 1867, now celebrated as Canada Day.",
+        "Sir John A. Macdonald was Canada's first Prime Minister.",
+        "The Canadian Pacific Railway, completed in 1885, linked the country from coast to coast.",
+        "Canadians made major sacrifices in both World Wars; the Battle of Vimy Ridge (1917) is a defining moment.",
+      ],
       cores: [
         {
           slug: "confederation",
@@ -460,6 +535,14 @@ const canadapass: Curriculum = {
       shortLabel: "Government",
       icon: "🏛️",
       intro: "Canada's system of government, elections, and the three levels of authority.",
+      summary:
+        "Canada is a federal state, a parliamentary democracy and a constitutional monarchy. This chapter explains the three levels of government, how elections work, and who does what.",
+      keyFacts: [
+        "Canada is a federal state, a parliamentary democracy and a constitutional monarchy.",
+        "The capital of Canada is Ottawa.",
+        "There are three levels of government: federal, provincial or territorial, and municipal.",
+        "Parliament has three parts: the Sovereign (represented by the Governor General), the Senate, and the House of Commons.",
+      ],
       cores: [
         {
           slug: "system-of-government",
@@ -495,6 +578,14 @@ const canadapass: Curriculum = {
       shortLabel: "Symbols & regions",
       icon: "🎽",
       intro: "The flag, the anthem, national sports and the regions that make up Canada.",
+      summary:
+        "From the maple leaf to national sports and the country's five regions, Canada's symbols express its identity. This chapter covers the flag, anthem, emblems and geography candidates should know.",
+      keyFacts: [
+        "The national flag, adopted in 1965, features a single red maple leaf on a white square between two red bands.",
+        "Canada's official national sports are ice hockey (winter) and lacrosse (summer).",
+        "The national anthem is 'O Canada'.",
+        "Canada has five regions: the Atlantic Provinces, Central Canada, the Prairie Provinces, the West Coast, and the Northern Territories.",
+      ],
       cores: [
         {
           slug: "symbols-and-sport",

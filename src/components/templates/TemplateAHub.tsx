@@ -10,8 +10,13 @@ import AppIconBadge from "@/components/AppIconBadge";
 import FlagAccentBar from "@/components/FlagAccentBar";
 import DashboardCard from "@/components/dashboard/DashboardCard";
 import QuizPanel from "@/components/practice/QuizPanel";
-import { MockTestIcon, StudyGuideIcon, TopicsIcon } from "@/components/dashboard/icons";
-import { chapterPath, dashboard } from "@/lib/urls";
+import { MockTestIcon, RevisionIcon, StudyGuideIcon, TopicsIcon } from "@/components/dashboard/icons";
+import {
+  cheatSheetPath,
+  chapterPath,
+  revisionNotesPath,
+  studyGuidePath,
+} from "@/lib/urls";
 
 type Props = {
   app: AppRecord;
@@ -128,9 +133,9 @@ export default function TemplateAHub({ app, curriculum }: Props) {
           <DashboardCard
             icon={<StudyGuideIcon />}
             title="Study guide & notes"
-            description="Read the essentials, then track your progress across every chapter."
-            ctaLabel="Open the app"
-            href={dashboard(app)}
+            description="Read the full study guide, quick revision notes, or a one-page cheat sheet."
+            ctaLabel="Read the guide"
+            href={studyGuidePath(app)}
           />
         </div>
       </section>
@@ -147,6 +152,35 @@ export default function TemplateAHub({ app, curriculum }: Props) {
           {curriculum.chapters.map((chapter, i) => (
             <ChapterCard key={chapter.slug} chapter={chapter} app={app} number={i + 1} />
           ))}
+        </div>
+      </section>
+
+      {/* Free study resources — the second keyword surface, internally linked */}
+      <section className="mt-14">
+        <h2 className="text-2xl font-bold">Free study resources</h2>
+        <FlagAccentBar colors={app.theme.flagColors} className="mt-3" />
+        <div className="mt-6 grid gap-5 md:grid-cols-3">
+          <DashboardCard
+            icon={<StudyGuideIcon />}
+            title="Study guide"
+            description={`The full ${curriculum.testName}, explained chapter by chapter.`}
+            ctaLabel="Read the guide"
+            href={studyGuidePath(app)}
+          />
+          <DashboardCard
+            icon={<RevisionIcon />}
+            title="Revision notes"
+            description="The key facts for every chapter, condensed for a fast recap."
+            ctaLabel="Open notes"
+            href={revisionNotesPath(app)}
+          />
+          <DashboardCard
+            icon={<MockTestIcon />}
+            title="Cheat sheet"
+            description="Every high-yield fact on a single page — perfect to cram."
+            ctaLabel="View cheat sheet"
+            href={cheatSheetPath(app)}
+          />
         </div>
       </section>
 

@@ -44,6 +44,17 @@ const organizationJsonLd = {
   sameAs: [],
 };
 
+// WebSite schema helps search engines and AI assistants understand the site as
+// a single entity (and enables a brand knowledge panel over time).
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+  publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -58,6 +69,7 @@ export default function RootLayout({
         <ThemeProvider>
           <StyledComponentsRegistry>
             <JsonLd data={organizationJsonLd} />
+            <JsonLd data={websiteJsonLd} />
             <Analytics />
             {/* Marketing chrome lives in (site); the dashboard in (app) brings its
                 own shell — both share this single root (html/body/providers). */}

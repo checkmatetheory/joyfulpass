@@ -5,6 +5,7 @@ import { getCurriculum } from "@/lib/curriculum";
 import TemplateAHub from "@/components/templates/TemplateAHub";
 import JsonLd from "@/components/JsonLd";
 import { examHub } from "@/lib/urls";
+import { breadcrumbJsonLd } from "@/lib/schema";
 import { SITE_URL } from "@/lib/site";
 
 export const dynamicParams = false;
@@ -58,10 +59,16 @@ export default async function ExamHubPage({
     provider: { "@type": "Organization", name: "Joyful", sameAs: SITE_URL },
   };
 
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Joyful", path: "/" },
+    { name: curriculum.testName, path: examHub(app) },
+  ]);
+
   return (
     <>
       <JsonLd data={faqJsonLd} />
       <JsonLd data={courseJsonLd} />
+      <JsonLd data={breadcrumb} />
       <TemplateAHub app={app} curriculum={curriculum} />
     </>
   );

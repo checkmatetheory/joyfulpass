@@ -2,7 +2,17 @@ import type { MetadataRoute } from "next";
 import { apps, getApp } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import { getAllPosts } from "@/lib/blog";
-import { blogIndex, blogPost, chapterPath, examHub, testCentresPath, toolPath } from "@/lib/urls";
+import {
+  blogIndex,
+  blogPost,
+  chapterPath,
+  cheatSheetPath,
+  examHub,
+  revisionNotesPath,
+  studyGuidePath,
+  testCentresPath,
+  toolPath,
+} from "@/lib/urls";
 import { SITE_URL } from "@/lib/site";
 
 // One sitemap file per silo (hub + each app), auto-assembled by Next.js into
@@ -68,6 +78,30 @@ export default async function sitemap({
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })) ?? []),
+    // Public study surfaces — the second keyword surface (study guide / revision
+    // notes / cheat sheet), each an indexable page targeting distinct searches.
+    ...(curriculum
+      ? [
+          {
+            url: `${SITE_URL}${studyGuidePath(app)}`,
+            lastModified: CONTENT_LAST_MODIFIED,
+            changeFrequency: "monthly" as const,
+            priority: 0.8,
+          },
+          {
+            url: `${SITE_URL}${revisionNotesPath(app)}`,
+            lastModified: CONTENT_LAST_MODIFIED,
+            changeFrequency: "monthly" as const,
+            priority: 0.7,
+          },
+          {
+            url: `${SITE_URL}${cheatSheetPath(app)}`,
+            lastModified: CONTENT_LAST_MODIFIED,
+            changeFrequency: "monthly" as const,
+            priority: 0.7,
+          },
+        ]
+      : []),
     { url: `${SITE_URL}${blogIndex(app)}`, changeFrequency: "weekly", priority: 0.7 },
     ...posts.map((post) => ({
       url: `${SITE_URL}${blogPost(app, post.slug)}`,

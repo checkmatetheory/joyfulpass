@@ -40,6 +40,21 @@ export function testCentresPath(app: AppRecord): string {
   return `/${app.examSlug}/test-centres/`;
 }
 
+/** Public study guide: /life-in-the-uk-test/study-guide/ */
+export function studyGuidePath(app: AppRecord): string {
+  return `/${app.examSlug}/study-guide/`;
+}
+
+/** Public revision notes: /life-in-the-uk-test/revision-notes/ */
+export function revisionNotesPath(app: AppRecord): string {
+  return `/${app.examSlug}/revision-notes/`;
+}
+
+/** Public cheat sheet: /life-in-the-uk-test/cheat-sheet/ */
+export function cheatSheetPath(app: AppRecord): string {
+  return `/${app.examSlug}/cheat-sheet/`;
+}
+
 /** Authenticated dashboard (noindex, brand-keyed): /app/britpass/ */
 export function dashboard(app: AppRecord): string {
   return `/app/${app.slug}/`;

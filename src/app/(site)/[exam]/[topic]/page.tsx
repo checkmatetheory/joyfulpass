@@ -5,7 +5,8 @@ import { getCurriculum, getChapter } from "@/lib/curriculum";
 import { toolComponents } from "@/components/tools/registry";
 import TemplateBChapter from "@/components/templates/TemplateBChapter";
 import JsonLd from "@/components/JsonLd";
-import { chapterPath, toolPath } from "@/lib/urls";
+import { chapterPath, examHub, toolPath } from "@/lib/urls";
+import { breadcrumbJsonLd } from "@/lib/schema";
 import { SITE_URL } from "@/lib/site";
 
 export const dynamicParams = false;
@@ -76,9 +77,15 @@ export default async function ExamTopicPage({
       about: chapter.intro,
       educationalLevel: "citizenship test preparation",
     };
+    const breadcrumb = breadcrumbJsonLd([
+      { name: "Joyful", path: "/" },
+      { name: curriculum.testName, path: examHub(app) },
+      { name: chapter.shortLabel, path: chapterPath(app, chapter.slug) },
+    ]);
     return (
       <>
         <JsonLd data={quizJsonLd} />
+        <JsonLd data={breadcrumb} />
         <TemplateBChapter app={app} curriculum={curriculum} chapter={chapter} />
       </>
     );
