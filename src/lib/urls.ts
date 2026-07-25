@@ -64,3 +64,8 @@ export function cheatSheetPath(app: AppRecord): string {
 export function dashboard(app: AppRecord): string {
   return `/app/${app.slug}/`;
 }
+
+/** A section within the dashboard flow, e.g. dashboardSection(app, "mock-tests"). */
+export function dashboardSection(app: AppRecord, section: string): string {
+  return `/app/${app.slug}/${section}/`;
+}

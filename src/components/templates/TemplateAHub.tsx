@@ -17,6 +17,7 @@ import { HomeIcon } from "@/components/dashboard/icons";
 import {
   cheatSheetPath,
   chapterPath,
+  dashboardSection,
   revisionNotesPath,
   studyGuidePath,
   topicsPath,
@@ -70,8 +71,8 @@ export default function TemplateAHub({ app, curriculum }: Props) {
               icon={<MockTestIcon />}
               title="Mock Test"
               description="Sit the real format against the clock — the best indicator of test-day readiness."
-              ctaLabel="Get the app"
-              href="#download"
+              ctaLabel="View mock tests"
+              href={dashboardSection(app, "mock-tests")}
             />
             <DashboardCard
               icon={<TopicsIcon />}
@@ -84,8 +85,8 @@ export default function TemplateAHub({ app, curriculum }: Props) {
               icon={<MistakesIcon />}
               title="Mistakes Test"
               description="Retry the questions you got wrong before until they stick."
-              ctaLabel="Get the app"
-              href="#download"
+              ctaLabel="Review mistakes"
+              href={dashboardSection(app, "mistakes")}
             />
           </div>
 
