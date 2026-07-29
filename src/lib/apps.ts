@@ -311,6 +311,90 @@ export const apps: AppRecord[] = [
     metaDescription:
       "CanadaPass helps you prepare for the Canadian citizenship test with practice questions based on Discover Canada, progress tracking, and a directory of test locations.",
   },
+  {
+    slug: "germanpass",
+    examSlug: "einbuergerungstest",
+    name: "GermanPass",
+    shortName: "GermanPass",
+    tagline: "Pass the Einbürgerungstest with confidence",
+    flagEmoji: "🇩🇪",
+    country: "Germany",
+    examName: "Einbürgerungstest",
+    theme: {
+      accent: "#1C1C1C", // German official black
+      accentDark: "#000000",
+      accentSoft: "#FCE9C8", // pale gold tint
+      accentForeground: "#FFFFFF",
+      accentSecondary: "#DD0000", // flag red
+      flagColors: ["#000000", "#DD0000", "#FFCE00"], // black, red, gold
+      gradientFrom: "#DD0000",
+      gradientTo: "#000000",
+    },
+    iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1UJrMy7ZY5I687eQlTBtkWrgEyU9CuznpoxVA",
+    hero: {
+      headline: "Everything you need to pass the Einbürgerungstest",
+      subheadline:
+        "Free practice questions and mock tests for the German naturalisation test, built from the official 300-question catalogue — so you learn exactly what comes up and walk in ready.",
+    },
+    appStoreUrl: null,
+    playStoreUrl: null,
+    officialSource: {
+      name: "BAMF — Einbürgerungstest",
+      url: "https://www.bamf.de/EN/Themen/Integration/ZugewanderteTeilnehmende/Einbuergerung/einbuergerung-node.html",
+    },
+    stats: [
+      { label: "Questions in the catalogue", value: "300+" },
+      { label: "To pass", value: "17 / 33" },
+      { label: "Time allowed", value: "60 min" },
+    ],
+    tools: [],
+    trustHeadline: "You've got this",
+    trustBody:
+      "Whatever your German level, study at your own pace with practice questions built from the official Einbürgerungstest catalogue — so nothing on test day catches you off guard.",
+    features: [
+      {
+        title: "Practice built for the real test",
+        body: "Mock tests mirror the actual 33-question, 60-minute format, drawn straight from the official catalogue of 300 questions.",
+        ctaLabel: "Start practicing",
+        mockup: "quiz",
+      },
+      {
+        title: "Learn by theme",
+        body: "Politics and democracy, history and responsibility, people and society, and your federal state — grouped so you can focus on what you find hardest.",
+        ctaLabel: "See your stats",
+        mockup: "progress",
+      },
+      {
+        title: "Know exactly what's tested",
+        body: "Every question is based on the official catalogue, with a clear explanation for each answer, so there are no surprises.",
+        ctaLabel: "Explore topics",
+        mockup: "content",
+      },
+    ],
+    testimonials: [],
+    faqs: [
+      {
+        question: "How many questions are on the Einbürgerungstest?",
+        answer:
+          "The Einbürgerungstest has 33 multiple-choice questions — 30 general questions plus 3 about your federal state (Bundesland). You need 17 correct within 60 minutes to pass.",
+      },
+      {
+        question: "Where do the questions come from?",
+        answer:
+          "Every question is drawn from the official catalogue of 300 general questions, plus 10 questions for each federal state, published by the BAMF. GermanPass practice questions are based on this catalogue.",
+      },
+      {
+        question: "Is GermanPass affiliated with the German government or BAMF?",
+        answer:
+          "No. GermanPass is an independent study app. Our practice is based on the official public question catalogue, and we link to the BAMF for authoritative guidance and booking.",
+      },
+    ],
+    blogCategory: "germanpass",
+    hasTestCenters: false,
+    languages: [],
+    metaDescription:
+      "GermanPass helps you prepare for the Einbürgerungstest (German naturalisation test) with free practice questions and mock tests based on the official 300-question catalogue.",
+  },
 ];
 
 export function getApp(slug: string): AppRecord | undefined {

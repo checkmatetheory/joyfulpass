@@ -635,7 +635,236 @@ const canadapass: Curriculum = {
   ],
 };
 
-const curricula: Curriculum[] = [britpass, canadapass];
+// ---------------------------------------------------------------------------
+// GermanPass — Einbürgerungstest (German naturalisation test)
+// ---------------------------------------------------------------------------
+const germanpass: Curriculum = {
+  appSlug: "germanpass",
+  testSlug: "einbuergerungstest",
+  testName: "Einbürgerungstest",
+  intro:
+    "Free Einbürgerungstest practice, organised by theme — politics and democracy, history, society, and your federal state. Every page has a real quiz, so you can see exactly where you stand before you book your test.",
+  facts: { questions: "33 questions", toPass: "17 to pass", timeLimit: "60 minutes" },
+  fullTest: { questionCount: 33, passMark: 17, minutes: 60 },
+  chapters: [
+    {
+      slug: "politics-and-democracy",
+      name: "Politics and democracy",
+      shortLabel: "Politics & democracy",
+      icon: "🏛️",
+      intro: "How Germany is governed — its democratic, federal system and how elections work.",
+      summary:
+        "This theme covers how Germany is governed: its democratic and federal system, the main institutions, and how elections work. It is the largest part of the catalogue, so it is worth knowing well.",
+      keyFacts: [
+        "Germany is a democratic, federal, social and constitutional state (Rechtsstaat).",
+        "The Bundestag is the elected national parliament; the Bundesrat represents the 16 federal states.",
+        "Bundestag elections are normally held every four years.",
+        "The Chancellor leads the federal government; the Federal President is the head of state.",
+      ],
+      cores: [
+        {
+          slug: "how-germany-is-governed",
+          name: "How Germany is governed",
+          questions: [
+            {
+              id: "de-pol-1",
+              prompt: "What kind of state is the Federal Republic of Germany?",
+              options: [
+                "A monarchy",
+                "A democratic and federal state",
+                "A one-party state",
+                "A dictatorship",
+              ],
+              answer: 1,
+              explanation:
+                "Germany is a democratic, federal, social and constitutional state (Rechtsstaat).",
+            },
+            {
+              id: "de-pol-2",
+              prompt: "What is the German national parliament called?",
+              options: ["The Bundesrat", "The Bundestag", "The Reichstag", "The Landtag"],
+              answer: 1,
+              explanation:
+                "The Bundestag is the elected national parliament. The Reichstag is the Berlin building where it meets.",
+            },
+            {
+              id: "de-pol-3",
+              prompt: "How often are Bundestag elections normally held?",
+              options: ["Every year", "Every four years", "Every six years", "Every ten years"],
+              answer: 1,
+              explanation: "Members of the Bundestag are normally elected every four years.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      slug: "history",
+      name: "History and responsibility",
+      shortLabel: "History",
+      icon: "📜",
+      intro:
+        "Modern German history and the responsibility that comes with it — the Nazi era, division, and reunification.",
+      summary:
+        "This theme covers modern German history and the responsibility that comes with it — from the National Socialist era and the Second World War to the division of Germany and reunification in 1990.",
+      keyFacts: [
+        "8 May 1945 marks the end of the Second World War in Europe and of the National Socialist dictatorship.",
+        "After the war Germany was divided into East (GDR) and West (FRG).",
+        "The Berlin Wall was built in 1961 and fell on 9 November 1989.",
+        "Germany was reunified on 3 October 1990 — the Day of German Unity.",
+      ],
+      cores: [
+        {
+          slug: "modern-german-history",
+          name: "Modern German history",
+          questions: [
+            {
+              id: "de-his-1",
+              prompt: "In which year was Germany reunified?",
+              options: ["1945", "1961", "1989", "1990"],
+              answer: 3,
+              explanation:
+                "Germany was officially reunified on 3 October 1990, now celebrated as the Day of German Unity.",
+            },
+            {
+              id: "de-his-2",
+              prompt: "What does 8 May 1945 mark in Germany?",
+              options: [
+                "The building of the Berlin Wall",
+                "The end of the Second World War in Europe",
+                "German reunification",
+                "The founding of the EU",
+              ],
+              answer: 1,
+              explanation:
+                "8 May 1945 marks the end of the Second World War in Europe and of the National Socialist dictatorship.",
+            },
+          ],
+        },
+        {
+          slug: "division-and-reunification",
+          name: "Division & reunification",
+          locked: true,
+          questions: [
+            {
+              id: "de-his-3",
+              prompt: "When was the Berlin Wall built?",
+              options: ["1949", "1961", "1971", "1989"],
+              answer: 1,
+              explanation: "The Berlin Wall was built in 1961 and fell on 9 November 1989.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      slug: "society",
+      name: "People and society",
+      shortLabel: "Society",
+      icon: "🤝",
+      intro: "The rights, freedoms and everyday principles of life in Germany.",
+      summary:
+        "This theme covers the rights, freedoms and everyday principles of life in Germany, grounded in the Basic Law (Grundgesetz) and the values of a free, pluralistic society.",
+      keyFacts: [
+        "Article 1 of the Basic Law states that human dignity is inviolable.",
+        "Fundamental rights include freedom of expression, faith and religion, and equality before the law.",
+        "Germany has freedom of the press and freedom of assembly.",
+        "Men and women have equal rights under the Basic Law.",
+      ],
+      cores: [
+        {
+          slug: "rights-and-freedoms",
+          name: "Rights and freedoms",
+          questions: [
+            {
+              id: "de-soc-1",
+              prompt: "What does Article 1 of the German Basic Law (Grundgesetz) guarantee?",
+              options: [
+                "Freedom of movement",
+                "That human dignity is inviolable",
+                "The right to bear arms",
+                "Free healthcare for all",
+              ],
+              answer: 1,
+              explanation:
+                "Article 1 of the Grundgesetz states that human dignity is inviolable — a founding principle of the German constitution.",
+            },
+            {
+              id: "de-soc-2",
+              prompt: "Which of these is a fundamental right in Germany?",
+              options: [
+                "A duty to vote for a set party",
+                "Freedom of faith and religion",
+                "Compulsory party membership",
+                "State-approved newspapers only",
+              ],
+              answer: 1,
+              explanation:
+                "Freedom of faith, conscience and religion is a fundamental right protected by the Basic Law.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      slug: "federal-states",
+      name: "Your federal state",
+      shortLabel: "Federal states",
+      icon: "🗺️",
+      intro: "Germany's 16 federal states (Bundesländer) and the state-specific part of the test.",
+      summary:
+        "Germany is a federal country of 16 states (Bundesländer), each with its own government. The test includes 3 questions specific to the state where you take it.",
+      keyFacts: [
+        "Germany has 16 federal states (Bundesländer).",
+        "Berlin is the capital of Germany and is itself a city-state.",
+        "Each federal state has its own parliament (Landtag) and state government.",
+        "3 of the 33 test questions are about your own federal state.",
+      ],
+      cores: [
+        {
+          slug: "the-bundeslaender",
+          name: "The Bundesländer",
+          questions: [
+            {
+              id: "de-fed-1",
+              prompt: "How many federal states (Bundesländer) does Germany have?",
+              options: ["9", "13", "16", "20"],
+              answer: 2,
+              explanation:
+                "Germany is made up of 16 federal states (Bundesländer), each with its own state government.",
+            },
+            {
+              id: "de-fed-2",
+              prompt: "What is the capital of Germany?",
+              options: ["Munich", "Hamburg", "Frankfurt", "Berlin"],
+              answer: 3,
+              explanation:
+                "Berlin is the capital of Germany and is also one of the 16 federal states (a city-state).",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  about:
+    "The Einbürgerungstest is a test of 33 multiple-choice questions — 30 general questions and 3 about your federal state (Bundesland). You need 17 correct within 60 minutes to pass. Every question comes from the official public catalogue of 300 general questions (plus 10 per federal state) published by the BAMF. There is no essay and no spoken element — it is entirely multiple choice.",
+  prep: [
+    {
+      title: "Learn the catalogue by theme",
+      body: "The 300 official questions are grouped into a few themes. Work through them theme by theme and use the quiz on each page to check what's actually sticking.",
+    },
+    {
+      title: "Practise full mock tests",
+      body: "Once you're comfortable, sit full 33-question mock tests against the 60-minute clock. Aim to score well above 17 before you book.",
+    },
+    {
+      title: "Book through an approved centre",
+      body: "You take the Einbürgerungstest at an approved centre such as a Volkshochschule (VHS). Confirm current details with the BAMF and your local Einbürgerungsbehörde.",
+    },
+  ],
+};
+
+const curricula: Curriculum[] = [britpass, canadapass, germanpass];
 
 export function getCurriculum(appSlug: string): Curriculum | undefined {
   return curricula.find((c) => c.appSlug === appSlug);
