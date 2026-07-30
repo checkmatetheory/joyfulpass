@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import type { AppRecord } from "@/lib/apps";
-import { LOGO_PURPLE_URL } from "@/lib/site";
+import { LOGO_PURPLE_URL, LOGO_URL } from "@/lib/site";
 import { useTheme } from "@/components/ThemeProvider";
 import {
   AccountIcon,
@@ -69,12 +69,24 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
   return (
     <aside className="flex h-full w-60 shrink-0 flex-col border-r border-black/10 bg-[var(--surface-cream)] px-3 py-5 dark:border-white/10">
       <Link href="/" className="flex items-center px-2" aria-label="Joyful home">
+        {/* Purple wordmark on the light (cream) sidebar; white wordmark in dark
+            mode where purple-on-dark reads poorly. Toggled via the `.dark` class
+            so there's no hydration flash. */}
         <Image
           src={LOGO_PURPLE_URL}
-          alt="Joyful"
+          alt=""
           width={360}
           height={110}
-          className="h-8 w-auto"
+          className="h-8 w-auto dark:hidden"
+          style={{ width: "auto" }}
+          priority
+        />
+        <Image
+          src={LOGO_URL}
+          alt=""
+          width={360}
+          height={110}
+          className="hidden h-8 w-auto dark:block"
           style={{ width: "auto" }}
           priority
         />

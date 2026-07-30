@@ -2,9 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { apps } from "@/lib/apps";
 import { blogIndex, examHub, testCentresPath } from "@/lib/urls";
-import { SITE_NAME } from "@/lib/site";
-
-const LOGO_URL = "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1k0q8x3P0iROj6VeEqT1Kpnm728XoNfrSPHyQ";
+import { LOGO_URL, SITE_NAME } from "@/lib/site";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -98,6 +96,9 @@ export default function Footer() {
           </Link>
           <Link href="/accessibility-statement/" className="hover:text-white">
             Accessibility statement
+          </Link>
+          <Link href="/site-map/" className="hover:text-white">
+            Sitemap
           </Link>
           <span>
             © {year} {SITE_NAME}. Not affiliated with any government body.
