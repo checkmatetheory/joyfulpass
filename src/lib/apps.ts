@@ -399,7 +399,7 @@ export const apps: AppRecord[] = [
       },
     ],
     blogCategory: "germanpass",
-    hasTestCenters: false,
+    hasTestCenters: true,
     languages: [],
     metaDescription:
       "GermanPass helps you prepare for the Einbürgerungstest (German naturalisation test) with free practice questions and mock tests based on the official 300-question catalogue.",

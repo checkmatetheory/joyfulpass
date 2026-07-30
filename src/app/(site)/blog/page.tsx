@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BlogCard from "@/components/BlogCard";
+import { apps } from "@/lib/apps";
 import { getAllPosts } from "@/lib/blog";
+import { blogIndex } from "@/lib/urls";
 import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -19,15 +21,15 @@ export default function HubBlogIndexPage() {
         <h1 className="text-4xl font-extrabold sm:text-5xl">The Joyful Blog</h1>
         <p className="max-w-md opacity-80 lg:text-right">
           Cross-app comparisons and editorial standards. Looking for exam-specific guidance? Visit
-          the blog inside each app — for example the{" "}
-          <Link href="/britpass/blog/" className="font-semibold hover:underline">
-            BritPass blog
-          </Link>{" "}
-          or the{" "}
-          <Link href="/canadapass/blog/" className="font-semibold hover:underline">
-            CanadaPass blog
-          </Link>
-          .
+          the blog inside each app:{" "}
+          {apps.map((app, i) => (
+            <span key={app.slug}>
+              <Link href={blogIndex(app)} className="font-semibold hover:underline">
+                {app.name} blog
+              </Link>
+              {i < apps.length - 1 ? (i === apps.length - 2 ? " or " : ", ") : "."}
+            </span>
+          ))}
         </p>
       </header>
 

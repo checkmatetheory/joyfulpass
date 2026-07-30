@@ -81,6 +81,45 @@ const testCenters: Record<string, TestCenter[]> = {
       address: "1801 Hollis Street, Halifax, NS B3J 3N4",
     },
   ],
+  germanpass: [
+    {
+      name: "Volkshochschule Berlin Mitte",
+      city: "Berlin",
+      region: "Berlin",
+      address: "Antonstraße 37, 13347 Berlin",
+      notes: "Register online or in person for the next Einbürgerungstest date.",
+    },
+    {
+      name: "Münchner Volkshochschule",
+      city: "München",
+      region: "Bavaria",
+      address: "Gasteig HP8, Hans-Preißinger-Straße 8, 81379 München",
+    },
+    {
+      name: "Volkshochschule Hamburg",
+      city: "Hamburg",
+      region: "Hamburg",
+      address: "Schanzenstraße 75, 20357 Hamburg",
+    },
+    {
+      name: "Volkshochschule Köln",
+      city: "Köln",
+      region: "North Rhine-Westphalia",
+      address: "Cäcilienstraße 29-33, 50667 Köln",
+    },
+    {
+      name: "Volkshochschule Frankfurt am Main",
+      city: "Frankfurt am Main",
+      region: "Hesse",
+      address: "Sonnemannstraße 13, 60314 Frankfurt am Main",
+    },
+    {
+      name: "Volkshochschule Stuttgart",
+      city: "Stuttgart",
+      region: "Baden-Württemberg",
+      address: "Rotebühlplatz 28, 70173 Stuttgart",
+    },
+  ],
 };
 
 export function getTestCenters(appSlug: string): TestCenter[] {
