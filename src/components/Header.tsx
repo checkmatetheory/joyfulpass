@@ -5,8 +5,8 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { apps } from "@/lib/apps";
 import { examHub } from "@/lib/urls";
+import { LOGO_URL } from "@/lib/site";
 
-const LOGO_URL = "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1k0q8x3P0iROj6VeEqT1Kpnm728XoNfrSPHyQ";
 const HEADER_REVEAL_DELAY_MS = 750;
 
 export default function Header() {

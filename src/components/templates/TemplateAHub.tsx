@@ -52,7 +52,7 @@ export default function TemplateAHub({ app, curriculum }: Props) {
         </nav>
 
         <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-          {curriculum.testName}
+          {app.name}: {curriculum.testName}
         </h1>
         <p className="mt-2 max-w-2xl opacity-70">
           Free practice organised the way the official handbook is. Pick how you want to study —

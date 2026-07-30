@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import type { AppRecord } from "@/lib/apps";
+import { FAVICON_URL } from "@/lib/site";
 import { useTheme } from "@/components/ThemeProvider";
 import {
   AccountIcon,
@@ -66,11 +68,11 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
 
   return (
     <aside className="flex h-full w-60 shrink-0 flex-col border-r border-black/10 bg-[var(--surface-cream)] px-3 py-5 dark:border-white/10">
-      <Link href="/" className="flex items-center gap-2 px-2">
-        <span className="text-xl" aria-hidden>
-          {app.flagEmoji}
+      <Link href="/" className="flex items-center gap-2 px-2" aria-label="Joyful home">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5">
+          <Image src={FAVICON_URL} alt="" width={64} height={64} className="h-6 w-6 object-contain" />
         </span>
-        <span className="text-lg font-bold">{app.name}</span>
+        <span className="text-lg font-extrabold tracking-tight">Joyful</span>
       </Link>
 
       <nav className="mt-6 space-y-1">
