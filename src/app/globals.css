@@ -121,32 +121,20 @@ h6 {
 
 /* ---------------------------------------------------------------------------
    Home phone mockups — text-free, looping animations that *show* how the app
-   works: answering a question, watching progress build, moving through
-   lessons. Purely decorative; disabled under reduced-motion.
+   works. The device frame is static; only the on-screen content animates, on
+   long, deliberate loops so the visual story is obvious. Disabled under
+   reduced-motion.
    --------------------------------------------------------------------------- */
 
-/* Gentle idle float so the whole device feels alive. */
-@keyframes phone-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-}
-.anim-phone-float {
-  animation: phone-float 6s ease-in-out infinite;
-}
-
-/* Quiz: the correct option fills in (gets "answered") on a loop. */
+/* --- Feature 1: answer a question, then an explanation appears ------------- */
+/* The correct option fills in and stays selected through the explanation. */
 @keyframes quiz-pick {
   0%,
-  18% {
+  8% {
     background-color: rgba(255, 255, 255, 0.12);
   }
-  34%,
-  88% {
+  16%,
+  93% {
     background-color: #ffffff;
   }
   100% {
@@ -154,16 +142,15 @@ h6 {
   }
 }
 .anim-quiz-pick {
-  animation: quiz-pick 4.5s ease-in-out infinite;
+  animation: quiz-pick 8s ease-in-out infinite;
 }
-/* The inner bar of the picked option tints to the accent as it's selected. */
 @keyframes quiz-pick-bar {
   0%,
-  18% {
+  8% {
     opacity: 0;
   }
-  34%,
-  88% {
+  16%,
+  93% {
     opacity: 1;
   }
   100% {
@@ -171,17 +158,17 @@ h6 {
   }
 }
 .anim-quiz-pick-bar {
-  animation: quiz-pick-bar 4.5s ease-in-out infinite;
+  animation: quiz-pick-bar 8s ease-in-out infinite;
 }
-/* A confirmation check pops in the moment the answer is chosen. */
+/* The confirmation check pops the moment the answer is chosen. */
 @keyframes quiz-check {
   0%,
-  22% {
+  10% {
     opacity: 0;
     transform: scale(0.2);
   }
-  40%,
-  88% {
+  18%,
+  93% {
     opacity: 1;
     transform: scale(1);
   }
@@ -191,19 +178,54 @@ h6 {
   }
 }
 .anim-quiz-check {
-  animation: quiz-check 4.5s cubic-bezier(0.2, 0.9, 0.3, 1.3) infinite;
+  animation: quiz-check 8s cubic-bezier(0.2, 0.9, 0.3, 1.3) infinite;
+}
+/* The explanation card slides up after the answer — the learning moment. */
+@keyframes quiz-explain {
+  0%,
+  26% {
+    opacity: 0;
+    transform: translateY(115%);
+  }
+  38%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(115%);
+  }
+}
+.anim-quiz-explain {
+  animation: quiz-explain 8s cubic-bezier(0.2, 0.9, 0.3, 1.1) infinite;
 }
 
-/* Progress: bars rise from the base in sequence, like a score building. */
+/* --- Feature 2: readiness ring + rising bars + line to a trophy ------------ */
+@keyframes ring-fill {
+  0% {
+    stroke-dashoffset: 151;
+  }
+  50%,
+  88% {
+    stroke-dashoffset: 34;
+  }
+  100% {
+    stroke-dashoffset: 151;
+  }
+}
+.anim-ring-fill {
+  animation: ring-fill 7s ease-in-out infinite;
+}
 @keyframes bar-rise {
   0% {
     transform: scaleY(0.12);
   }
-  45% {
+  50% {
     transform: scaleY(1);
   }
-  78% {
-    transform: scaleY(0.82);
+  85% {
+    transform: scaleY(0.85);
   }
   100% {
     transform: scaleY(0.12);
@@ -211,33 +233,110 @@ h6 {
 }
 .anim-bar-rise {
   transform-origin: bottom;
-  animation: bar-rise 4.5s ease-in-out infinite;
+  animation: bar-rise 7s ease-in-out infinite;
+}
+/* The trend line draws left-to-right. */
+@keyframes line-draw {
+  0%,
+  14% {
+    stroke-dashoffset: 320;
+  }
+  62%,
+  90% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 320;
+  }
+}
+.anim-line-draw {
+  animation: line-draw 7s ease-in-out infinite;
+}
+/* The trophy pops in once the line reaches the top. */
+@keyframes trophy-pop {
+  0%,
+  60% {
+    opacity: 0;
+    transform: scale(0.2) translateY(6px);
+  }
+  72%,
+  90% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2) translateY(6px);
+  }
+}
+.anim-trophy-pop {
+  animation: trophy-pop 7s cubic-bezier(0.2, 0.9, 0.3, 1.4) infinite;
 }
 
-/* Lessons: rows flow in one after another, like moving through content. */
-@keyframes line-flow {
-  0%,
-  100% {
-    opacity: 0.2;
-    transform: translateX(-6px);
+/* --- Feature 3: study anywhere — a sequence of places, then book+phone+tick */
+@keyframes scene-show {
+  0% {
+    opacity: 0;
+    transform: scale(0.86);
   }
-  40%,
-  70% {
+  3% {
     opacity: 1;
-    transform: translateX(0);
+    transform: scale(1);
+  }
+  17% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  20% {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.86);
   }
 }
-.anim-line-flow {
-  animation: line-flow 3.6s ease-in-out infinite;
+.anim-scene {
+  animation: scene-show 10s ease-in-out infinite;
+}
+/* The final tick in the "studied" scene lands with a pop. */
+@keyframes scene-tick {
+  0%,
+  86% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  90%,
+  96% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+.anim-scene-tick {
+  animation: scene-tick 10s cubic-bezier(0.2, 0.9, 0.3, 1.4) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .anim-phone-float,
   .anim-quiz-pick,
   .anim-quiz-pick-bar,
   .anim-quiz-check,
+  .anim-quiz-explain,
+  .anim-ring-fill,
   .anim-bar-rise,
-  .anim-line-flow {
+  .anim-line-draw,
+  .anim-trophy-pop,
+  .anim-scene,
+  .anim-scene-tick {
     animation: none;
+  }
+  /* With motion off, keep the final "answered + explained" state legible. */
+  .anim-quiz-explain,
+  .anim-scene:last-child {
+    opacity: 1;
+    transform: none;
   }
 }
