@@ -64,6 +64,7 @@ export default async function ExamLayout({
           "--accent-soft": app.theme.accentSoft,
           "--accent-foreground": app.theme.accentForeground,
           "--accent-secondary": app.theme.accentSecondary,
+          "--accent-highlight": app.theme.accentHighlight ?? app.theme.accent,
         } as React.CSSProperties
       }
     >

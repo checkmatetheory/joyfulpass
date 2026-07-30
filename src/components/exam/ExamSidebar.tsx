@@ -82,7 +82,7 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
               href={href}
               aria-current={active ? "page" : undefined}
               className={rowClass(active, muted)}
-              style={active ? { backgroundColor: "var(--accent)" } : undefined}
+              style={active ? { backgroundColor: "var(--accent-highlight)" } : undefined}
             >
               <Icon className="shrink-0" />
               <span>{label}</span>
@@ -98,7 +98,7 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
           href={blogIndex(app)}
           aria-current={isActive(blogIndex(app)) ? "page" : undefined}
           className={rowClass(isActive(blogIndex(app)))}
-          style={isActive(blogIndex(app)) ? { backgroundColor: "var(--accent)" } : undefined}
+          style={isActive(blogIndex(app)) ? { backgroundColor: "var(--accent-highlight)" } : undefined}
         >
           <RevisionIcon className="shrink-0" />
           <span>Blog</span>
@@ -107,7 +107,7 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
           href={pricingPath(app)}
           aria-current={isActive(pricingPath(app)) ? "page" : undefined}
           className={rowClass(isActive(pricingPath(app)))}
-          style={isActive(pricingPath(app)) ? { backgroundColor: "var(--accent)" } : undefined}
+          style={isActive(pricingPath(app)) ? { backgroundColor: "var(--accent-highlight)" } : undefined}
         >
           <PricingIcon className="shrink-0" />
           <span>Pricing</span>
@@ -124,7 +124,7 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
           <span
             className="ml-auto flex h-5 w-9 items-center rounded-full p-0.5 transition-colors"
             style={{
-              backgroundColor: theme === "dark" ? "var(--accent)" : "rgba(120,120,120,0.35)",
+              backgroundColor: theme === "dark" ? "var(--accent-highlight)" : "rgba(120,120,120,0.35)",
             }}
           >
             <span

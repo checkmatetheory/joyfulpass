@@ -14,6 +14,14 @@ export type AppTheme = {
   /** Secondary flag color, used sparingly for national cues (e.g. UK red on blue). */
   accentSecondary: string;
   /**
+   * Colour for the sidebar active-row highlight (and dark-mode toggle). Defaults
+   * to `accent` when unset, so most apps highlight in their primary colour. Set
+   * it only when the primary is a colour that would vanish as a highlight — e.g.
+   * GermanPass uses a black primary but a red highlight so the active row still
+   * reads in dark mode.
+   */
+  accentHighlight?: string;
+  /**
    * The country's flag colors, left-to-right, for the subtle FlagAccentBar under
    * titles. Gives each silo a national feel without recoloring the whole UI.
    * e.g. UK ["#012169","#FFFFFF","#C8102E"], Canada ["#FF0000","#FFFFFF","#FF0000"].
@@ -321,14 +329,15 @@ export const apps: AppRecord[] = [
     country: "Germany",
     examName: "Einbürgerungstest",
     theme: {
-      accent: "#E10000", // vivid German flag red (pops in light + dark)
-      accentDark: "#A50000", // deep red — hover, banners, icon glyphs on gold
-      accentSoft: "#FFE58A", // vivid flag gold tint (icon tiles)
+      accent: "#1A1A1A", // German flag black — primary buttons + CTA
+      accentDark: "#C40000", // flag red — CTA gradient end + icon glyphs on gold
+      accentSoft: "#FFE9A8", // flag gold tint — icon tiles (secondary)
       accentForeground: "#FFFFFF",
       accentSecondary: "#FFCE00", // flag gold
+      accentHighlight: "#DD0000", // flag red — sidebar active row + toggle (stays vivid in dark)
       flagColors: ["#000000", "#DD0000", "#FFCE00"], // black, red, gold
-      gradientFrom: "#E10000",
-      gradientTo: "#A50000",
+      gradientFrom: "#1A1A1A",
+      gradientTo: "#C40000",
     },
     iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1UJrMy7ZY5I687eQlTBtkWrgEyU9CuznpoxVA",
     hero: {
