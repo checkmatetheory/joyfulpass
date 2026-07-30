@@ -113,16 +113,6 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
       <div className="my-4 border-t border-black/10 dark:border-white/10" />
 
       <nav className="space-y-1">
-        {/* Primary purchase CTA — present on every in-app page, per app URL. */}
-        <Link
-          href={pricingPath(app)}
-          aria-current={isActive(pricingPath(app)) ? "page" : undefined}
-          className="mb-1 flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-bold text-white shadow-md transition hover:opacity-95"
-          style={{ background: "linear-gradient(120deg, var(--accent), var(--accent-dark))" }}
-        >
-          <PricingIcon className="h-4 w-4 shrink-0 text-amber-300" />
-          <span>Go Pro</span>
-        </Link>
         <Link
           href={blogIndex(app)}
           aria-current={isActive(blogIndex(app)) ? "page" : undefined}
@@ -131,6 +121,15 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
         >
           <RevisionIcon className="shrink-0" />
           <span>Blog</span>
+        </Link>
+        <Link
+          href={pricingPath(app)}
+          aria-current={isActive(pricingPath(app)) ? "page" : undefined}
+          className={rowClass(isActive(pricingPath(app)))}
+          style={isActive(pricingPath(app)) ? { backgroundColor: "var(--accent-highlight)" } : undefined}
+        >
+          <PricingIcon className="shrink-0" />
+          <span>Pricing</span>
         </Link>
 
         <button
