@@ -16,6 +16,10 @@ export const LOGO_URL =
   "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1k0q8x3P0iROj6VeEqT1Kpnm728XoNfrSPHyQ";
 export const LOGO_PURPLE_URL =
   "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1eurOUBCHp1AK08lhVEFW94bncCPZ3LRdaJux";
+// Standalone white wordmark used in the exam sidebar's dark mode (reads on the
+// dark background). Distinct asset from LOGO_URL, which is tuned for the header.
+export const LOGO_WHITE_URL =
+  "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1ICaaRtyX7vNUGCPfV0h2MZxWdSmk9yipujRg";
 export const ORG_FOUNDING_YEAR = "2023";
 
 // Default social-share (Open Graph / Twitter) image for the whole site. Used

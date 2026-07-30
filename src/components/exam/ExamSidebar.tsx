@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import type { AppRecord } from "@/lib/apps";
-import { LOGO_PURPLE_URL, LOGO_URL } from "@/lib/site";
+import { LOGO_PURPLE_URL, LOGO_WHITE_URL } from "@/lib/site";
 import { useTheme } from "@/components/ThemeProvider";
 import {
   AccountIcon,
@@ -77,16 +77,16 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
           alt=""
           width={360}
           height={110}
-          className="h-8 w-auto dark:hidden"
+          className="h-11 w-auto dark:hidden"
           style={{ width: "auto" }}
           priority
         />
         <Image
-          src={LOGO_URL}
+          src={LOGO_WHITE_URL}
           alt=""
           width={360}
           height={110}
-          className="hidden h-8 w-auto dark:block"
+          className="hidden h-11 w-auto dark:block"
           style={{ width: "auto" }}
           priority
         />
