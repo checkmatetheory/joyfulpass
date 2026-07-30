@@ -8,10 +8,14 @@ export const SITE_TWITTER = "@joyfulpass";
 // it's referenced via metadata rather than a file in app/.
 export const FAVICON_URL =
   "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1I0GxBiKyX7vNUGCPfV0h2MZxWdSmk9yipujR";
-// Joyful horizontal wordmark logo, used in the marketing header and the exam
-// sidebar top-left (constant across every app, links to the homepage).
+// Joyful horizontal wordmark logo. LOGO_URL is the light/white version used on
+// the marketing header's dark purple bar. LOGO_PURPLE_URL is the purple version
+// used in the exam sidebar, where it must read on both the cream (light) and
+// dark sidebar backgrounds.
 export const LOGO_URL =
   "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1k0q8x3P0iROj6VeEqT1Kpnm728XoNfrSPHyQ";
+export const LOGO_PURPLE_URL =
+  "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1eurOUBCHp1AK08lhVEFW94bncCPZ3LRdaJux";
 export const ORG_FOUNDING_YEAR = "2023";
 
 // Default social-share (Open Graph / Twitter) image for the whole site. Used
