@@ -4,6 +4,8 @@ import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import JsonLd from "@/components/JsonLd";
 import ExamSidebar from "@/components/exam/ExamSidebar";
 import GoProButton from "@/components/exam/GoProButton";
+import MobileExamHeader from "@/components/exam/MobileExamHeader";
+import ExamDownloadFooter from "@/components/exam/ExamDownloadFooter";
 import { examHub } from "@/lib/urls";
 import { SITE_URL } from "@/lib/site";
 
@@ -73,14 +75,18 @@ export default async function ExamLayout({
       <div className="sticky top-0 hidden h-screen self-start md:block">
         <ExamSidebar app={app} />
       </div>
-      <div className="relative min-w-0 flex-1">
-        {/* Persistent, top-right upgrade CTA on every in-app screen. */}
-        <div className="pointer-events-none sticky top-0 z-30 flex h-0 justify-end">
+      <div className="relative flex min-w-0 flex-1 flex-col">
+        {/* Mobile-only top bar: Joyful logo + Go Pro + nav drawer. */}
+        <MobileExamHeader app={app} />
+        {/* Desktop persistent top-right upgrade CTA. */}
+        <div className="pointer-events-none sticky top-0 z-30 hidden h-0 justify-end md:flex">
           <div className="pointer-events-auto px-4 pt-4 sm:px-8 sm:pt-6">
             <GoProButton app={app} />
           </div>
         </div>
-        <main className="min-w-0">{children}</main>
+        <main className="min-w-0 flex-1">{children}</main>
+        {/* Consistent download prompt at the bottom of every in-app screen. */}
+        <ExamDownloadFooter app={app} />
       </div>
     </div>
   );

@@ -1,0 +1,75 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import type { AppRecord } from "@/lib/apps";
+import { LOGO_PURPLE_URL, LOGO_WHITE_URL } from "@/lib/site";
+import ExamSidebar from "@/components/exam/ExamSidebar";
+import GoProButton from "@/components/exam/GoProButton";
+
+/**
+ * Mobile-only top bar for the exam shell (the sidebar is hidden below md). Shows
+ * the Joyful logo top-left, the Go Pro CTA, and a hamburger that opens the full
+ * sidebar nav as a drawer.
+ */
+export default function MobileExamHeader({ app }: { app: AppRecord }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <header className="sticky top-0 z-40 flex items-center justify-between gap-2 border-b border-black/10 bg-[var(--surface-cream)] px-4 py-2.5 md:hidden dark:border-white/10">
+        <Link href="/" aria-label="Joyful home" className="flex items-center">
+          {/* Purple on light, white on dark — stays visible either way. */}
+          <Image
+            src={LOGO_PURPLE_URL}
+            alt=""
+            width={360}
+            height={110}
+            className="h-8 w-auto dark:hidden"
+            style={{ width: "auto" }}
+            priority
+          />
+          <Image
+            src={LOGO_WHITE_URL}
+            alt=""
+            width={360}
+            height={110}
+            className="hidden h-8 w-auto dark:block"
+            style={{ width: "auto" }}
+            priority
+          />
+        </Link>
+
+        <div className="flex items-center gap-2">
+          <GoProButton app={app} />
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            className="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-black/5 dark:hover:bg-white/5"
+          >
+            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      {open && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <button
+            type="button"
+            aria-label="Close menu"
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setOpen(false)}
+          />
+          {/* Any tap inside (including a nav link) closes the drawer. */}
+          <div className="absolute inset-y-0 left-0" onClick={() => setOpen(false)}>
+            <ExamSidebar app={app} />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

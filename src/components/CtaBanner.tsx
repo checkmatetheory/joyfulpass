@@ -58,7 +58,7 @@ export default function CtaBanner({
   // heading + store buttons to the bottom-right.
   return (
     <div
-      className={`relative flex aspect-[2/1] min-h-[240px] items-end justify-end overflow-hidden rounded-3xl text-white ${className}`}
+      className={`relative flex aspect-[4/3] items-end justify-end overflow-hidden rounded-3xl text-white sm:aspect-[2/1] ${className}`}
       style={{
         backgroundImage: bg ? `url("${bg}")` : `linear-gradient(120deg, ${accent}, ${accentDark})`,
         backgroundSize: "cover",

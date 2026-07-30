@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { apps } from "@/lib/apps";
 import { blogIndex, examHub, testCentresPath } from "@/lib/urls";
-import { LOGO_URL, SITE_NAME } from "@/lib/site";
+import { LOGO_WHITE_URL, SITE_NAME } from "@/lib/site";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div>
           <Image
-            src={LOGO_URL}
+            src={LOGO_WHITE_URL}
             alt={SITE_NAME}
             width={280}
             height={64}
