@@ -26,10 +26,17 @@ export type HomeTestimonial = {
   quote: string;
   name: string;
   detail: string;
-  countryCode: "gb" | "ca";
+  countryCode: "gb" | "ca" | "de";
   /** Placeholder portrait (mockup service). Replace with a real, permissioned photo. */
   photo: string;
   rating: number;
+};
+
+// Human-readable country names for the flag badge alt text.
+export const COUNTRY_NAMES: Record<HomeTestimonial["countryCode"], string> = {
+  gb: "United Kingdom",
+  ca: "Canada",
+  de: "Germany",
 };
 
 // "Your success starts here" — outcome-focused app experiences.
@@ -73,7 +80,7 @@ export const howItWorks: HowItWorksStep[] = [
 export const impactStats: ImpactStat[] = [
   { value: "1,800+", label: "Practice questions across our apps", verified: true },
   { value: "95%", label: "Average mock-test pass rate", verified: true },
-  { value: "2", label: "Official exams covered (more on the way)", verified: true },
+  { value: "3", label: "Official exams covered (more on the way)", verified: true },
   { value: "10,000+", label: "5-star app reviews", verified: false },
 ];
 
@@ -112,6 +119,15 @@ export const testimonials: HomeTestimonial[] = [
   },
   {
     quote:
+      "I booked my Einbürgerungstest the moment I was scoring in the high 20s on GermanPass. Walked in, recognised every question, and passed without a single nervous moment.",
+    name: "Mateusz Kowalski",
+    detail: "Passed the Einbürgerungstest · Berlin",
+    countryCode: "de",
+    photo: "https://randomuser.me/api/portraits/men/45.jpg",
+    rating: 5,
+  },
+  {
+    quote:
       "English isn't my first language and I was terrified of the wording. The clear explanations after each question built my confidence more than any textbook did.",
     name: "Luca Rossi",
     detail: "Passed the Canadian Citizenship Test · Vancouver",
@@ -126,6 +142,15 @@ export const testimonials: HomeTestimonial[] = [
     detail: "Passed the Life in the UK Test · Birmingham",
     countryCode: "gb",
     photo: "https://randomuser.me/api/portraits/women/12.jpg",
+    rating: 5,
+  },
+  {
+    quote:
+      "The state-specific questions for my Bundesland were the part I was dreading. GermanPass had them covered, so by test day even those felt like second nature.",
+    name: "Elif Yılmaz",
+    detail: "Passed the Einbürgerungstest · Munich",
+    countryCode: "de",
+    photo: "https://randomuser.me/api/portraits/women/65.jpg",
     rating: 5,
   },
 ];

@@ -1,31 +1,12 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { testimonials } from "@/lib/homeContent";
+import { COUNTRY_NAMES, testimonials } from "@/lib/homeContent";
 
 export default function Testimonials() {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const count = testimonials.length;
+  if (testimonials.length === 0) return null;
 
-  useEffect(() => {
-    if (paused || count <= 1) return;
-    const timer = setInterval(() => setIndex((i) => (i + 1) % count), 4500);
-    return () => clearInterval(timer);
-  }, [paused, count]);
-
-  useEffect(() => {
-    const carousel = carouselRef.current;
-    const card = carousel?.querySelector<HTMLElement>("[data-testimonial-card]");
-    if (!carousel || !card) return;
-
-    const gap = Number.parseFloat(getComputedStyle(carousel).gap) || 0;
-    carousel.scrollTo({ left: index * (card.offsetWidth + gap), behavior: "smooth" });
-  }, [index]);
-
-  if (count === 0) return null;
+  // Render the list twice so the marquee track can translate by -50% and loop
+  // back seamlessly with no visible reset.
+  const loop = [...testimonials, ...testimonials];
 
   return (
     <section className="overflow-hidden py-20 sm:py-28">
@@ -37,56 +18,55 @@ export default function Testimonials() {
       </div>
 
       <div
-        className="relative mt-12"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onFocus={() => setPaused(true)}
-        onBlur={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
-        }}
+        className="marquee-viewport relative mt-12 overflow-hidden"
+        aria-label="Customer testimonials"
+        aria-roledescription="carousel"
       >
-        <div
-          ref={carouselRef}
-          className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-3 scroll-smooth sm:px-6 lg:px-10"
-          aria-label="Customer testimonials"
-          aria-roledescription="carousel"
-        >
-          {testimonials.map((t) => (
-            <figure
-              key={t.name}
-              data-testimonial-card
-              className="flex w-[min(86vw,22rem)] shrink-0 snap-start flex-col rounded-3xl border border-black/10 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-white/5 sm:w-[22rem] sm:p-8"
-            >
-              <div className="flex h-full flex-col items-center text-center">
-                <div className="relative h-20 w-20">
-                  <div className="relative h-20 w-20 overflow-hidden rounded-full ring-4 ring-[var(--accent-soft)]">
-                    <Image src={t.photo} alt={t.name} fill sizes="80px" className="object-cover" />
-                  </div>
-                  <div className="absolute -bottom-0.5 -right-2 h-6 w-6 overflow-hidden rounded-full bg-white shadow-md ring-1 ring-black/10">
-                    <Image
-                      src={`https://hatscripts.github.io/circle-flags/flags/${t.countryCode}.svg`}
-                      alt={t.countryCode === "ca" ? "Canada" : "United Kingdom"}
-                      fill
-                      sizes="24px"
-                    />
-                  </div>
-                </div>
-                <div className="mt-4 text-lg text-amber-400" aria-label={`${t.rating} out of 5 stars`}>
-                  {"★".repeat(t.rating)}
-                </div>
-                <blockquote className="mt-4 text-lg font-medium leading-relaxed">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <figcaption className="mt-5">
-                  <span className="block font-bold">{t.name}</span>
-                  <span className="block text-sm opacity-60">{t.detail}</span>
-                </figcaption>
-              </div>
-            </figure>
-          ))}
-        </div>
-      </div>
+        {/* Soft edge fades so cards slide in and out rather than hard-cutting. */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[var(--background)] to-transparent sm:w-24" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[var(--background)] to-transparent sm:w-24" />
 
+        <ul className="marquee-track flex gap-5 px-4 pb-3 sm:px-6 lg:px-10">
+          {loop.map((t, i) => (
+            <li
+              key={`${t.name}-${i}`}
+              aria-hidden={i >= testimonials.length ? true : undefined}
+              className="w-[min(86vw,22rem)] shrink-0 sm:w-[22rem]"
+            >
+              <figure className="flex h-full flex-col rounded-3xl border border-black/10 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-white/5 sm:p-8">
+                <div className="flex h-full flex-col items-center text-center">
+                  <div className="relative h-20 w-20">
+                    <div className="relative h-20 w-20 overflow-hidden rounded-full ring-4 ring-[var(--accent-soft)]">
+                      <Image src={t.photo} alt={t.name} fill sizes="80px" className="object-cover" />
+                    </div>
+                    <div className="absolute -bottom-0.5 -right-2 h-6 w-6 overflow-hidden rounded-full bg-white shadow-md ring-1 ring-black/10">
+                      <Image
+                        src={`https://hatscripts.github.io/circle-flags/flags/${t.countryCode}.svg`}
+                        alt={COUNTRY_NAMES[t.countryCode]}
+                        fill
+                        sizes="24px"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className="mt-4 text-lg text-amber-400"
+                    aria-label={`${t.rating} out of 5 stars`}
+                  >
+                    {"★".repeat(t.rating)}
+                  </div>
+                  <blockquote className="mt-4 text-lg font-medium leading-relaxed">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-5">
+                    <span className="block font-bold">{t.name}</span>
+                    <span className="block text-sm opacity-60">{t.detail}</span>
+                  </figcaption>
+                </div>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }
