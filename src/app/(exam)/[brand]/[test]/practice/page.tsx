@@ -103,9 +103,9 @@ export default async function PracticePage({
               <Link
                 key={mock.slug}
                 href={practiceTestPath(app, mock.slug)}
-                className="group flex items-center justify-between rounded-xl border border-black/10 p-4 transition-colors hover:border-[var(--accent)] dark:border-white/10"
+                className="group flex items-center justify-between gap-3 rounded-xl border border-black/10 p-4 transition-colors hover:border-[var(--accent)] dark:border-white/10"
               >
-                <div>
+                <div className="min-w-0">
                   <p className="font-mono text-xs opacity-50">Test {mock.number}</p>
                   <p className="mt-1 font-bold">
                     {curriculum.testName} {mock.number}
@@ -113,7 +113,7 @@ export default async function PracticePage({
                   <p className="mt-0.5 text-xs opacity-60">{mock.questions.length} questions</p>
                 </div>
                 <span
-                  className="rounded-full px-2 py-0.5 text-[11px] font-bold text-white"
+                  className="shrink-0 self-start rounded-full px-2.5 py-0.5 text-[11px] font-bold text-white"
                   style={{ backgroundColor: "var(--accent)" }}
                 >
                   Play
