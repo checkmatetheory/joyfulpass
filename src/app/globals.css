@@ -320,6 +320,15 @@ h6 {
   animation: scene-tick 10s cubic-bezier(0.2, 0.9, 0.3, 1.4) infinite;
 }
 
+/* Hold every screen animation paused until the phone scrolls into view, then
+   let it autoplay (a client IntersectionObserver adds `.is-visible`). */
+[data-mockup] [class*="anim-"] {
+  animation-play-state: paused;
+}
+[data-mockup].is-visible [class*="anim-"] {
+  animation-play-state: running;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .anim-quiz-pick,
   .anim-quiz-pick-bar,
@@ -338,5 +347,12 @@ h6 {
   .anim-scene:last-child {
     opacity: 1;
     transform: none;
+  }
+  /* Show the ring filled and the trend line drawn (not their empty start). */
+  .anim-ring-fill {
+    stroke-dashoffset: 34;
+  }
+  .anim-line-draw {
+    stroke-dashoffset: 0;
   }
 }

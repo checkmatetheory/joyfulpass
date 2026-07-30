@@ -1,6 +1,11 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 // Deliberately abstract, illustrative phone screens — not real screenshots.
 // The device frame is static; the on-screen content animates on long loops to
-// *show* the value, no copy required. Swap in real screenshots here later.
+// *show* the value, no copy required. Animations start when the phone scrolls
+// into view. Swap in real screenshots here later.
 type Variant = "quiz" | "progress" | "tool" | "content";
 
 const strokeIcon = "h-full w-full";
@@ -194,11 +199,12 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
           ))}
         </div>
 
-        {/* Trend line climbing to a trophy */}
-        <div className="relative h-16">
-          <svg viewBox="0 0 200 64" preserveAspectRatio="none" className="h-full w-full">
+        {/* Trend line climbing to a trophy — nudged down, trophy pinned to its
+            top-right where the line peaks. */}
+        <div className="relative mt-3 h-16 pt-5">
+          <svg viewBox="0 0 200 52" preserveAspectRatio="none" className="h-full w-full">
             <polyline
-              points="4,56 44,48 84,52 124,32 164,22 196,8"
+              points="4,46 44,40 84,43 124,26 164,18 194,8"
               fill="none"
               stroke="rgba(255,255,255,0.85)"
               strokeWidth="3"
@@ -210,7 +216,7 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
               vectorEffect="non-scaling-stroke"
             />
           </svg>
-          <span className="anim-trophy-pop absolute -right-1 -top-1 h-7 w-7 text-white">
+          <span className="anim-trophy-pop absolute right-0 top-0 h-7 w-7 text-white">
             <TrophyIcon />
           </span>
         </div>
@@ -273,8 +279,33 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
 }
 
 export default function PhoneMockup({ variant, accent }: { variant: Variant; accent: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <div className="mx-auto w-64 rounded-[2.75rem] border-[6px] border-black/20 bg-black/20 p-2.5 shadow-2xl">
+    <div
+      ref={ref}
+      data-mockup
+      className={`mx-auto w-64 rounded-[2.75rem] border-[6px] border-black/20 bg-black/20 p-2.5 shadow-2xl ${
+        visible ? "is-visible" : ""
+      }`}
+    >
       <div
         className="h-[480px] overflow-hidden rounded-[2rem]"
         style={{ backgroundColor: `${accent}CC` }}

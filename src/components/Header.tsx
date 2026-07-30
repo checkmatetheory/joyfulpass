@@ -59,7 +59,7 @@ export default function Header() {
         </Link>
 
         {/* Center: nav links */}
-        <nav className="col-start-2 hidden items-center gap-8 text-sm font-bold lg:flex" aria-label="Primary navigation">
+        <nav className="col-start-2 hidden -translate-y-1 items-center gap-8 text-sm font-bold lg:flex" aria-label="Primary navigation">
           <div
             className="relative"
             onMouseEnter={() => setSwitcherOpen(true)}
