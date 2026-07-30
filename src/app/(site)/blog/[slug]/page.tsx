@@ -3,7 +3,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { getPost, getPostSlugs } from "@/lib/blog";
-import { OG_IMAGE, SITE_URL } from "@/lib/site";
+import { OG_IMAGE } from "@/lib/site";
+import { articleJsonLd, breadcrumbJsonLd } from "@/lib/schema";
 
 export function generateStaticParams() {
   return getPostSlugs("hub").map((slug) => ({ slug }));
@@ -41,19 +42,25 @@ export default async function HubBlogPostPage({
   const post = await getPost("hub", slug);
   if (!post) notFound();
 
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
+  const article = articleJsonLd({
+    title: post.title,
     description: post.description,
+    path: `/blog/${slug}/`,
     datePublished: post.date,
-    author: { "@type": "Person", name: post.author },
-    mainEntityOfPage: `${SITE_URL}/blog/${slug}/`,
-  };
+    author: post.author,
+    image: post.coverImage,
+  });
+
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Joyful", path: "/" },
+    { name: "Blog", path: "/blog/" },
+    { name: post.title, path: `/blog/${slug}/` },
+  ]);
 
   return (
     <article className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
-      <JsonLd data={articleJsonLd} />
+      <JsonLd data={article} />
+      <JsonLd data={breadcrumb} />
       <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-2xl">
         <Image
           src={post.coverImage}

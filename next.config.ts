@@ -25,13 +25,15 @@ const nextConfig: NextConfig = {
         destination: "/canadapass/canadian-citizenship-test/:path*",
         permanent: true,
       },
-      // Bare brand → its test silo.
-      { source: "/britpass", destination: "/britpass/life-in-the-uk-test", permanent: true },
+      // Bare brand → its test silo. Trailing slash on the destination avoids a
+      // second (trailingSlash) redirect hop, so brand searches land in one step.
+      { source: "/britpass", destination: "/britpass/life-in-the-uk-test/", permanent: true },
       {
         source: "/canadapass",
-        destination: "/canadapass/canadian-citizenship-test",
+        destination: "/canadapass/canadian-citizenship-test/",
         permanent: true,
       },
+      { source: "/germanpass", destination: "/germanpass/einbuergerungstest/", permanent: true },
     ];
   },
   images: {

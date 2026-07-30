@@ -4,8 +4,9 @@ import { notFound } from "next/navigation";
 import { apps, getAppByExamSlug } from "@/lib/apps";
 import { getPost, getPostSlugs } from "@/lib/blog";
 import JsonLd from "@/components/JsonLd";
-import { blogPost } from "@/lib/urls";
-import { OG_IMAGE, SITE_URL } from "@/lib/site";
+import { blogIndex, blogPost, examHub } from "@/lib/urls";
+import { OG_IMAGE } from "@/lib/site";
+import { articleJsonLd, breadcrumbJsonLd } from "@/lib/schema";
 
 export const dynamicParams = false;
 
@@ -56,19 +57,26 @@ export default async function ExamBlogPostPage({
   const post = await getPost(app.blogCategory, slug);
   if (!post) notFound();
 
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
+  const article = articleJsonLd({
+    title: post.title,
     description: post.description,
+    path: blogPost(app, slug),
     datePublished: post.date,
-    author: { "@type": "Person", name: post.author },
-    mainEntityOfPage: `${SITE_URL}${blogPost(app, slug)}`,
-  };
+    author: post.author,
+    image: post.coverImage,
+  });
+
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Joyful", path: "/" },
+    { name: app.name, path: examHub(app) },
+    { name: "Blog", path: blogIndex(app) },
+    { name: post.title, path: blogPost(app, slug) },
+  ]);
 
   return (
     <article className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
-      <JsonLd data={articleJsonLd} />
+      <JsonLd data={article} />
+      <JsonLd data={breadcrumb} />
       <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-2xl">
         <Image
           src={post.coverImage}

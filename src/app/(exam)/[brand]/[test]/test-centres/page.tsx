@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { apps, getAppByExamSlug } from "@/lib/apps";
 import { getTestCenters } from "@/lib/testCenters";
 import TestCenterList from "@/components/TestCenterList";
-import { testCentresPath } from "@/lib/urls";
+import JsonLd from "@/components/JsonLd";
+import { examHub, testCentresPath } from "@/lib/urls";
+import { breadcrumbJsonLd } from "@/lib/schema";
 
 export const dynamicParams = false;
 
@@ -39,8 +41,15 @@ export default async function ExamTestCentresPage({
 
   const centers = getTestCenters(app.slug);
 
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Joyful", path: "/" },
+    { name: app.examName, path: examHub(app) },
+    { name: "Test centres", path: testCentresPath(app) },
+  ]);
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+      <JsonLd data={breadcrumb} />
       <h1 className="text-4xl font-extrabold">{app.name} test centres</h1>
       <p className="mt-4 opacity-80">
         A directory of {app.examName} locations across {app.country}. Always confirm current
