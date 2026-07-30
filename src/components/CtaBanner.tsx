@@ -1,10 +1,5 @@
 import type { AppRecord } from "@/lib/apps";
 
-// A subtle repeating "civic document" motif (dotted grid) rendered as an inline
-// SVG data-URI, so the banner reads as official/branded rather than a flat block.
-const PATTERN =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23ffffff' fill-opacity='0.14'/%3E%3C/svg%3E";
-
 type Props = {
   app: AppRecord;
   heading: string;
@@ -45,13 +40,6 @@ export default function CtaBanner({
         backgroundPosition: "center",
       }}
     >
-      {/* Civic pattern overlay */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{ backgroundImage: `url("${PATTERN}")` }}
-        aria-hidden
-      />
-
       {variant === "center" ? (
         <div className="relative px-6 py-12 text-center sm:px-10 sm:py-14">
           <h2 className="text-2xl font-bold sm:text-3xl">{heading}</h2>

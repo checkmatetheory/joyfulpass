@@ -155,6 +155,8 @@ export const apps: AppRecord[] = [
       gradientTo: "#0B1D51",
     },
     iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1BUBTO8ufXcr6Fdb7TYlAaW1GvmhjOS0uxE42",
+    ctaBannerImage:
+      "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1zYNLtCwQg0SnePdhCf4blZoD9kqXR6LziATp",
     heroMedia: {
       type: "image",
       url: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1sGNvWb02trGJvOKdcpQuA8fbURnZis5gjV7C",
@@ -251,6 +253,8 @@ export const apps: AppRecord[] = [
       gradientTo: "#4A0E14",
     },
     iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1RxP2dC7BhAYrLo1uIdltUiTFOMzbnvqC20HP",
+    ctaBannerImage:
+      "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1TJQByhKDwG9rjJDoM5lNspAIZEfFeOVRmaQ0",
     heroMedia: {
       type: "image",
       url: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1TZg3P8DwG9rjJDoM5lNspAIZEfFeOVRmaQ0v",
@@ -340,6 +344,8 @@ export const apps: AppRecord[] = [
       gradientTo: "#C40000",
     },
     iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1UJrMy7ZY5I687eQlTBtkWrgEyU9CuznpoxVA",
+    ctaBannerImage:
+      "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1jlMAwMkmLVPxl43z1ipGu89nBMefgWCQkhOj",
     hero: {
       headline: "Everything you need to pass the Einbürgerungstest",
       subheadline:
