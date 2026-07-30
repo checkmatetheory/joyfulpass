@@ -5,7 +5,7 @@ import Analytics from "@/components/Analytics";
 import JsonLd from "@/components/JsonLd";
 import StyledComponentsRegistry from "@/components/StyledComponentsRegistry";
 import ThemeProvider from "@/components/ThemeProvider";
-import { OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { FAVICON_URL, OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/site";
 
 // Applies the saved (or OS-preferred) theme before first paint so there's no
 // flash of the wrong theme. Kept tiny and inlined; runs before hydration.
@@ -14,24 +14,29 @@ const noFlashThemeScript = `(function(){try{var t=localStorage.getItem('theme');
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Focused prep apps for life-changing exams`,
+    default: `${SITE_NAME} | ${SITE_TAGLINE}`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: FAVICON_URL,
+    shortcut: FAVICON_URL,
+    apple: FAVICON_URL,
+  },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
     url: SITE_URL,
-    title: `${SITE_NAME} — Focused prep apps for life-changing exams`,
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
     images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Focused prep apps for life-changing exams`,
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
     images: [OG_IMAGE.url],
   },
