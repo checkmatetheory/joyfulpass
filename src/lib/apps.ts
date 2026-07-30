@@ -321,14 +321,14 @@ export const apps: AppRecord[] = [
     country: "Germany",
     examName: "Einbürgerungstest",
     theme: {
-      accent: "#1C1C1C", // German official black
-      accentDark: "#000000",
-      accentSoft: "#FCE9C8", // pale gold tint
+      accent: "#E10000", // vivid German flag red (pops in light + dark)
+      accentDark: "#A50000", // deep red — hover, banners, icon glyphs on gold
+      accentSoft: "#FFE58A", // vivid flag gold tint (icon tiles)
       accentForeground: "#FFFFFF",
-      accentSecondary: "#DD0000", // flag red
+      accentSecondary: "#FFCE00", // flag gold
       flagColors: ["#000000", "#DD0000", "#FFCE00"], // black, red, gold
-      gradientFrom: "#DD0000",
-      gradientTo: "#000000",
+      gradientFrom: "#E10000",
+      gradientTo: "#A50000",
     },
     iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1UJrMy7ZY5I687eQlTBtkWrgEyU9CuznpoxVA",
     hero: {
