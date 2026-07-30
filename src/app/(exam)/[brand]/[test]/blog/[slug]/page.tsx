@@ -5,7 +5,7 @@ import { apps, getAppByExamSlug } from "@/lib/apps";
 import { getPost, getPostSlugs } from "@/lib/blog";
 import JsonLd from "@/components/JsonLd";
 import { blogPost } from "@/lib/urls";
-import { SITE_URL } from "@/lib/site";
+import { OG_IMAGE, SITE_URL } from "@/lib/site";
 
 export const dynamicParams = false;
 
@@ -39,6 +39,7 @@ export async function generateMetadata({
       description: post.description,
       publishedTime: post.date,
       authors: [post.author],
+      images: [OG_IMAGE],
     },
   };
 }

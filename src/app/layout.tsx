@@ -5,7 +5,7 @@ import Analytics from "@/components/Analytics";
 import JsonLd from "@/components/JsonLd";
 import StyledComponentsRegistry from "@/components/StyledComponentsRegistry";
 import ThemeProvider from "@/components/ThemeProvider";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 // Applies the saved (or OS-preferred) theme before first paint so there's no
 // flash of the wrong theme. Kept tiny and inlined; runs before hydration.
@@ -27,11 +27,13 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: `${SITE_NAME} — Focused prep apps for life-changing exams`,
     description: SITE_DESCRIPTION,
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE_NAME} — Focused prep apps for life-changing exams`,
     description: SITE_DESCRIPTION,
+    images: [OG_IMAGE.url],
   },
 };
 

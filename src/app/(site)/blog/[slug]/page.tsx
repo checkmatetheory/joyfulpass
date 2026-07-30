@@ -3,7 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { getPost, getPostSlugs } from "@/lib/blog";
-import { SITE_URL } from "@/lib/site";
+import { OG_IMAGE, SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
   return getPostSlugs("hub").map((slug) => ({ slug }));
@@ -27,6 +27,7 @@ export async function generateMetadata({
       description: post.description,
       publishedTime: post.date,
       authors: [post.author],
+      images: [OG_IMAGE],
     },
   };
 }
