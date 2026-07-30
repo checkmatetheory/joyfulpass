@@ -117,11 +117,7 @@ export default function TemplateAHub({ app, curriculum }: Props) {
 
         {/* Branded, per-app download banner */}
         <section id="download" className="mt-12 scroll-mt-6">
-          <CtaBanner
-            app={app}
-            heading={`Get ${app.name}`}
-            body={`The full ${curriculum.testName} question bank, saved progress across devices, mistake review, and an offline study guide.`}
-          >
+          <CtaBanner app={app} heading={`Download ${app.name}`}>
             <DownloadCta app={app} />
           </CtaBanner>
         </section>
