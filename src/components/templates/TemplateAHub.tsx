@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { AppRecord } from "@/lib/apps";
 import type { Curriculum } from "@/lib/curriculum";
 import FaqAccordion from "@/components/FaqAccordion";
-import DownloadCta from "@/components/DownloadCta";
+import StoreBadges from "@/components/StoreBadges";
 import CtaBanner from "@/components/CtaBanner";
 import DashboardCard from "@/components/dashboard/DashboardCard";
 import {
@@ -118,7 +118,7 @@ export default function TemplateAHub({ app, curriculum }: Props) {
         {/* Branded, per-app download banner */}
         <section id="download" className="mt-12 scroll-mt-6">
           <CtaBanner app={app} heading={`Download ${app.name}`}>
-            <DownloadCta app={app} />
+            <StoreBadges app={app} />
           </CtaBanner>
         </section>
 
