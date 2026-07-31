@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { AppRecord } from "@/lib/apps";
@@ -8,17 +8,44 @@ import { LOGO_PURPLE_URL, LOGO_WHITE_URL } from "@/lib/site";
 import ExamSidebar from "@/components/exam/ExamSidebar";
 import GoProButton from "@/components/exam/GoProButton";
 
+const REVEAL_DELAY_MS = 650;
+
 /**
  * Mobile-only top bar for the exam shell (the sidebar is hidden below md). Shows
  * the Joyful logo top-left, the Go Pro CTA, and a hamburger that opens the full
- * sidebar nav as a drawer.
+ * sidebar nav as a drawer. Auto-hides while scrolling and slides back in once
+ * scrolling stops, so more content is visible on small screens.
  */
 export default function MobileExamHeader({ app }: { app: AppRecord }) {
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const stopTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      // Never hide near the very top, and keep it shown while the drawer is open.
+      if (window.scrollY < 12 || open) {
+        setHidden(false);
+        return;
+      }
+      setHidden(true);
+      if (stopTimer.current) clearTimeout(stopTimer.current);
+      stopTimer.current = setTimeout(() => setHidden(false), REVEAL_DELAY_MS);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (stopTimer.current) clearTimeout(stopTimer.current);
+    };
+  }, [open]);
 
   return (
     <>
-      <header className="sticky top-0 z-40 flex items-center justify-between gap-2 border-b border-black/10 bg-[var(--surface-cream)] px-4 py-2.5 md:hidden dark:border-white/10">
+      <header
+        className={`sticky top-0 z-40 flex items-center justify-between gap-2 border-b border-black/10 bg-[var(--surface-cream)] px-4 py-2.5 transition-transform duration-300 md:hidden dark:border-white/10 ${
+          hidden ? "-translate-y-full" : "translate-y-0"
+        }`}
+      >
         <Link href="/" aria-label="Joyful home" className="flex items-center">
           {/* Purple on light, white on dark — stays visible either way. */}
           <Image
@@ -26,7 +53,7 @@ export default function MobileExamHeader({ app }: { app: AppRecord }) {
             alt=""
             width={360}
             height={110}
-            className="h-8 w-auto dark:hidden"
+            className="h-7 w-auto dark:hidden"
             style={{ width: "auto" }}
             priority
           />
@@ -35,7 +62,7 @@ export default function MobileExamHeader({ app }: { app: AppRecord }) {
             alt=""
             width={360}
             height={110}
-            className="hidden h-8 w-auto dark:block"
+            className="hidden h-7 w-auto dark:block"
             style={{ width: "auto" }}
             priority
           />

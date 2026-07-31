@@ -10,16 +10,16 @@ export default function Footer() {
   return (
     <footer className="bg-[#2E1065] text-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
-        <div>
+        <div className="pt-2 text-center sm:pt-0 sm:text-left">
           <Image
             src={LOGO_WHITE_URL}
             alt={SITE_NAME}
             width={280}
             height={64}
-            className="h-16 w-auto sm:h-20"
+            className="mx-auto h-12 w-auto sm:mx-0 sm:h-14"
             style={{ width: "auto" }}
           />
-          <p className="mt-5 max-w-sm text-base leading-relaxed text-white/75">
+          <p className="mx-auto mt-5 max-w-sm text-base leading-relaxed text-white/75 sm:mx-0">
             Focused, trustworthy prep apps for the exams that change your life — citizenship,
             settlement, and beyond.
           </p>
