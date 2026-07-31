@@ -255,28 +255,32 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
     );
   }
 
-  /* --- Feature 3: study anywhere → book + phone + tick -------------------- */
-  const places = [<CarIcon key="car" />, <TrainIcon key="train" />, <PlaneIcon key="plane" />, <HomeIcon key="home" />];
+  /* --- Feature 3: study anywhere → each place on its own, then a phone with
+       a green tick as the final beat. Each icon gets its own scene. --------- */
+  const places = [
+    <CarIcon key="car" />,
+    <TrainIcon key="train" />,
+    <PlaneIcon key="plane" />,
+    <HomeIcon key="home" />,
+    <BookIcon key="book" />,
+  ];
   return (
     <div className="relative h-full">
       {places.map((icon, i) => (
         <div
           key={i}
           className="anim-scene absolute inset-0 flex items-center justify-center text-white"
-          style={{ animationDelay: `${i * 2}s`, opacity: 0 }}
+          style={{ animationDelay: `${i * 1.5}s`, opacity: 0 }}
         >
           <span className="h-20 w-20">{icon}</span>
         </div>
       ))}
-      {/* Final scene: studied on mobile — book + phone + a landing tick. */}
+      {/* Final scene: studied on mobile — the phone lands with a green tick. */}
       <div
-        className="anim-scene absolute inset-0 flex items-center justify-center gap-3 text-white"
-        style={{ animationDelay: "8s", opacity: 0 }}
+        className="anim-scene absolute inset-0 flex items-center justify-center text-white"
+        style={{ animationDelay: "7.5s", opacity: 0 }}
       >
-        <span className="h-12 w-12 opacity-90">
-          <BookIcon />
-        </span>
-        <span className="relative h-16 w-16">
+        <span className="relative h-20 w-20">
           <PhoneIcon />
           <span
             className="anim-scene-tick absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full text-white shadow-md"

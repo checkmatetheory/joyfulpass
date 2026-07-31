@@ -335,21 +335,22 @@ h6 {
   animation: trophy-pop 9s cubic-bezier(0.2, 0.9, 0.3, 1.4) infinite;
 }
 
-/* --- Feature 3: study anywhere — a sequence of places, then book+phone+tick */
+/* --- Feature 3: study anywhere — each place on its own, then a phone+tick.
+   Six 1.5s scenes on a 9s loop (snappier reveals than before). */
 @keyframes scene-show {
   0% {
     opacity: 0;
     transform: scale(0.86);
   }
-  3% {
+  4% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  13% {
     opacity: 1;
     transform: scale(1);
   }
   17% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  20% {
     opacity: 0;
     transform: scale(0.86);
   }
@@ -359,17 +360,18 @@ h6 {
   }
 }
 .anim-scene {
-  animation: scene-show 10s ease-in-out infinite;
+  animation: scene-show 9s ease-in-out infinite;
 }
-/* The final tick in the "studied" scene lands with a pop. */
+/* The final tick in the "studied" scene lands with a pop once the phone (the
+   last scene) is on screen. */
 @keyframes scene-tick {
   0%,
-  86% {
+  87% {
     opacity: 0;
     transform: scale(0.2);
   }
-  90%,
-  96% {
+  91%,
+  97% {
     opacity: 1;
     transform: scale(1);
   }
@@ -379,7 +381,7 @@ h6 {
   }
 }
 .anim-scene-tick {
-  animation: scene-tick 10s cubic-bezier(0.2, 0.9, 0.3, 1.4) infinite;
+  animation: scene-tick 9s cubic-bezier(0.2, 0.9, 0.3, 1.4) infinite;
 }
 
 /* Hold every screen animation paused until the phone scrolls into view, then
