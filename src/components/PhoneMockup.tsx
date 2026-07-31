@@ -33,10 +33,10 @@ const GREEN = "#22C55E";
 
 const CarIcon = () => (
   <Icon>
-    <path d="M5 12l2-5h10l2 5" />
-    <rect x="3" y="12" width="18" height="5" rx="1.5" />
-    <circle cx="7.5" cy="17.5" r="1.5" />
-    <circle cx="16.5" cy="17.5" r="1.5" />
+    <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
+    <circle cx="7" cy="17" r="2" />
+    <path d="M9 17h6" />
+    <circle cx="17" cy="17" r="2" />
   </Icon>
 );
 const TrainIcon = () => (
@@ -49,10 +49,11 @@ const TrainIcon = () => (
     <line x1="16" y1="20" x2="18" y2="22.5" />
   </Icon>
 );
+// A clean, single-shape filled aeroplane (reads as one solid icon).
 const PlaneIcon = () => (
-  <Icon>
-    <path d="M17.8 19.2 16 11l3.5-3.5c1-1 1.5-2.5 1-3S18 3 16.5 4.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .4 1.3L11 12l-3 3H4l-1 1 3 2 2 3 1-1v-4l3-3 3.5 3.5c.4.4 1 .6 1.3.4l.5-.3c.4-.2.6-.6.5-1.1z" />
-  </Icon>
+  <svg viewBox="0 0 24 24" fill="currentColor" className={strokeIcon} aria-hidden>
+    <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L12 19v-4.5L21 16z" />
+  </svg>
 );
 const HomeIcon = () => (
   <Icon>
@@ -138,10 +139,7 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
 
         {/* The "why" explanation card — the learning moment after answering.
             A green line + highlight ties it to the correct answer. */}
-        <div
-          className="anim-quiz-explain absolute inset-x-4 bottom-4 rounded-2xl border-l-4 bg-white p-3.5 shadow-xl"
-          style={{ borderLeftColor: GREEN }}
-        >
+        <div className="anim-quiz-explain absolute inset-x-4 bottom-4 rounded-2xl bg-white p-3.5 shadow-xl">
           <div className="flex items-center gap-2">
             <span
               className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full p-1 text-white"
