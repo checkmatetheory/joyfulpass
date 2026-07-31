@@ -5,6 +5,7 @@ import { examHub } from "@/lib/urls";
 import { SITE_NAME } from "@/lib/site";
 import { FILM_PHOTOS } from "@/lib/photos";
 import InstaxPhoto from "@/components/InstaxPhoto";
+import AppIconBadge from "@/components/AppIconBadge";
 
 export const metadata: Metadata = {
   title: "About",
@@ -98,10 +99,10 @@ export default function AboutPage() {
             <li key={app.slug}>
               <Link
                 href={examHub(app)}
-                className="flex items-center gap-3 rounded-2xl border border-black/10 p-4 transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10"
+                className="flex items-center gap-4 rounded-2xl border border-black/10 p-4 transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10"
               >
-                <span className="text-2xl" aria-hidden>
-                  {app.flagEmoji}
+                <span className="shrink-0">
+                  <AppIconBadge app={app} size={64} />
                 </span>
                 <span>
                   <span className="block font-bold">{app.name}</span>
