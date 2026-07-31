@@ -28,12 +28,15 @@ function Icon({ children, className = "" }: { children: React.ReactNode; classNa
   );
 }
 
-const BusIcon = () => (
+// Green used for the "correct" cues on the quiz phone and the final tick.
+const GREEN = "#22C55E";
+
+const CarIcon = () => (
   <Icon>
-    <rect x="4" y="4" width="16" height="13" rx="2.5" />
-    <line x1="4" y1="10" x2="20" y2="10" />
-    <circle cx="8" cy="19" r="1.3" />
-    <circle cx="16" cy="19" r="1.3" />
+    <path d="M5 12l2-5h10l2 5" />
+    <rect x="3" y="12" width="18" height="5" rx="1.5" />
+    <circle cx="7.5" cy="17.5" r="1.5" />
+    <circle cx="16.5" cy="17.5" r="1.5" />
   </Icon>
 );
 const TrainIcon = () => (
@@ -48,8 +51,7 @@ const TrainIcon = () => (
 );
 const PlaneIcon = () => (
   <Icon>
-    <path d="M21 3 3 10.5l7 2.5 2.5 7L21 3z" />
-    <path d="M10 13 21 3" />
+    <path d="M17.8 19.2 16 11l3.5-3.5c1-1 1.5-2.5 1-3S18 3 16.5 4.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .4 1.3L11 12l-3 3H4l-1 1 3 2 2 3 1-1v-4l3-3 3.5 3.5c.4.4 1 .6 1.3.4l.5-.3c.4-.2.6-.6.5-1.1z" />
   </Icon>
 );
 const HomeIcon = () => (
@@ -104,7 +106,7 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
               >
                 <span
                   className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
-                  style={{ backgroundColor: isCorrect ? accent : "rgba(255,255,255,0.25)" }}
+                  style={{ backgroundColor: isCorrect ? GREEN : "rgba(255,255,255,0.25)" }}
                 >
                   {letter}
                 </span>
@@ -115,14 +117,14 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
                   {isCorrect && (
                     <div
                       className="anim-quiz-pick-bar absolute inset-0 rounded-full"
-                      style={{ backgroundColor: `${accent}66` }}
+                      style={{ backgroundColor: `${GREEN}99` }}
                     />
                   )}
                 </div>
                 {isCorrect && (
                   <span
                     className="anim-quiz-check flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white shadow-md"
-                    style={{ backgroundColor: accent }}
+                    style={{ backgroundColor: GREEN }}
                   >
                     <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M20 6 9 17l-5-5" />
@@ -134,16 +136,20 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
           })}
         </div>
 
-        {/* The "why" explanation card — the learning moment after answering. */}
-        <div className="anim-quiz-explain absolute inset-x-4 bottom-4 rounded-2xl bg-white p-3.5 shadow-xl">
+        {/* The "why" explanation card — the learning moment after answering.
+            A green line + highlight ties it to the correct answer. */}
+        <div
+          className="anim-quiz-explain absolute inset-x-4 bottom-4 rounded-2xl border-l-4 bg-white p-3.5 shadow-xl"
+          style={{ borderLeftColor: GREEN }}
+        >
           <div className="flex items-center gap-2">
             <span
               className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full p-1 text-white"
-              style={{ backgroundColor: accent }}
+              style={{ backgroundColor: GREEN }}
             >
               <LightbulbIcon />
             </span>
-            <div className="h-2 w-20 rounded-full" style={{ backgroundColor: `${accent}55` }} />
+            <div className="h-2 w-20 rounded-full" style={{ backgroundColor: GREEN }} />
           </div>
           <div className="mt-2.5 space-y-1.5">
             <div className="h-1.5 w-full rounded-full bg-black/10" />
@@ -242,7 +248,7 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
   }
 
   /* --- Feature 3: study anywhere → book + phone + tick -------------------- */
-  const places = [<BusIcon key="bus" />, <TrainIcon key="train" />, <PlaneIcon key="plane" />, <HomeIcon key="home" />];
+  const places = [<CarIcon key="car" />, <TrainIcon key="train" />, <PlaneIcon key="plane" />, <HomeIcon key="home" />];
   return (
     <div className="relative h-full">
       {places.map((icon, i) => (
@@ -266,7 +272,7 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
           <PhoneIcon />
           <span
             className="anim-scene-tick absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full text-white shadow-md"
-            style={{ backgroundColor: accent }}
+            style={{ backgroundColor: GREEN }}
           >
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 6 9 17l-5-5" />
@@ -323,7 +329,9 @@ export default function PhoneMockup({
         className="h-[480px] overflow-hidden rounded-[2rem]"
         style={{ backgroundColor: `${accent}CC` }}
       >
-        <VariantContent variant={variant} accent={accent} />
+        {/* Remount when the phone scrolls into view so every screen animation
+            starts cleanly from frame 0 — never caught mid-loop or at its end. */}
+        <VariantContent key={visible ? "play" : "wait"} variant={variant} accent={accent} />
       </div>
     </div>
   );
