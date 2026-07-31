@@ -201,65 +201,127 @@ h6 {
   animation: quiz-explain 8s cubic-bezier(0.2, 0.9, 0.3, 1.1) infinite;
 }
 
-/* --- Feature 2: readiness ring + rising bars + line to a trophy ------------ */
-@keyframes ring-fill {
+/* --- Feature 2: readiness ring → bars → trend line → trophy, in sequence ---
+   Three rows fade in one after another; the inner motion (ring fill, bar rise,
+   line draw, trophy pop) plays as each row appears. Everything shares one 9s
+   loop with no per-element delay, so it always starts clean from frame 0 and
+   the four stages never drift out of sync. */
+@keyframes prog-row-a {
   0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  6%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  98%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@keyframes prog-row-b {
+  0%,
+  15% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  23%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  98%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@keyframes prog-row-c {
+  0%,
+  36% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  44%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  98%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+.anim-prog-row-a {
+  animation: prog-row-a 9s ease-in-out infinite;
+}
+.anim-prog-row-b {
+  animation: prog-row-b 9s ease-in-out infinite;
+}
+.anim-prog-row-c {
+  animation: prog-row-c 9s ease-in-out infinite;
+}
+/* Ring fills as row 1 appears, then holds. */
+@keyframes ring-fill {
+  0%,
+  4% {
     stroke-dashoffset: 151;
   }
-  50%,
-  88% {
+  22% {
     stroke-dashoffset: 34;
   }
   100% {
-    stroke-dashoffset: 151;
+    stroke-dashoffset: 34;
   }
 }
 .anim-ring-fill {
-  animation: ring-fill 7s ease-in-out infinite;
+  animation: ring-fill 9s ease-in-out infinite;
 }
+/* Bars grow as row 2 appears, then hold at full height. */
 @keyframes bar-rise {
-  0% {
-    transform: scaleY(0.12);
+  0%,
+  16% {
+    transform: scaleY(0.08);
   }
-  50% {
+  34% {
     transform: scaleY(1);
   }
-  85% {
-    transform: scaleY(0.85);
-  }
   100% {
-    transform: scaleY(0.12);
+    transform: scaleY(1);
   }
 }
 .anim-bar-rise {
   transform-origin: bottom;
-  animation: bar-rise 7s ease-in-out infinite;
+  animation: bar-rise 9s ease-in-out infinite;
 }
-/* The trend line draws left-to-right. */
+/* The trend line draws left-to-right as row 3 appears, then holds. */
 @keyframes line-draw {
   0%,
-  14% {
+  40% {
     stroke-dashoffset: 320;
   }
-  62%,
-  90% {
+  60% {
     stroke-dashoffset: 0;
   }
   100% {
-    stroke-dashoffset: 320;
+    stroke-dashoffset: 0;
   }
 }
 .anim-line-draw {
-  animation: line-draw 7s ease-in-out infinite;
+  animation: line-draw 9s ease-in-out infinite;
 }
-/* The trophy pops in once the line reaches the top. */
+/* The trophy pops in last, once the line reaches the top. */
 @keyframes trophy-pop {
   0%,
   60% {
     opacity: 0;
     transform: scale(0.2) translateY(6px);
   }
-  72%,
+  70%,
   90% {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -270,7 +332,7 @@ h6 {
   }
 }
 .anim-trophy-pop {
-  animation: trophy-pop 7s cubic-bezier(0.2, 0.9, 0.3, 1.4) infinite;
+  animation: trophy-pop 9s cubic-bezier(0.2, 0.9, 0.3, 1.4) infinite;
 }
 
 /* --- Feature 3: study anywhere — a sequence of places, then book+phone+tick */
@@ -334,6 +396,9 @@ h6 {
   .anim-quiz-pick-bar,
   .anim-quiz-check,
   .anim-quiz-explain,
+  .anim-prog-row-a,
+  .anim-prog-row-b,
+  .anim-prog-row-c,
   .anim-ring-fill,
   .anim-bar-rise,
   .anim-line-draw,
@@ -344,13 +409,21 @@ h6 {
   }
   /* With motion off, keep the final "answered + explained" state legible. */
   .anim-quiz-explain,
+  .anim-prog-row-a,
+  .anim-prog-row-b,
+  .anim-prog-row-c,
+  .anim-trophy-pop,
   .anim-scene:last-child {
     opacity: 1;
     transform: none;
   }
-  /* Show the ring filled and the trend line drawn (not their empty start). */
+  /* Show the ring filled, bars grown, and the trend line drawn (their end
+     state, not the empty start). */
   .anim-ring-fill {
     stroke-dashoffset: 34;
+  }
+  .anim-bar-rise {
+    transform: scaleY(1);
   }
   .anim-line-draw {
     stroke-dashoffset: 0;

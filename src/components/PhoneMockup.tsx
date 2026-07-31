@@ -49,10 +49,17 @@ const TrainIcon = () => (
     <line x1="16" y1="20" x2="18" y2="22.5" />
   </Icon>
 );
-// A clean, single-shape filled aeroplane (reads as one solid icon).
+// A single-shape filled aeroplane, perfectly symmetric about its vertical axis
+// (x=12) and banked to 45° so it reads as one solid icon in flight.
 const PlaneIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={strokeIcon} aria-hidden>
-    <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L12 19v-4.5L21 16z" />
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={strokeIcon}
+    style={{ transform: "rotate(45deg)" }}
+    aria-hidden
+  >
+    <path d="M12 2C12.6 2 13 2.6 13 3.4V8L21 13V15L13 12.5V17L15.5 19V20.5L12 19.5L8.5 20.5V19L11 17V12.5L3 15V13L11 8V3.4C11 2.6 11.4 2 12 2Z" />
   </svg>
 );
 const HomeIcon = () => (
@@ -163,8 +170,12 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
   if (variant === "progress") {
     return (
       <div className="flex h-full flex-col justify-center gap-6 p-6">
-        {/* Circular readiness score filling up */}
-        <div className="flex items-center gap-4">
+        {/* Each row fades in one after another (ring → bars → line + trophy),
+            and its inner motion plays as it appears. All share one 9s loop so
+            they always start clean from frame 0 and stay in sequence. */}
+
+        {/* Row 1: circular readiness score filling up */}
+        <div className="anim-prog-row-a flex items-center gap-4">
           <div className="relative h-16 w-16 shrink-0">
             <svg viewBox="0 0 56 56" className="h-16 w-16">
               <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="6" />
@@ -188,8 +199,8 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
           </div>
         </div>
 
-        {/* Bar chart building */}
-        <div className="flex h-24 items-end gap-2">
+        {/* Row 2: bar chart building */}
+        <div className="anim-prog-row-b flex h-24 items-end gap-2">
           {[40, 68, 55, 92, 66].map((h, i) => (
             <div
               key={i}
@@ -197,15 +208,14 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
               style={{
                 height: `${h}%`,
                 backgroundColor: i === 3 ? "white" : "rgba(255,255,255,0.4)",
-                animationDelay: `${i * 0.18}s`,
               }}
             />
           ))}
         </div>
 
-        {/* Trend line climbing to a trophy — nudged down, trophy pinned to its
-            top-right where the line peaks. */}
-        <div className="relative mt-3 h-16 pt-5">
+        {/* Row 3: trend line climbing to a trophy — nudged down, trophy pinned
+            to its top-right where the line peaks. */}
+        <div className="anim-prog-row-c relative mt-3 h-16 pt-5">
           <svg viewBox="0 0 200 52" preserveAspectRatio="none" className="h-full w-full">
             <polyline
               points="4,46 44,40 84,43 124,26 164,18 194,8"
