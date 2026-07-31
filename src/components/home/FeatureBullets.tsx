@@ -3,7 +3,7 @@ import PhoneMockup from "@/components/PhoneMockup";
 
 export default function FeatureBullets() {
   return (
-    <section className="bg-[#2E1065] px-4 py-20 text-white sm:px-6 sm:py-28">
+    <section className="overflow-hidden bg-[#2E1065] px-4 py-20 text-white sm:px-6 sm:py-28">
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-3xl font-bold sm:text-4xl">Your success starts here</h2>
         <p className="mt-3 text-white/75">
@@ -27,7 +27,11 @@ export default function FeatureBullets() {
               <h3 className="mt-3 text-2xl font-bold sm:text-3xl">{feature.title}</h3>
               <p className="mt-4 leading-relaxed text-white/75">{feature.body}</p>
             </div>
-            <PhoneMockup variant={feature.mockup} accent="#5B6EE1" />
+            <PhoneMockup
+              variant={feature.mockup}
+              accent="#5B6EE1"
+              revealFrom={index % 2 === 0 ? "right" : "left"}
+            />
           </div>
         ))}
       </div>

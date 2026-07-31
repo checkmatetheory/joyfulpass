@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { apps } from "@/lib/apps";
 import { examHub } from "@/lib/urls";
-import { LOGO_URL } from "@/lib/site";
+import { LOGO_WHITE_URL } from "@/lib/site";
 
 const HEADER_REVEAL_DELAY_MS = 750;
 
@@ -40,19 +40,19 @@ export default function Header() {
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      <div className="mx-auto grid h-[72px] max-w-[1800px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-3 sm:h-20 sm:px-6 lg:px-10">
-        {/* Far left: logo */}
+      <div className="mx-auto grid h-14 max-w-[1800px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 sm:h-16 sm:px-6 lg:px-10">
+        {/* Far left: logo — matches the compact app-page logo size/placement. */}
         <Link
           href="/"
           className="col-start-1 flex min-w-0 items-center justify-self-start"
           aria-label="Joyful home"
         >
           <Image
-            src={LOGO_URL}
+            src={LOGO_WHITE_URL}
             alt="Joyful"
             width={400}
             height={120}
-            className="-translate-y-1 h-16 w-auto sm:h-24"
+            className="h-8 w-auto sm:h-9"
             style={{ width: "auto" }}
             priority
           />
@@ -114,7 +114,7 @@ export default function Header() {
         <div className="col-start-3 flex items-center justify-self-end">
           <Link
             href="/#apps"
-            className="hidden -translate-y-1 rounded-full px-6 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-transform hover:-translate-y-1.5 focus-visible:ring-2 focus-visible:ring-white lg:inline-block"
+            className="hidden rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-white lg:inline-block"
             style={{ backgroundColor: "var(--accent)" }}
           >
             Get started

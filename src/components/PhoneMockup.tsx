@@ -278,7 +278,16 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
   );
 }
 
-export default function PhoneMockup({ variant, accent }: { variant: Variant; accent: string }) {
+export default function PhoneMockup({
+  variant,
+  accent,
+  revealFrom = "right",
+}: {
+  variant: Variant;
+  accent: string;
+  /** Direction the phone fades/slides in from as it scrolls into view. */
+  revealFrom?: "left" | "right";
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -298,11 +307,15 @@ export default function PhoneMockup({ variant, accent }: { variant: Variant; acc
     return () => io.disconnect();
   }, []);
 
+  const reveal = visible
+    ? "translate-x-0 opacity-100"
+    : `opacity-0 ${revealFrom === "left" ? "-translate-x-16" : "translate-x-16"}`;
+
   return (
     <div
       ref={ref}
       data-mockup
-      className={`mx-auto w-64 rounded-[2.75rem] border-[6px] border-black/20 bg-black/20 p-2.5 shadow-2xl ${
+      className={`mx-auto w-64 rounded-[2.75rem] border-[6px] border-black/20 bg-black/20 p-2.5 shadow-2xl transition duration-700 ease-out motion-reduce:translate-x-0 motion-reduce:opacity-100 motion-reduce:transition-none ${reveal} ${
         visible ? "is-visible" : ""
       }`}
     >
