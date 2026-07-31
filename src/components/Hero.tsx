@@ -23,7 +23,7 @@ export default function Hero({
   return (
     <section className="relative -mt-14 overflow-hidden pt-36 text-white sm:-mt-16 sm:pt-44">
       <HeroBackground media={media} gradientFrom={gradientFrom} gradientTo={gradientTo} />
-      <div className="relative mx-auto max-w-4xl px-4 pb-32 text-center sm:px-6 sm:pb-40">
+      <div className="relative mx-auto max-w-4xl px-4 pb-72 text-center sm:px-6 sm:pb-[26rem]">
         {eyebrow && (
           <p className="mb-4 inline-block rounded-full bg-white/15 px-4 py-1 text-sm font-semibold">
             {eyebrow}
