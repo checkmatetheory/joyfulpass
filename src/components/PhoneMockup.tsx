@@ -283,7 +283,7 @@ function VariantContent({ variant, accent }: { variant: Variant; accent: string 
         <span className="relative h-20 w-20">
           <PhoneIcon />
           <span
-            className="anim-scene-tick absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full text-white shadow-md"
+            className="anim-scene-tick absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full text-white shadow-md"
             style={{ backgroundColor: GREEN }}
           >
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
