@@ -4,6 +4,7 @@ import type { Curriculum } from "@/lib/curriculum";
 import FaqAccordion from "@/components/FaqAccordion";
 import StoreBadges from "@/components/StoreBadges";
 import CtaBanner from "@/components/CtaBanner";
+import AppTestimonials from "@/components/AppTestimonials";
 import DashboardCard from "@/components/dashboard/DashboardCard";
 import {
   MistakesIcon,
@@ -121,6 +122,9 @@ export default function TemplateAHub({ app, curriculum }: Props) {
             <StoreBadges app={app} />
           </CtaBanner>
         </section>
+
+        {/* Social proof — people who passed thanks to the app */}
+        <AppTestimonials app={app} />
 
         {/* Informative content below the CTA — SEO + app-store direction */}
         <section className="mt-12 max-w-3xl">
