@@ -28,6 +28,8 @@ export default function CtaBanner({
   className = "",
 }: Props) {
   const bg = app.ctaBannerImage ?? app.heroMedia?.url;
+  // Mobile art is optional; fall back to the desktop image when unset.
+  const bgMobile = app.ctaBannerImageMobile ?? bg;
   const { accent, accentDark } = app.theme;
 
   if (variant === "split") {
@@ -54,17 +56,37 @@ export default function CtaBanner({
     );
   }
 
-  // Full-image showcase: show the whole 2:1 artwork with no colour wash; pin the
-  // heading + store buttons to the bottom-right.
+  // Full-image showcase: show the whole artwork with no colour wash; pin the
+  // heading + store buttons to the bottom-right. The box is 4:3 on mobile and
+  // 2:1 on desktop, so we serve distinct art per breakpoint (a dedicated 4:3
+  // mobile asset when provided) to avoid center-cropping the wrong axis.
   return (
     <div
       className={`relative flex aspect-[4/3] items-end justify-end overflow-hidden rounded-3xl text-white sm:aspect-[2/1] ${className}`}
-      style={{
-        backgroundImage: bg ? `url("${bg}")` : `linear-gradient(120deg, ${accent}, ${accentDark})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+      // Gradient base always sits behind the art, so it shows through if an
+      // image is unset or fails to load.
+      style={{ backgroundImage: `linear-gradient(120deg, ${accent}, ${accentDark})` }}
     >
+      {bg && (
+        <>
+          {/* Mobile (4:3) art. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={bgMobile}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center sm:hidden"
+          />
+          {/* Desktop (2:1) art. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={bg}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-center sm:block"
+          />
+        </>
+      )}
       {/* Soft corner scrim so the bottom-right buttons stay legible. */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-tl from-black/60 via-black/10 to-transparent" />
       <div className="relative flex flex-col items-end gap-3 p-5 sm:p-8">

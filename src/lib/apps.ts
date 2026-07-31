@@ -105,6 +105,14 @@ export type AppRecord = {
    * then to the accent gradient, when unset.
    */
   ctaBannerImage?: string;
+  /**
+   * Optional mobile-specific (4:3) CTA banner art. On the "center" banner the
+   * box is 4:3 below `sm` and 2:1 at/above it, and the image is center-cropped
+   * to `cover`. When set, this shows only on mobile so a 4:3 design isn't
+   * top/bottom-cropped by the 2:1 desktop box; `ctaBannerImage` shows on desktop.
+   * Falls back to `ctaBannerImage` when unset.
+   */
+  ctaBannerImageMobile?: string;
   hero: {
     headline: string;
     subheadline: string;
