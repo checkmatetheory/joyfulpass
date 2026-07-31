@@ -32,7 +32,7 @@ export default function HeroBackground({
         className="absolute inset-0"
         style={{
           backgroundImage: media
-            ? `linear-gradient(160deg, ${gradientFrom}CC, ${gradientTo}F2)`
+            ? `linear-gradient(160deg, ${gradientFrom}99, ${gradientTo}D9)`
             : `linear-gradient(160deg, ${gradientFrom}, ${gradientTo})`,
         }}
       />
