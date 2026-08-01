@@ -22,6 +22,19 @@ export const LOGO_WHITE_URL =
   "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1ICaaRtyX7vNUGCPfV0h2MZxWdSmk9yipujRg";
 export const ORG_FOUNDING_YEAR = "2023";
 
+// Social profiles shown in the footer. Update the URLs to the real accounts —
+// these follow the @joyfulpass handle used elsewhere. `platform` selects the
+// icon rendered by the footer's SocialIcon switch.
+export const SOCIAL_LINKS = [
+  { platform: "facebook", label: "Facebook", href: "https://www.facebook.com/joyfulpass" },
+  { platform: "instagram", label: "Instagram", href: "https://www.instagram.com/joyfulpass" },
+  { platform: "x", label: "X", href: "https://x.com/joyfulpass" },
+  { platform: "youtube", label: "YouTube", href: "https://www.youtube.com/@joyfulpass" },
+  { platform: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/joyfulpass" },
+] as const;
+
+export type SocialPlatform = (typeof SOCIAL_LINKS)[number]["platform"];
+
 // Default social-share (Open Graph / Twitter) image for the whole site. Used
 // wherever a page doesn't provide a more specific one. Standard 1200×630.
 export const OG_IMAGE = {
