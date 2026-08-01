@@ -89,7 +89,7 @@ export default function CtaBanner({
       )}
       {/* Soft corner scrim so the bottom-right buttons stay legible. */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-tl from-black/60 via-black/10 to-transparent" />
-      <div className="relative flex flex-col items-end gap-3 p-5 sm:p-8">
+      <div className="relative flex flex-col items-end gap-3 p-5 pb-8 sm:p-8 sm:pb-12">
         {/* The artwork already carries the headline; keep the H2 for SEO/a11y
             but hide it visually so it doesn't overlap the baked-in image text. */}
         <h2 className="sr-only">{heading}</h2>

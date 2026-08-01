@@ -15,7 +15,7 @@ export default function StoreBadges({ app, className = "" }: { app: AppRecord; c
         <a
           href={app.appStoreUrl}
           aria-label={`Download ${app.name} on the App Store`}
-          className="flex h-[52px] items-center gap-2.5 rounded-xl bg-black px-4 text-white ring-1 ring-white/15 transition hover:opacity-90"
+          className="flex h-[52px] w-[180px] items-center gap-2.5 rounded-xl bg-black px-4 text-white ring-1 ring-white/15 transition hover:opacity-90"
         >
           <AppleIcon className="h-7 w-7 shrink-0" aria-hidden />
           <span className="flex flex-col items-start pr-1 text-left leading-none">
@@ -28,9 +28,9 @@ export default function StoreBadges({ app, className = "" }: { app: AppRecord; c
         <a
           href={app.playStoreUrl}
           aria-label={`Get ${app.name} on Google Play`}
-          className="flex h-[52px] items-center gap-2.5 rounded-xl bg-black px-4 text-white ring-1 ring-white/15 transition hover:opacity-90"
+          className="flex h-[52px] w-[180px] items-center gap-2.5 rounded-xl bg-black px-4 text-white ring-1 ring-white/15 transition hover:opacity-90"
         >
-          <GooglePlayIcon className="h-6 w-6 shrink-0" aria-hidden />
+          <GooglePlayIcon className="h-7 w-7 shrink-0" aria-hidden />
           <span className="flex flex-col items-start pr-1 text-left leading-none">
             <span className="text-[10px] tracking-tight">Get it on</span>
             <span className="mt-0.5 text-base font-semibold">Google Play</span>
