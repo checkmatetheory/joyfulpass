@@ -36,6 +36,31 @@ const nextConfig: NextConfig = {
       { source: "/germanpass", destination: "/germanpass/einbuergerungstest/", permanent: true },
     ];
   },
+  // Production security headers. SEO-safe hardening: these strengthen the
+  // site's security posture without affecting crawling or rankings. HSTS uses
+  // a 1-year max-age WITHOUT `preload` (kept reversible on purpose), and there
+  // is deliberately no Content-Security-Policy so the GA/Meta/TikTok pixels are
+  // never at risk of being blocked. Referrer-Policy matches Chrome's default so
+  // same-origin referrers (and analytics attribution) are preserved.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains",
+          },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "657cm7lxu0.ufs.sh" },
