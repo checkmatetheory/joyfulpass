@@ -264,7 +264,7 @@ export const apps: AppRecord[] = [
     },
     iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1RxP2dC7BhAYrLo1uIdltUiTFOMzbnvqC20HP",
     ctaBannerImage:
-      "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1TJQByhKDwG9rjJDoM5lNspAIZEfFeOVRmaQ0",
+      "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1kbaG0VP0iROj6VeEqT1Kpnm728XoNfrSPHyQ",
     ctaBannerImageMobile:
       "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1yz2iKpsXwEBiOhuc0T7Nqn2QPr3xDg1Z9paH",
     heroMedia: {
@@ -357,7 +357,7 @@ export const apps: AppRecord[] = [
     },
     iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1UJrMy7ZY5I687eQlTBtkWrgEyU9CuznpoxVA",
     ctaBannerImage:
-      "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1jlMAwMkmLVPxl43z1ipGu89nBMefgWCQkhOj",
+      "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1brpalsFF0dJBEyNVUl43eKqTpSio5YbPxsMm",
     ctaBannerImageMobile:
       "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1jsCMPCkmLVPxl43z1ipGu89nBMefgWCQkhOj",
     hero: {
