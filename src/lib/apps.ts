@@ -276,8 +276,9 @@ export const apps: AppRecord[] = [
       subheadline:
         "Focused practice tests covering history, geography, government, and rights and responsibilities — built from the official Discover Canada guide, with progress tracking built in.",
     },
+    // iOS listing is still in App Store review — keep the placeholder until it's live.
     appStoreUrl: "https://apps.apple.com/app/canadapass",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.joyfulpass.canadapass",
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.joyfulcanpass.app&hl=en",
     officialSource: {
       name: "IRCC — Prepare for your citizenship test",
       url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/citizenship-test.html",
