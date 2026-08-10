@@ -1,7 +1,7 @@
 import { impactStats } from "@/lib/homeContent";
 
 const BACKGROUND_IMAGE =
-  "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN13rwPlFPSXKlAi59mOpnMFbI0ZHJg8Yfuz6dG";
+  "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1I1nUhUyX7vNUGCPfV0h2MZxWdSmk9yipujRg";
 
 export default function ImpactStats() {
   return (
