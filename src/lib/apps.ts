@@ -276,8 +276,7 @@ export const apps: AppRecord[] = [
       subheadline:
         "Focused practice tests covering history, geography, government, and rights and responsibilities — built from the official Discover Canada guide, with progress tracking built in.",
     },
-    // iOS listing is still in App Store review — keep the placeholder until it's live.
-    appStoreUrl: "https://apps.apple.com/app/canadapass",
+    appStoreUrl: "https://apps.apple.com/us/app/canadapass-citizenship-test/id6792343897",
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.joyfulcanpass.app&hl=en",
     officialSource: {
       name: "IRCC — Prepare for your citizenship test",
@@ -366,10 +365,9 @@ export const apps: AppRecord[] = [
       subheadline:
         "Free practice questions and mock tests for the German naturalisation test, built from the official 300-question catalogue — so you learn exactly what comes up and walk in ready.",
     },
-    // Placeholder store links until the GermanPass apps ship — update to the
-    // real listing URLs on launch.
+    // iOS listing is still in App Store review — keep the placeholder until it's live.
     appStoreUrl: "https://apps.apple.com/app/germanpass",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.joyfulpass.germanpass",
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.joyfulgermanpass.app",
     officialSource: {
       name: "BAMF — Einbürgerungstest",
       url: "https://www.bamf.de/EN/Themen/Integration/ZugewanderteTeilnehmende/Einbuergerung/einbuergerung-node.html",
