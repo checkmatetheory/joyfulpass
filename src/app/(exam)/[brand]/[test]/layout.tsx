@@ -4,9 +4,11 @@ import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import JsonLd from "@/components/JsonLd";
 import ExamSidebar from "@/components/exam/ExamSidebar";
 import GoProButton from "@/components/exam/GoProButton";
+import GetAppButton from "@/components/exam/GetAppButton";
 import MobileExamHeader from "@/components/exam/MobileExamHeader";
 import ExamDownloadFooter from "@/components/exam/ExamDownloadFooter";
-import { examHub } from "@/lib/urls";
+import { examHub, getAppPath } from "@/lib/urls";
+import { qrDataUri } from "@/lib/qr";
 import { SITE_URL } from "@/lib/site";
 
 export const dynamicParams = false;
@@ -49,6 +51,11 @@ export default async function ExamLayout({
   const app = getAppByExamSlug(test);
   if (!app) notFound();
 
+  // Smart-link URL + its QR, baked in at build time and shared by the desktop
+  // and mobile "Get {app}" buttons (the QR library never ships to the browser).
+  const smartLink = `${SITE_URL}${getAppPath(app)}`;
+  const appQr = await qrDataUri(smartLink);
+
   const educationalOrgJsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
@@ -76,11 +83,12 @@ export default async function ExamLayout({
         <ExamSidebar app={app} />
       </div>
       <div className="relative flex min-w-0 flex-1 flex-col">
-        {/* Mobile-only top bar: Joyful logo + Go Pro + nav drawer. */}
-        <MobileExamHeader app={app} />
-        {/* Desktop persistent top-right upgrade CTA. */}
+        {/* Mobile-only top bar: Joyful logo + Get app + Go Pro + nav drawer. */}
+        <MobileExamHeader app={app} qrDataUri={appQr} smartLink={smartLink} />
+        {/* Desktop persistent top-right CTAs: download the app + upgrade. */}
         <div className="pointer-events-none sticky top-0 z-30 hidden h-0 justify-end md:flex">
-          <div className="pointer-events-auto px-4 pt-4 sm:px-8 sm:pt-6">
+          <div className="pointer-events-auto flex items-center gap-2.5 px-4 pt-4 sm:px-8 sm:pt-6">
+            <GetAppButton app={app} qrDataUri={appQr} smartLink={smartLink} />
             <GoProButton app={app} />
           </div>
         </div>

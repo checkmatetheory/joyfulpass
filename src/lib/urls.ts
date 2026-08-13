@@ -75,6 +75,16 @@ export function cheatSheetPath(app: AppRecord): string {
   return `${root(app)}/cheat-sheet/`;
 }
 
+/**
+ * Device-routing "smart link" for an app's store listings: /get/britpass/.
+ * Opening it on a phone bounces the visitor to the right store (App Store on
+ * iOS, Google Play on Android); on desktop it shows a scan-to-download page.
+ * This is the URL every "Get {app}" button and its QR code point at.
+ */
+export function getAppPath(app: AppRecord): string {
+  return `/get/${app.slug}/`;
+}
+
 // App-flow pages — same silo, but noindex.
 /** Mistakes review: …/mistakes/ */
 export function mistakesPath(app: AppRecord): string {

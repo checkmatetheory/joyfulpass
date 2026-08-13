@@ -27,7 +27,7 @@ export default function GoProButton({ app }: { app: AppRecord }) {
   return (
     <Link
       href={href}
-      className="group inline-flex items-center gap-2 rounded-full py-2 pl-2.5 pr-4 text-sm font-semibold text-white shadow-lg shadow-black/10 ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:shadow-xl"
+      className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full py-2 pl-2.5 pr-4 text-sm font-semibold text-white shadow-lg shadow-black/10 ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:shadow-xl"
       style={{ backgroundColor: "var(--accent)" }}
     >
       <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20">

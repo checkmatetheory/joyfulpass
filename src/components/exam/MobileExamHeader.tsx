@@ -7,6 +7,7 @@ import type { AppRecord } from "@/lib/apps";
 import { LOGO_PURPLE_URL, LOGO_WHITE_URL } from "@/lib/site";
 import ExamSidebar from "@/components/exam/ExamSidebar";
 import GoProButton from "@/components/exam/GoProButton";
+import GetAppButton from "@/components/exam/GetAppButton";
 
 const REVEAL_DELAY_MS = 650;
 
@@ -16,7 +17,15 @@ const REVEAL_DELAY_MS = 650;
  * sidebar nav as a drawer. Auto-hides while scrolling and slides back in once
  * scrolling stops, so more content is visible on small screens.
  */
-export default function MobileExamHeader({ app }: { app: AppRecord }) {
+export default function MobileExamHeader({
+  app,
+  qrDataUri,
+  smartLink,
+}: {
+  app: AppRecord;
+  qrDataUri: string;
+  smartLink: string;
+}) {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const stopTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -69,6 +78,7 @@ export default function MobileExamHeader({ app }: { app: AppRecord }) {
         </Link>
 
         <div className="flex items-center gap-2">
+          <GetAppButton app={app} qrDataUri={qrDataUri} smartLink={smartLink} />
           <GoProButton app={app} />
           <button
             type="button"
