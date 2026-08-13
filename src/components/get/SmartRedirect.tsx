@@ -89,7 +89,7 @@ export default function SmartRedirect({
   // Desktop / no matching store: scan-to-download fallback.
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-6 py-16 text-center">
-      <AppIconBadge app={app} size={72} />
+      <AppIconBadge app={app} size={116} shadow={false} />
       <h1 className="mt-5 text-2xl font-extrabold tracking-tight sm:text-3xl">
         Download {app.name}
       </h1>

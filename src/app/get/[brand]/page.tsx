@@ -56,7 +56,7 @@ export default async function GetAppPage({
           alt="Joyful"
           width={360}
           height={110}
-          className="h-7 w-auto dark:hidden"
+          className="h-[42px] w-auto dark:hidden"
           style={{ width: "auto" }}
           priority
         />
@@ -65,7 +65,7 @@ export default async function GetAppPage({
           alt="Joyful"
           width={360}
           height={110}
-          className="hidden h-7 w-auto dark:block"
+          className="hidden h-[42px] w-auto dark:block"
           style={{ width: "auto" }}
           priority
         />
