@@ -6,30 +6,30 @@ author: "Chris Thür"
 authorCredential: "Co-founder, Joyful"
 ---
 
-Choosing a test date is a balance. Booking too early can create unnecessary pressure, while waiting indefinitely can make it harder to maintain momentum. A realistic plan starts with your current practice level.
+Picking a test date is a balancing act. Book too early and you pile on pressure; wait forever and momentum quietly slips away. The honest starting point isn't the calendar — it's your current practice level.
 
 ## Take a baseline test first
 
-Before choosing a date, complete a timed practice test without notes. Your first score is not a verdict; it is a starting point. It shows whether you need a short revision period or a more structured plan.
+Before you choose a date, sit one timed practice test with no notes. That first score isn't a verdict, it's a reading. It tells you whether you're looking at a short tidy-up or a more structured plan.
 
 ## Use consistent scores, not confidence alone
 
-You are usually ready to book when you can pass several mixed mock tests in a row with room to spare. This matters because test-day nerves can affect recall, even when you understand the material well.
+You're usually ready to book when you can pass several mixed mocks in a row with room to spare. That "in a row" part matters, because test-day nerves chip away at recall even when you genuinely know the material.
 
-Use the gap between your current score and the pass mark to plan:
+Let the gap between your current score and the pass mark set the plan:
 
-- **Close to passing:** focus on weak topics and add timed practice
+- **Close to passing:** drill your weak topics and add timed practice
 - **Well below passing:** work through the official source section by section
-- **Consistently above passing:** maintain light review until the test date
+- **Consistently above passing:** keep it warm with light review until the date
 
-## Leave time for practical arrangements
+## Leave time for the practical stuff
 
-The official booking process may have date, location, and document requirements. Check the relevant government service before committing to an appointment.
+The official booking process comes with its own date, location, and document requirements. Check the relevant government service before you commit to an appointment — don't let logistics ambush you the week before.
 
-For the Life in the UK Test, see our [booking guide](/britpass/life-in-the-uk-test/blog/how-to-book-life-in-the-uk-test/). For the Canadian citizenship test, follow the instructions in your IRCC notice and review our [test-day guide](/canadapass/canadian-citizenship-test/blog/citizenship-test-day-tips/).
+For the Life in the UK Test, see our [booking guide](/britpass/life-in-the-uk-test/blog/how-to-book-life-in-the-uk-test/). For the Canadian citizenship test, follow the instructions in your IRCC notice and read our [test-day guide](/canadapass/canadian-citizenship-test/blog/citizenship-test-day-tips/).
 
 ## Keep revising after you book
 
-Booking can provide a useful deadline, but it is not the point to stop learning. Use the final days to revisit errors, take one or two timed tests, and get familiar with the practical instructions for the appointment.
+A booking is a useful deadline, but it's not a finish line for studying. Spend the final days revisiting your mistakes, sitting a couple of timed tests, and getting comfortable with the practical instructions for the appointment itself.
 
 Joyful provides independent study support for UK and Canadian exam preparation. Official sources always take priority for dates, eligibility, and test-day requirements.
