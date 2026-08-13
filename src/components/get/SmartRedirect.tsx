@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { AppRecord } from "@/lib/apps";
+import AppIconBadge from "@/components/AppIconBadge";
 import StoreBadges from "@/components/StoreBadges";
 
 type Platform = "ios" | "android" | "desktop";
@@ -88,10 +89,8 @@ export default function SmartRedirect({
   // Desktop / no matching store: scan-to-download fallback.
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-6 py-16 text-center">
-      <p className="text-4xl" aria-hidden>
-        {app.flagEmoji}
-      </p>
-      <h1 className="mt-4 text-2xl font-extrabold tracking-tight sm:text-3xl">
+      <AppIconBadge app={app} size={72} />
+      <h1 className="mt-5 text-2xl font-extrabold tracking-tight sm:text-3xl">
         Download {app.name}
       </h1>
       <p className="mt-2 max-w-md text-sm opacity-70">{app.tagline}</p>
