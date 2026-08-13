@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getApp, getAllAppSlugs } from "@/lib/apps";
 import { getAppPath } from "@/lib/urls";
 import { qrDataUri } from "@/lib/qr";
-import { SITE_URL } from "@/lib/site";
+import { LOGO_PURPLE_URL, LOGO_WHITE_URL, SITE_URL } from "@/lib/site";
 import SmartRedirect from "@/components/get/SmartRedirect";
 
 export const dynamicParams = false;
@@ -42,6 +44,32 @@ export default async function GetAppPage({
         } as React.CSSProperties
       }
     >
+      {/* Persistent Joyful logo, top-left, so anyone who lands here can get home. */}
+      <Link
+        href="/"
+        aria-label="Joyful home"
+        className="absolute left-5 top-5 z-10 inline-flex items-center sm:left-8 sm:top-6"
+      >
+        {/* Purple on light, white on dark — stays visible either way. */}
+        <Image
+          src={LOGO_PURPLE_URL}
+          alt="Joyful"
+          width={360}
+          height={110}
+          className="h-7 w-auto dark:hidden"
+          style={{ width: "auto" }}
+          priority
+        />
+        <Image
+          src={LOGO_WHITE_URL}
+          alt="Joyful"
+          width={360}
+          height={110}
+          className="hidden h-7 w-auto dark:block"
+          style={{ width: "auto" }}
+          priority
+        />
+      </Link>
       <SmartRedirect app={app} qrDataUri={qr} />
     </div>
   );
