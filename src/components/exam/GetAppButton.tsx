@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { AppRecord } from "@/lib/apps";
+import { detectPlatform, storeUrlForPlatform } from "@/lib/platform";
 import StoreBadges from "@/components/StoreBadges";
 
 function DownloadGlyph({ className = "" }: { className?: string }) {
@@ -15,11 +16,13 @@ function DownloadGlyph({ className = "" }: { className?: string }) {
 }
 
 /**
- * A persistent "Get {app}" pill for the exam shell, sitting next to Go Pro. On
- * click it opens a Clubhouse-style modal with a QR code: a phone camera scans it
- * and lands on the device-routing smart link (/get/{brand}/), which bounces to
- * the right store. The modal also shows the store badges as a direct fallback
- * for anyone already on their phone.
+ * A persistent "Get {app}" pill for the exam shell, sitting next to Go Pro.
+ *
+ * On a phone there's no point showing a QR of the page you're already on, so a
+ * tap goes straight to the matching store (App Store on iOS, Google Play on
+ * Android). On desktop it opens a Clubhouse-style modal with a QR code that
+ * lands on the device-routing smart link (/get/{brand}/). Anything else (a
+ * phone whose platform has no listing yet) falls back to that smart link too.
  *
  * Renders nothing until the app has at least one store link. `qrDataUri` and
  * `smartLink` are generated at build time by the Server Component that mounts
@@ -35,6 +38,18 @@ export default function GetAppButton({
   smartLink: string;
 }) {
   const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    const platform = detectPlatform();
+    if (platform === "desktop") {
+      setOpen(true);
+      return;
+    }
+    // On a phone: jump straight to the right store, or to the smart link (which
+    // shows a scan/both-stores fallback) if that platform has no listing yet.
+    const direct = storeUrlForPlatform(platform, app.appStoreUrl, app.playStoreUrl);
+    window.location.href = direct ?? smartLink;
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -57,7 +72,7 @@ export default function GetAppButton({
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={handleClick}
         className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-neutral-900 py-2 pl-3 pr-4 text-sm font-semibold text-white shadow-lg shadow-black/10 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl dark:bg-white dark:text-neutral-900 dark:ring-white/10"
       >
         <DownloadGlyph className="h-4 w-4" />

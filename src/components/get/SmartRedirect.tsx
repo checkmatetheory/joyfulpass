@@ -2,24 +2,9 @@
 
 import { useEffect, useState } from "react";
 import type { AppRecord } from "@/lib/apps";
+import { detectPlatform, storeUrlForPlatform, type Platform } from "@/lib/platform";
 import AppIconBadge from "@/components/AppIconBadge";
 import StoreBadges from "@/components/StoreBadges";
-
-type Platform = "ios" | "android" | "desktop";
-
-/** Best-effort OS sniff, run once on the client. */
-function detectPlatform(): Platform {
-  if (typeof navigator === "undefined") return "desktop";
-  const ua = navigator.userAgent || "";
-  if (/android/i.test(ua)) return "android";
-  // iPadOS 13+ masquerades as desktop Safari, so also treat a touch-capable
-  // "Mac" as iOS.
-  const iOSLike =
-    /iPad|iPhone|iPod/.test(ua) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  if (iOSLike) return "ios";
-  return "desktop";
-}
 
 /**
  * The client half of the /get/{brand}/ smart link. On a phone it redirects to
@@ -42,12 +27,7 @@ export default function SmartRedirect({
 
   useEffect(() => {
     const platform = detectPlatform();
-    const target =
-      platform === "ios"
-        ? app.appStoreUrl
-        : platform === "android"
-          ? app.playStoreUrl
-          : null;
+    const target = storeUrlForPlatform(platform, app.appStoreUrl, app.playStoreUrl);
     // Redirect immediately for phones — `replace` keeps this interstitial out of
     // history so Back doesn't bounce them here again.
     if (target) window.location.replace(target);
