@@ -365,8 +365,7 @@ export const apps: AppRecord[] = [
       subheadline:
         "Free practice questions and mock tests for the German naturalisation test, built from the official 300-question catalogue — so you learn exactly what comes up and walk in ready.",
     },
-    // iOS listing is still in App Store review — keep the placeholder until it's live.
-    appStoreUrl: "https://apps.apple.com/app/germanpass",
+    appStoreUrl: "https://apps.apple.com/de/app/germanpass-einb%C3%BCrgerungstest/id6795239762",
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.joyfulgermanpass.app",
     officialSource: {
       name: "BAMF — Einbürgerungstest",
