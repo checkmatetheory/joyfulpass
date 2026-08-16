@@ -83,6 +83,13 @@ export async function getPost(scope: string, slug: string): Promise<Post | null>
   const { data, content } = readFrontmatter(scope, slug);
   const processed = await remark().use(remarkGfm).use(remarkHtml).process(content);
 
+  // Open external links (absolute http(s) URLs — official gov sources, etc.) in
+  // a new tab so readers keep the post open, with the `noopener noreferrer`
+  // security pairing. Internal links are root-relative (`/…`) and untouched.
+  const contentHtml = processed
+    .toString()
+    .replace(/<a href="(https?:\/\/[^"]*)"/g, '<a href="$1" target="_blank" rel="noopener noreferrer"');
+
   return {
     slug,
     scope,
@@ -93,7 +100,7 @@ export async function getPost(scope: string, slug: string): Promise<Post | null>
     authorCredential: data.authorCredential as string,
     readingMinutes: estimateReadingMinutes(content),
     coverImage: coverImageFor(slug, data),
-    contentHtml: processed.toString(),
+    contentHtml,
   };
 }
 

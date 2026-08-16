@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { ComponentProps } from "react";
 import { apps } from "@/lib/apps";
 import { blogIndex, examHub, testCentresPath } from "@/lib/urls";
-import { LOGO_WHITE_URL, SITE_NAME, SOCIAL_LINKS, type SocialPlatform } from "@/lib/site";
+import { EXTERNAL_LINK_PROPS, LOGO_WHITE_URL, SITE_NAME, SOCIAL_LINKS, type SocialPlatform } from "@/lib/site";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -29,8 +29,7 @@ export default function Footer() {
               <li key={social.platform}>
                 <a
                   href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  {...EXTERNAL_LINK_PROPS}
                   aria-label={`${SITE_NAME} on ${social.label}`}
                   className="block text-white/90 transition hover:text-white"
                 >

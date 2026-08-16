@@ -5,6 +5,7 @@ import { freeQuestions } from "@/lib/curriculum";
 import QuizPanel from "@/components/practice/QuizPanel";
 import CtaBanner from "@/components/CtaBanner";
 import { chapterPath, examHub, topicsPath } from "@/lib/urls";
+import { EXTERNAL_LINK_PROPS } from "@/lib/site";
 
 type Props = {
   app: AppRecord;
@@ -75,6 +76,7 @@ export default function TemplateBChapter({ app, curriculum, chapter }: Props) {
         {app.appStoreUrl && (
           <a
             href={app.appStoreUrl}
+            {...EXTERNAL_LINK_PROPS}
             className="rounded-lg bg-white px-4 py-2 text-sm font-bold text-black"
           >
             App Store
@@ -83,6 +85,7 @@ export default function TemplateBChapter({ app, curriculum, chapter }: Props) {
         {app.playStoreUrl && (
           <a
             href={app.playStoreUrl}
+            {...EXTERNAL_LINK_PROPS}
             className="rounded-lg border border-white/40 px-4 py-2 text-sm font-bold"
           >
             Google Play

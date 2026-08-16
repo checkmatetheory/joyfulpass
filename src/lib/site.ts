@@ -22,6 +22,15 @@ export const LOGO_WHITE_URL =
   "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1ICaaRtyX7vNUGCPfV0h2MZxWdSmk9yipujRg";
 export const ORG_FOUNDING_YEAR = "2023";
 
+// Spread onto any anchor that leaves the site (app stores, official government
+// sources, external blog links) so it opens in a new tab — the visitor keeps
+// Joyful open and can come straight back. `noopener noreferrer` is the required
+// security pairing (prevents reverse-tabnabbing via window.opener).
+export const EXTERNAL_LINK_PROPS = {
+  target: "_blank",
+  rel: "noopener noreferrer",
+} as const;
+
 // Social profiles shown in the footer. Update the URLs to the real accounts —
 // these follow the @joyfulpass handle used elsewhere. `platform` selects the
 // icon rendered by the footer's SocialIcon switch.

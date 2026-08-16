@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { QuizQuestion } from "@/lib/curriculum";
+import { EXTERNAL_LINK_PROPS } from "@/lib/site";
 
 type Props = {
   questions: QuizQuestion[];
@@ -146,6 +147,7 @@ export default function QuizPanel({
               {appStoreUrl && (
                 <a
                   href={appStoreUrl}
+                  {...EXTERNAL_LINK_PROPS}
                   className="rounded-lg px-4 py-2 text-xs font-bold text-white"
                   style={{ backgroundColor: "var(--accent-dark)" }}
                 >
@@ -155,6 +157,7 @@ export default function QuizPanel({
               {playStoreUrl && (
                 <a
                   href={playStoreUrl}
+                  {...EXTERNAL_LINK_PROPS}
                   className="rounded-lg px-4 py-2 text-xs font-bold text-white"
                   style={{ backgroundColor: "var(--accent-dark)" }}
                 >

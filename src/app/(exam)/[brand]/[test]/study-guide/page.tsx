@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import JsonLd from "@/components/JsonLd";
+import { EXTERNAL_LINK_PROPS } from "@/lib/site";
 import {
   cheatSheetPath,
   chapterPath,
@@ -164,7 +165,7 @@ export default async function StudyGuidePage({
       <p className="mt-12 text-xs opacity-50">
         This is an original, condensed study guide written by the {app.name} team — not a
         reproduction of the official handbook. Always confirm details with{" "}
-        <a href={app.officialSource.url} className="underline">
+        <a href={app.officialSource.url} {...EXTERNAL_LINK_PROPS} className="underline">
           {app.officialSource.name}
         </a>
         .

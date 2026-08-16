@@ -6,6 +6,7 @@ import StoreBadges from "@/components/StoreBadges";
 import CtaBanner from "@/components/CtaBanner";
 import AppTestimonials from "@/components/AppTestimonials";
 import DashboardCard from "@/components/dashboard/DashboardCard";
+import { EXTERNAL_LINK_PROPS } from "@/lib/site";
 import {
   MistakesIcon,
   MockTestIcon,
@@ -178,7 +179,7 @@ export default function TemplateAHub({ app, curriculum }: Props) {
           </div>
           <p className="mt-8 text-sm opacity-70">
             Official source:{" "}
-            <a href={app.officialSource.url} className="font-semibold hover:underline">
+            <a href={app.officialSource.url} {...EXTERNAL_LINK_PROPS} className="font-semibold hover:underline">
               {app.officialSource.name}
             </a>
           </p>

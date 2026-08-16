@@ -6,6 +6,7 @@ import { getCurriculum } from "@/lib/curriculum";
 import { getMockTests } from "@/lib/mockTests";
 import FaqAccordion from "@/components/FaqAccordion";
 import JsonLd from "@/components/JsonLd";
+import { EXTERNAL_LINK_PROPS } from "@/lib/site";
 import {
   cheatSheetPath,
   examHub,
@@ -174,7 +175,7 @@ export default async function PracticePage({
           </div>
           <p className="mt-8 text-sm opacity-70">
             Official source:{" "}
-            <a href={app.officialSource.url} className="font-semibold hover:underline">
+            <a href={app.officialSource.url} {...EXTERNAL_LINK_PROPS} className="font-semibold hover:underline">
               {app.officialSource.name}
             </a>
           </p>

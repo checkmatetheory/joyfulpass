@@ -6,6 +6,7 @@ import TestCenterList from "@/components/TestCenterList";
 import JsonLd from "@/components/JsonLd";
 import { examHub, testCentresPath } from "@/lib/urls";
 import { breadcrumbJsonLd } from "@/lib/schema";
+import { EXTERNAL_LINK_PROPS } from "@/lib/site";
 
 export const dynamicParams = false;
 
@@ -54,7 +55,7 @@ export default async function ExamTestCentresPage({
       <p className="mt-4 opacity-80">
         A directory of {app.examName} locations across {app.country}. Always confirm current
         availability and book directly through{" "}
-        <a href={app.officialSource.url} className="font-semibold hover:underline">
+        <a href={app.officialSource.url} {...EXTERNAL_LINK_PROPS} className="font-semibold hover:underline">
           {app.officialSource.name}
         </a>
         .
