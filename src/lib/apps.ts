@@ -444,13 +444,23 @@ export const apps: AppRecord[] = [
       gradientTo: "#134E4A",
     },
     iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1eWdxe1CHp1AK08lhVEFW94bncCPZ3LRdaJux",
+    // PLACEHOLDER art — swap for the real SeruPass assets at the same aspect
+    // ratios as BritPass/CanadaPass: ctaBannerImage 2:1 (~2048×1024), the
+    // mobile variant 4:3 (~1200×900), heroMedia landscape.
+    ctaBannerImage: "https://picsum.photos/seed/serupass-cta/2048/1024",
+    ctaBannerImageMobile: "https://picsum.photos/seed/serupass-cta-mobile/1200/900",
+    heroMedia: {
+      type: "image",
+      url: "https://picsum.photos/seed/serupass-hero/1600/1000",
+    },
     hero: {
       headline: "Everything you need to pass the TfL SERU assessment",
       subheadline:
         "Free practice built around the real SERU assessment for London private-hire drivers — safeguarding, equality, and the regulatory rules you're tested on, in the same open-book format you'll sit on the day.",
     },
     appStoreUrl: "https://apps.apple.com/gb/app/seru-mock-test-mcq-theory/id6469409786",
-    playStoreUrl: null,
+    // PLACEHOLDER — update to the real Google Play listing when the Android app ships.
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.joyfulserupass.app",
     officialSource: {
       name: "Transport for London — SERU",
       url: "https://tfl.gov.uk/info-for/taxis-and-private-hire/licensing/SERU-for-private-hire-drivers",
