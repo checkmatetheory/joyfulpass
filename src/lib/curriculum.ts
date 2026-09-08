@@ -864,7 +864,490 @@ const germanpass: Curriculum = {
   ],
 };
 
-const curricula: Curriculum[] = [britpass, canadapass, germanpass];
+// ---------------------------------------------------------------------------
+// SeruPass — TfL SERU Assessment (London private-hire drivers)
+// Original practice written from published regulatory facts (Equality Act 2010,
+// PHV (London) Act 1998, safeguarding principles) — NOT copied from TfL's
+// Crown-copyright Private Hire Driver's Handbook.
+// ---------------------------------------------------------------------------
+const serupass: Curriculum = {
+  appSlug: "serupass",
+  testSlug: "seru-assessment",
+  testName: "TfL SERU Assessment",
+  intro:
+    "Free TfL SERU practice, organised around the real assessment — safety, safeguarding, equality, and the regulations London private-hire drivers are tested on. Work through a topic, see your score, and know when you're ready to book.",
+  facts: { questions: "~36 questions", toPass: "60% to pass", timeLimit: "~60 minutes" },
+  fullTest: { questionCount: 36, passMark: 22, minutes: 60 },
+  chapters: [
+    {
+      slug: "passenger-and-road-safety",
+      name: "Passenger, road and vehicle safety",
+      shortLabel: "Safety",
+      icon: "🛟",
+      intro:
+        "Keeping passengers, yourself, and other road users safe — the responsibilities that sit at the heart of the 'S' in SERU.",
+      summary:
+        "This topic covers your duty to keep passengers and other road users safe, from carrying only the number of passengers you're licensed and insured for to knowing what to do after a collision. It's about the practical, everyday safety habits TfL expects of a professional driver.",
+      keyFacts: [
+        "You may only carry the number of passengers your vehicle is licensed and insured to carry — never more.",
+        "Licensed private hire vehicles are smoke-free; smoking is not allowed inside the vehicle.",
+        "After a collision you must stop, exchange details, and report it to the police and your insurer as required.",
+        "Keeping the vehicle roadworthy — valid MOT, tyres, lights and brakes — is your responsibility, not just the operator's.",
+      ],
+      cores: [
+        {
+          slug: "everyday-safety",
+          name: "Everyday safety on the job",
+          questions: [
+            {
+              id: "seru-saf-1",
+              prompt:
+                "A group asks you to take more passengers than your vehicle is licensed and insured to carry. What should you do?",
+              options: [
+                "Carry them all to keep the customer happy",
+                "Only carry up to the number you're licensed and insured for",
+                "Carry the extra passengers if the journey is short",
+                "Let one sit in the front footwell",
+              ],
+              answer: 1,
+              explanation:
+                "You must never exceed the number of passengers your vehicle is licensed and insured to carry — doing so is unsafe and invalidates your insurance.",
+            },
+            {
+              id: "seru-saf-2",
+              prompt: "Smoking inside a licensed private hire vehicle is:",
+              options: [
+                "Allowed if the passenger asks",
+                "Allowed with the windows open",
+                "Not allowed — it's a smoke-free vehicle",
+                "Allowed for the driver only",
+              ],
+              answer: 2,
+              explanation:
+                "Licensed vehicles are smoke-free workplaces. Neither the driver nor passengers may smoke inside.",
+            },
+            {
+              id: "seru-saf-3",
+              prompt: "You're involved in a road traffic collision while working. What must you do?",
+              options: [
+                "Drive on if the damage looks minor",
+                "Stop, exchange details, and report it as required",
+                "Only report it if a passenger asks you to",
+                "Wait until your shift ends to deal with it",
+              ],
+              answer: 1,
+              explanation:
+                "You must stop, exchange details with anyone involved, and report the collision to the police and your insurer where required.",
+            },
+          ],
+        },
+        {
+          slug: "vehicle-standards",
+          name: "Vehicle standards & emergencies",
+          locked: true,
+          questions: [
+            {
+              id: "seru-saf-4",
+              prompt: "Keeping your licensed vehicle roadworthy (MOT, tyres, brakes, lights) is:",
+              options: [
+                "Only the operator's responsibility",
+                "Your responsibility as the driver",
+                "Only checked once a year by TfL",
+                "Optional between MOTs",
+              ],
+              answer: 1,
+              explanation:
+                "As the driver you're responsible for making sure the vehicle you use is roadworthy every time you work.",
+            },
+            {
+              id: "seru-saf-5",
+              prompt: "A passenger is taken unwell during a journey. Your first priority is:",
+              options: [
+                "Finishing the booked journey quickly",
+                "Their safety — stop safely and get help if needed",
+                "Charging a cleaning fee",
+                "Asking them to leave the vehicle",
+              ],
+              answer: 1,
+              explanation:
+                "Passenger safety comes first. Stop somewhere safe and call for medical help if the situation needs it.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      slug: "safeguarding",
+      name: "Safeguarding children and adults at risk",
+      shortLabel: "Safeguarding",
+      icon: "🛡️",
+      intro:
+        "Recognising when a child or vulnerable adult may be at risk of harm — and knowing it's your duty to act, not to investigate.",
+      summary:
+        "Safeguarding means protecting children and adults at risk from harm and abuse. As a licensed driver you're in a position to notice when something isn't right, and TfL expects you to report concerns to the authorities rather than ignore them or try to investigate yourself.",
+      keyFacts: [
+        "Safeguarding is about protecting children and adults at risk from harm and abuse.",
+        "An 'adult at risk' is someone unable to protect themselves because of age, disability, or mental illness.",
+        "Your role is to recognise and report concerns — not to investigate them yourself.",
+        "If you believe someone is in immediate danger, call 999; use 101 for non-emergency police concerns.",
+      ],
+      cores: [
+        {
+          slug: "recognising-risk",
+          name: "Recognising and reporting risk",
+          questions: [
+            {
+              id: "seru-sg-1",
+              prompt: "'Safeguarding' is best described as:",
+              options: [
+                "Protecting your vehicle from damage",
+                "Protecting children and adults at risk from harm and abuse",
+                "Keeping your licence documents safe",
+                "Locking the doors during a journey",
+              ],
+              answer: 1,
+              explanation:
+                "Safeguarding is about protecting vulnerable people — children and adults at risk — from harm and abuse.",
+            },
+            {
+              id: "seru-sg-2",
+              prompt:
+                "You pick up a distressed young person late at night who appears to be controlled by an older adult. You're concerned they may be at risk. You should:",
+              options: [
+                "Ignore it — it's not your business",
+                "Confront the older adult directly",
+                "Report your concern to the police",
+                "Refuse the booking and drive away",
+              ],
+              answer: 2,
+              explanation:
+                "Your role is to report concerns so the authorities can act. Don't investigate or confront anyone yourself.",
+            },
+            {
+              id: "seru-sg-3",
+              prompt: "If you believe a child is in immediate danger, you should call:",
+              options: ["101", "111", "999", "Your operator only"],
+              answer: 2,
+              explanation:
+                "In an emergency where someone is in immediate danger, call 999. Use 101 for non-emergency police matters.",
+            },
+          ],
+        },
+        {
+          slug: "adults-at-risk",
+          name: "Adults at risk in depth",
+          locked: true,
+          questions: [
+            {
+              id: "seru-sg-4",
+              prompt: "Which best describes an 'adult at risk'?",
+              options: [
+                "Any passenger over 65",
+                "Someone unable to protect themselves due to age, disability or illness",
+                "Anyone travelling alone at night",
+                "A passenger who has had a drink",
+              ],
+              answer: 1,
+              explanation:
+                "An adult at risk is someone who can't protect themselves from harm because of age, disability, or mental illness.",
+            },
+            {
+              id: "seru-sg-5",
+              prompt: "If a vulnerable passenger asks to be dropped somewhere that worries you, you should:",
+              options: [
+                "Always refuse to take them anywhere",
+                "Use your judgement, prioritise their safety, and report genuine concerns",
+                "Charge extra for the risk",
+                "Leave them at the nearest bus stop",
+              ],
+              answer: 1,
+              explanation:
+                "Prioritise the passenger's safety and report a genuine safeguarding concern to the police rather than ignoring it.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      slug: "equality-and-disability",
+      name: "Equality, disability and the Equality Act 2010",
+      shortLabel: "Equality",
+      icon: "♿",
+      intro:
+        "Treating every passenger fairly under the Equality Act 2010 — including your legal duties around disability and assistance dogs.",
+      summary:
+        "The Equality Act 2010 protects people with certain characteristics from discrimination. For drivers, that means treating passengers fairly regardless of who they are, making reasonable adjustments where needed, and carrying assistance dogs and wheelchair users without charging more.",
+      keyFacts: [
+        "The Equality Act 2010 protects characteristics including age, disability, race, religion or belief, sex, sexual orientation, gender reassignment, and pregnancy.",
+        "You must carry a passenger's assistance dog at no extra charge unless you hold a medical exemption certificate.",
+        "Charging a wheelchair user or disabled passenger more for the same journey is unlawful discrimination.",
+        "Making reasonable adjustments — such as helping with a wheelchair — is part of your legal duty.",
+      ],
+      cores: [
+        {
+          slug: "equality-basics",
+          name: "Equality and assistance dogs",
+          questions: [
+            {
+              id: "seru-eq-1",
+              prompt:
+                "A passenger with a guide dog books your vehicle. Unless you hold a medical exemption certificate, you must:",
+              options: [
+                "Refuse the booking",
+                "Charge extra to clean the vehicle",
+                "Carry the passenger and their assistance dog at no extra charge",
+                "Ask them to hold the dog on their lap only",
+              ],
+              answer: 2,
+              explanation:
+                "Unless you have a medical exemption certificate, you must carry assistance dogs at no additional charge. Refusing is unlawful.",
+            },
+            {
+              id: "seru-eq-2",
+              prompt: "Which of these is a protected characteristic under the Equality Act 2010?",
+              options: [
+                "The car you drive",
+                "Disability",
+                "How far someone is travelling",
+                "The time of day",
+              ],
+              answer: 1,
+              explanation:
+                "Disability is one of the nine protected characteristics under the Equality Act 2010.",
+            },
+            {
+              id: "seru-eq-3",
+              prompt: "Charging a wheelchair user more than other passengers for the same journey is:",
+              options: [
+                "Fine if loading takes longer",
+                "Allowed with the operator's permission",
+                "Unlawful discrimination",
+                "Only a problem in central London",
+              ],
+              answer: 2,
+              explanation:
+                "Charging a disabled passenger more for the same journey is unlawful discrimination under the Equality Act 2010.",
+            },
+          ],
+        },
+        {
+          slug: "reasonable-adjustments",
+          name: "Reasonable adjustments in depth",
+          locked: true,
+          questions: [
+            {
+              id: "seru-eq-4",
+              prompt: "A 'reasonable adjustment' for a disabled passenger might include:",
+              options: [
+                "Refusing the journey to avoid difficulty",
+                "Helping stow a wheelchair and offering assistance",
+                "Charging a higher fare",
+                "Asking them to book a different service",
+              ],
+              answer: 1,
+              explanation:
+                "Reasonable adjustments — like helping with a wheelchair — help disabled passengers use your service on equal terms.",
+            },
+            {
+              id: "seru-eq-5",
+              prompt: "Refusing to carry a passenger because of their religion would be:",
+              options: [
+                "Acceptable if you're uncomfortable",
+                "Unlawful discrimination",
+                "Fine if another driver is available",
+                "A matter for the operator only",
+              ],
+              answer: 1,
+              explanation:
+                "Religion or belief is a protected characteristic — refusing service on that basis is unlawful discrimination.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      slug: "regulatory-understanding",
+      name: "Regulatory understanding: the PHV (London) Act and TfL rules",
+      shortLabel: "Regulations",
+      icon: "📋",
+      intro:
+        "The licensing framework you work within — how private hire is regulated in London and the obligations that come with your licence.",
+      summary:
+        "Private hire in London is governed by the PHV (London) Act 1998. This topic covers the rules that make a journey legal — bookings through a licensed operator, the three licences involved, and your duty to keep TfL informed of anything that affects your fitness to hold a licence.",
+      keyFacts: [
+        "Private hire in London is regulated under the PHV (London) Act 1998.",
+        "PHV journeys must be pre-booked through a licensed operator — you can't ply for hire or pick up in the street.",
+        "Three licences are needed to operate legally: driver, vehicle, and operator.",
+        "You must tell TfL about relevant changes, including a new address, medical conditions affecting driving, or a conviction.",
+      ],
+      cores: [
+        {
+          slug: "licensing-rules",
+          name: "How private hire is regulated",
+          questions: [
+            {
+              id: "seru-reg-1",
+              prompt: "Someone hails your private hire vehicle in the street and asks for a ride. You should:",
+              options: [
+                "Accept — a fare is a fare",
+                "Decline — PHV journeys must be pre-booked through a licensed operator",
+                "Accept only if you're not busy",
+                "Accept if they pay cash",
+              ],
+              answer: 1,
+              explanation:
+                "Unlike black taxis, private hire vehicles can't ply for hire. Every journey must be pre-booked through a licensed operator.",
+            },
+            {
+              id: "seru-reg-2",
+              prompt: "Under the PHV (London) Act 1998, which three licences are needed to operate legally?",
+              options: [
+                "Driver, vehicle and operator licences",
+                "Driver, insurance and MOT",
+                "Operator, council and TfL",
+                "Driver and vehicle only",
+              ],
+              answer: 0,
+              explanation:
+                "Legal private hire in London requires three separate TfL licences: the driver, the vehicle, and the operator.",
+            },
+            {
+              id: "seru-reg-3",
+              prompt: "If you're convicted of an offence while licensed, you must:",
+              options: [
+                "Only mention it at renewal",
+                "Notify TfL",
+                "Tell your operator instead of TfL",
+                "Do nothing unless asked",
+              ],
+              answer: 1,
+              explanation:
+                "You must notify TfL of a conviction — it affects your fitness to hold a licence.",
+            },
+          ],
+        },
+        {
+          slug: "keeping-tfl-informed",
+          name: "Keeping TfL informed in depth",
+          locked: true,
+          questions: [
+            {
+              id: "seru-reg-4",
+              prompt: "Which change should you report to TfL?",
+              options: [
+                "Buying a new phone",
+                "A change of home address",
+                "Taking a holiday",
+                "Changing your usual route",
+              ],
+              answer: 1,
+              explanation:
+                "You must keep TfL updated on relevant changes such as your address, so their records stay accurate.",
+            },
+            {
+              id: "seru-reg-5",
+              prompt: "A medical condition that affects your ability to drive safely should be:",
+              options: [
+                "Kept private",
+                "Reported to TfL (and the DVLA where required)",
+                "Mentioned only if you have an accident",
+                "Handled by your operator",
+              ],
+              answer: 1,
+              explanation:
+                "Notify TfL (and the DVLA where relevant) about a medical condition that affects your driving — it's part of holding a licence responsibly.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      slug: "dealing-with-passengers",
+      name: "Dealing with passengers and difficult situations",
+      shortLabel: "Passengers",
+      icon: "🤝",
+      intro:
+        "The judgement calls of the job — lost property, disputes, and staying calm and professional when a situation gets difficult.",
+      summary:
+        "Beyond the rules, SERU checks that you can handle real situations well: returning lost property, keeping calm during a dispute, and knowing the difference between a legitimate reason to refuse a journey and unlawful discrimination.",
+      keyFacts: [
+        "Lost property should be kept safe and returned to the passenger or handed in — never kept.",
+        "You can refuse a journey for a legitimate safety reason, but never because of a protected characteristic.",
+        "Staying calm and de-escalating is the safest response to an aggressive or upset passenger.",
+        "Professional, respectful service is part of what TfL expects from every licensed driver.",
+      ],
+      cores: [
+        {
+          slug: "everyday-judgement",
+          name: "Everyday judgement calls",
+          questions: [
+            {
+              id: "seru-dp-1",
+              prompt: "A passenger leaves a phone in your vehicle. The right thing to do is:",
+              options: [
+                "Keep it — finders keepers",
+                "Keep it safe and arrange to return it or hand it in as lost property",
+                "Sell it to cover your time",
+                "Leave it at the roadside",
+              ],
+              answer: 1,
+              explanation:
+                "Lost property must be kept safe and returned to the owner or handed in — never kept for yourself.",
+            },
+            {
+              id: "seru-dp-2",
+              prompt: "You may legitimately refuse a journey when:",
+              options: [
+                "You don't like the passenger's appearance",
+                "There's a genuine safety reason",
+                "The passenger has an assistance dog",
+                "The fare seems too low",
+              ],
+              answer: 1,
+              explanation:
+                "A genuine safety reason can justify refusing a journey. Refusing because of a protected characteristic is unlawful.",
+            },
+            {
+              id: "seru-dp-3",
+              prompt: "A passenger becomes aggressive about the fare. Your best first response is to:",
+              options: [
+                "Argue back firmly",
+                "Stay calm and try to de-escalate, prioritising safety",
+                "Speed up to end the journey sooner",
+                "Refuse to speak to them at all",
+              ],
+              answer: 1,
+              explanation:
+                "Staying calm and de-escalating keeps everyone safe. Prioritise safety over winning the argument.",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  about:
+    "The TfL SERU assessment — Safety, Equality and Regulatory Understanding — is the test every new London private-hire driver must pass to get licensed. It has around 36 questions in a mix of formats (multiple choice, sentence completion, and reading), you need 60% to pass, and you get roughly an hour. It's open-book: you can refer to the Private Hire Driver's Handbook during the assessment, but it's timed, so the drivers who pass already know the material and use the handbook only to check. You currently get two attempts — fail both and your licence application is cancelled — so it pays to go in genuinely ready.",
+  prep: [
+    {
+      title: "Learn the four SERU pillars",
+      body: "Work through safety, safeguarding, equality, and regulatory understanding one topic at a time. Read the notes, then answer questions on that topic straight away so it sticks.",
+    },
+    {
+      title: "Practise every question style",
+      body: "SERU isn't only multiple choice — there's sentence completion and reading too. Get comfortable with all of them so nothing on the day is a surprise.",
+    },
+    {
+      title: "Use the handbook like the real test",
+      body: "Practise checking the Private Hire Driver's Handbook against the clock, so you know where things are without burning time you don't have.",
+    },
+    {
+      title: "Book only when you're consistently passing",
+      body: "You get two attempts before your application is cancelled. Sit full mock tests until you're clearing 60% comfortably, then book through Transport for London.",
+    },
+  ],
+};
+
+const curricula: Curriculum[] = [britpass, canadapass, germanpass, serupass];
 
 export function getCurriculum(appSlug: string): Curriculum | undefined {
   return curricula.find((c) => c.appSlug === appSlug);

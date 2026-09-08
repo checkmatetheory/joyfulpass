@@ -424,6 +424,95 @@ export const apps: AppRecord[] = [
     metaDescription:
       "GermanPass helps you prepare for the Einbürgerungstest (German naturalisation test) with free practice questions and mock tests based on the official 300-question catalogue.",
   },
+  {
+    slug: "serupass",
+    examSlug: "seru-assessment",
+    name: "SeruPass",
+    shortName: "SeruPass",
+    tagline: "Pass the TfL SERU assessment and get your London PHV licence",
+    flagEmoji: "🚕",
+    country: "United Kingdom",
+    examName: "TfL SERU Assessment",
+    theme: {
+      accent: "#0D9488", // teal — distinct from BritPass blue / CanadaPass red / GermanPass black
+      accentDark: "#0F766E",
+      accentSoft: "#CCFBF1",
+      accentForeground: "#FFFFFF",
+      accentSecondary: "#DC241F", // London / TfL red
+      flagColors: ["#DC241F", "#FFFFFF", "#113B92"], // TfL red, white, TfL blue
+      gradientFrom: "#0D9488",
+      gradientTo: "#134E4A",
+    },
+    iconUrl: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1eWdxe1CHp1AK08lhVEFW94bncCPZ3LRdaJux",
+    hero: {
+      headline: "Everything you need to pass the TfL SERU assessment",
+      subheadline:
+        "Free practice built around the real SERU assessment for London private-hire drivers — safeguarding, equality, and the regulatory rules you're tested on, in the same open-book format you'll sit on the day.",
+    },
+    appStoreUrl: "https://apps.apple.com/gb/app/seru-mock-test-mcq-theory/id6469409786",
+    playStoreUrl: null,
+    officialSource: {
+      name: "Transport for London — SERU",
+      url: "https://tfl.gov.uk/info-for/taxis-and-private-hire/licensing/SERU-for-private-hire-drivers",
+    },
+    stats: [
+      { label: "Questions in the assessment", value: "~36" },
+      { label: "To pass", value: "60%" },
+      { label: "Time allowed", value: "~60 min" },
+    ],
+    tools: [],
+    trustHeadline: "Walk in ready",
+    trustBody:
+      "SERU is open-book, but it's timed — you won't have time to look up everything, so the drivers who pass already know the material. Practise the real question styles until safeguarding, equality, and the regulations feel like second nature.",
+    features: [
+      {
+        title: "Practice built for the real assessment",
+        body: "Mock questions mirror the SERU format — multiple choice, sentence completion, and reading — across safeguarding, equality, and regulatory understanding, not guesswork about what comes up.",
+        ctaLabel: "Start practising",
+        mockup: "quiz",
+      },
+      {
+        title: "Track your weak areas",
+        body: "See which SERU topics still need work — from the Equality Act 2010 to your obligations under the PHV (London) Act — before you book your assessment slot.",
+        ctaLabel: "See your progress",
+        mockup: "progress",
+      },
+      {
+        title: "Learn the rules that come up",
+        body: "Short, plain-English notes on the safeguarding, disability, and licensing rules TfL expects you to know — written to be understood, not just memorised.",
+        ctaLabel: "Read the notes",
+        mockup: "content",
+      },
+    ],
+    testimonials: [],
+    faqs: [
+      {
+        question: "How many questions are on the TfL SERU assessment?",
+        answer:
+          "The SERU assessment has around 36 questions — a mix of multiple choice, sentence completion, and reading and understanding. You need 60% to pass, with roughly an hour to complete it.",
+      },
+      {
+        question: "Is the SERU assessment open book?",
+        answer:
+          "Yes — you can refer to the Private Hire Driver's Handbook during the assessment. But it's timed, so you won't have time to look everything up. Drivers who pass already know the material and use the handbook only to double-check.",
+      },
+      {
+        question: "How many attempts do I get at the SERU test?",
+        answer:
+          "Private hire drivers currently get two attempts. If you don't pass within two, your licence application is cancelled and you have to reapply and pay the fees again — so it's worth being genuinely ready first.",
+      },
+      {
+        question: "Is SeruPass affiliated with Transport for London?",
+        answer:
+          "No. SeruPass is an independent study app. All content is based on TfL's published SERU requirements, and we link to Transport for London for the official rules and booking.",
+      },
+    ],
+    blogCategory: "serupass",
+    hasTestCenters: false,
+    languages: [],
+    metaDescription:
+      "SeruPass helps London private-hire drivers pass the TfL SERU assessment — free practice questions and mock tests covering safeguarding, equality, and regulatory understanding, in the real open-book format.",
+  },
 ];
 
 export function getApp(slug: string): AppRecord | undefined {
