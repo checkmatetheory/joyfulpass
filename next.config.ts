@@ -71,6 +71,34 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "hatscripts.github.io" },
     ],
   },
+  // Fallback security headers for every route. middleware.ts applies the same
+  // headers (plus HTTPS enforcement) at the edge; this config ensures they are
+  // also present for any response path that bypasses the middleware.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains; preload",
+          },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "geolocation=(), microphone=(), camera=(), payment=()",
+          },
+          {
+            key: "Content-Security-Policy",
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' https:; font-src 'self' https:; connect-src 'self' https:; frame-ancestors 'self';",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
