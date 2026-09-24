@@ -29,6 +29,7 @@ import {
   studyGuidePath,
   topicsPath,
   proPath,
+  questionsPath,
 } from "@/lib/urls";
 
 type Item = {
@@ -57,6 +58,7 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
     { label: "Study guide", href: studyGuidePath(app), Icon: StudyGuideIcon },
     { label: "Revision notes", href: revisionNotesPath(app), Icon: RevisionIcon },
     { label: "Cheat sheet", href: cheatSheetPath(app), Icon: MockTestIcon },
+    { label: "Questions & answers", href: questionsPath(app), Icon: RevisionIcon },
   ];
 
   const isActive = (href: string) => (href === hub ? pathname === hub : pathname.startsWith(href));

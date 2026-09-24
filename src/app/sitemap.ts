@@ -11,6 +11,7 @@ import {
   examHub,
   practicePath,
   practiceTestPath,
+  questionsPath,
   revisionNotesPath,
   studyGuidePath,
   testCentresPath,
@@ -89,6 +90,17 @@ export default async function sitemap({
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
+    // "Questions and answers" pillar page.
+    ...(curriculum
+      ? [
+          {
+            url: `${SITE_URL}${questionsPath(app)}`,
+            lastModified: CONTENT_LAST_MODIFIED,
+            changeFrequency: "monthly" as const,
+            priority: 0.9,
+          },
+        ]
+      : []),
     // Topics index — the chapter directory.
     ...(curriculum
       ? [
@@ -134,7 +146,7 @@ export default async function sitemap({
     { url: `${SITE_URL}${blogIndex(app)}`, changeFrequency: "weekly", priority: 0.7 },
     ...posts.map((post) => ({
       url: `${SITE_URL}${blogPost(app, post.slug)}`,
-      lastModified: post.date,
+      lastModified: post.updated ?? post.date,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

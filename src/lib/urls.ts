@@ -60,6 +60,11 @@ export function testCentresPath(app: AppRecord): string {
   return `${root(app)}/test-centres/`;
 }
 
+/** Public "questions and answers" pillar page: …/questions/ */
+export function questionsPath(app: AppRecord): string {
+  return `${root(app)}/questions/`;
+}
+
 /** Public study guide: …/study-guide/ */
 export function studyGuidePath(app: AppRecord): string {
   return `${root(app)}/study-guide/`;

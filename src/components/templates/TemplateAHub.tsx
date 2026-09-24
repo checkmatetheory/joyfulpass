@@ -26,6 +26,7 @@ import {
   mistakesPath,
   practicePath,
   pricingPath,
+  questionsPath,
   revisionNotesPath,
   studyGuidePath,
   testCentresPath,
@@ -241,7 +242,11 @@ export default function TemplateAHub({ app, curriculum }: Props) {
             <Link href={cheatSheetPath(app)} className="font-semibold hover:underline">
               cheat sheet
             </Link>{" "}
-            are all free to read.
+            are all free to read, and you can browse{" "}
+            <Link href={questionsPath(app)} className="font-semibold hover:underline">
+              sample {curriculum.testName} questions and answers
+            </Link>
+            .
           </p>
           {(app.hasTestCenters || app.tools.length > 0) && (
             <p className="mt-4 opacity-80">
