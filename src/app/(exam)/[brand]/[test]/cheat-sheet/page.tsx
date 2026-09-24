@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import JsonLd from "@/components/JsonLd";
+import LeadCapture from "@/components/leads/LeadCapture";
 import { cheatSheetPath, examHub, practicePath, revisionNotesPath, studyGuidePath } from "@/lib/urls";
 import { breadcrumbJsonLd, learningResourceJsonLd } from "@/lib/schema";
 
@@ -111,6 +112,14 @@ export default async function CheatSheetPage({
           </div>
         ))}
       </div>
+
+      <LeadCapture
+        appSlug={app.slug}
+        testName={curriculum.testName}
+        source="cheat_sheet"
+        heading="Email this cheat sheet to yourself"
+        className="mt-10"
+      />
 
       <div className="mt-10 rounded-2xl p-6 text-center text-white" style={{ backgroundColor: "var(--accent-dark)" }}>
         <p className="font-bold">Think you&rsquo;ve got it?</p>

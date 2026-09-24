@@ -7,6 +7,7 @@ import { getCurriculum, passRatio } from "@/lib/curriculum";
 import { getMockTest, getMockTests } from "@/lib/mockTests";
 import QuizPanel from "@/components/practice/QuizPanel";
 import JsonLd from "@/components/JsonLd";
+import LeadCapture from "@/components/leads/LeadCapture";
 import { examHub, practicePath, practiceTestPath, pricingPath } from "@/lib/urls";
 import { breadcrumbJsonLd, quizJsonLd } from "@/lib/schema";
 
@@ -108,7 +109,14 @@ export default async function MockTestPage({
                 ? { href: practiceTestPath(app, nextMock.slug), label: `Practice Test ${nextMock.number}` }
                 : { href: practicePath(app), label: "All practice tests" }
             }
-          />
+          >
+            <LeadCapture
+              appSlug={app.slug}
+              testName={curriculum.testName}
+              source="quiz_results"
+              className="mt-8"
+            />
+          </QuizPanel>
         </div>
 
         <p className="mt-8 text-sm opacity-70">

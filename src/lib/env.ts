@@ -16,3 +16,6 @@ export const accountsEnabled = Boolean(SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY)
  */
 export const checkoutEnabled =
   accountsEnabled && process.env.NEXT_PUBLIC_CHECKOUT_ENABLED === "true";
+
+/** Email capture forms render only once Resend is configured. */
+export const emailCaptureEnabled = process.env.NEXT_PUBLIC_EMAIL_CAPTURE_ENABLED === "true";

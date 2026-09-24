@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { AppRecord } from "@/lib/apps";
 import ProLink from "@/components/ProLink";
+import LeadCapture from "@/components/leads/LeadCapture";
 import { practicePath, pricingPath } from "@/lib/urls";
 
 /**
@@ -36,6 +37,7 @@ export default function ArticleCta({ app, apps }: { app?: AppRecord; apps: AppRe
   }
 
   return (
+    <>
     <aside
       className="mt-14 rounded-3xl p-6 text-white sm:p-8"
       style={{ background: `linear-gradient(135deg, ${app.theme.accent}, ${app.theme.accentDark})` }}
@@ -63,5 +65,7 @@ export default function ArticleCta({ app, apps }: { app?: AppRecord; apps: AppRe
         </ProLink>
       </div>
     </aside>
+    <LeadCapture appSlug={app.slug} testName={app.examName} source="article_end" className="mt-6" />
+    </>
   );
 }

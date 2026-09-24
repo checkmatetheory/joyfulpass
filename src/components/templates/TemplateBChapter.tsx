@@ -5,6 +5,7 @@ import { freeQuestions, passRatio } from "@/lib/curriculum";
 import QuizPanel from "@/components/practice/QuizPanel";
 import CtaBanner from "@/components/CtaBanner";
 import ProLink from "@/components/ProLink";
+import LeadCapture from "@/components/leads/LeadCapture";
 import { chapterPath, examHub, practicePath, pricingPath, topicsPath } from "@/lib/urls";
 
 type Props = {
@@ -66,7 +67,14 @@ export default function TemplateBChapter({ app, curriculum, chapter }: Props) {
               ? { href: chapterPath(app, next.slug), label: `Next topic: ${next.shortLabel}` }
               : { href: practicePath(app), label: "Try a mixed practice test" }
           }
-        />
+        >
+          <LeadCapture
+            appSlug={app.slug}
+            testName={curriculum.testName}
+            source="quiz_results"
+            className="mt-8"
+          />
+        </QuizPanel>
       </div>
 
       {/* In-context Pro upsell: web checkout is the primary sale. */}
