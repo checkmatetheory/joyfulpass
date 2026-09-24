@@ -11,7 +11,8 @@ type Body = {
   kind?: "mock" | "topic" | "mistakes";
   setId?: string;
   seconds?: number;
-  answers?: { id: string; picked: number[] }[];
+  /** Chosen option TEXT per question (options are shuffled client-side). */
+  answers?: { id: string; picked: string[] }[];
 };
 
 /**
@@ -41,7 +42,14 @@ export async function POST(request: Request) {
   const scored = body.answers
     .filter((a) => typeof a?.id === "string" && Array.isArray(a.picked) && bank.has(a.id))
     .slice(0, 200)
-    .map((a) => ({ id: a.id, correct: isCorrect(bank.get(a.id)!, a.picked.filter(Number.isInteger)) }));
+    .map((a) => {
+      const q = bank.get(a.id)!;
+      const picked = a.picked
+        .filter((text): text is string => typeof text === "string")
+        .map((text) => q.options.indexOf(text))
+        .filter((i) => i >= 0);
+      return { id: a.id, correct: isCorrect(q, picked) };
+    });
   if (scored.length === 0) return NextResponse.json({ error: "Invalid attempt." }, { status: 400 });
 
   const correctCount = scored.filter((s) => s.correct).length;

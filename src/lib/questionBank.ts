@@ -80,7 +80,22 @@ export function sampleFullMock(appSlug: string): BankQuestion[] {
   return shuffle(picked);
 }
 
-/** Strip bank-only fields before a question is sent to the browser. */
+/**
+ * Prepare a bank question for the browser: strip bank-only fields and shuffle
+ * the options (remapping the answer), so the right answer isn't always in the
+ * same position. Two-option True/False questions keep their natural order.
+ */
 export function toQuizQuestion(q: BankQuestion): QuizQuestion {
-  return { id: q.id, prompt: q.prompt, options: q.options, answer: q.answer, explanation: q.explanation };
+  if (q.options.length <= 2) {
+    return { id: q.id, prompt: q.prompt, options: q.options, answer: q.answer, explanation: q.explanation };
+  }
+  const order = shuffle(q.options.map((_, i) => i));
+  const remap = (i: number) => order.indexOf(i);
+  return {
+    id: q.id,
+    prompt: q.prompt,
+    options: order.map((i) => q.options[i]),
+    answer: Array.isArray(q.answer) ? q.answer.map(remap) : remap(q.answer),
+    explanation: q.explanation,
+  };
 }

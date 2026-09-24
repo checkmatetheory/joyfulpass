@@ -47,7 +47,12 @@ export default function ProAttemptRunner({
           kind,
           setId,
           seconds: result.seconds,
-          answers: questions.map((q, i) => ({ id: q.id, picked: result.answers[i] ?? [] })),
+          // Options are shuffled per session, so send the chosen option text;
+          // the server maps it back onto the bank's own answer indexes.
+          answers: questions.map((q, i) => ({
+            id: q.id,
+            picked: (result.answers[i] ?? []).map((idx) => q.options[idx]),
+          })),
         }),
       }).catch(() => null);
       setStatus(res?.ok ? "saved" : "error");

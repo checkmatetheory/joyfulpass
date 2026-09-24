@@ -1,5 +1,9 @@
 import "server-only";
 import type { QuizQuestion } from "@/lib/curriculum";
+import { britpassQuestions } from "@/content/questions/britpass";
+import { canadapassQuestions } from "@/content/questions/canadapass";
+import { germanpassQuestions } from "@/content/questions/germanpass";
+import { serupassQuestions } from "@/content/questions/serupass";
 
 /**
  * The Pro question bank, on top of the curriculum's own questions. SERVER
@@ -10,4 +14,9 @@ import type { QuizQuestion } from "@/lib/curriculum";
  */
 export type ProQuestion = QuizQuestion & { chapter: string };
 
-export const PRO_QUESTIONS: Record<string, ProQuestion[]> = {};
+export const PRO_QUESTIONS: Record<string, ProQuestion[]> = {
+  britpass: britpassQuestions,
+  canadapass: canadapassQuestions,
+  germanpass: germanpassQuestions,
+  serupass: serupassQuestions,
+};
