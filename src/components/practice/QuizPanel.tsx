@@ -1,179 +1,250 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { QuizQuestion } from "@/lib/curriculum";
-import { EXTERNAL_LINK_PROPS } from "@/lib/site";
+import { track } from "@/lib/track";
 
 type Props = {
   questions: QuizQuestion[];
-  /** Human label for the chapter, used in the finished-state summary. */
-  chapterName: string;
-  /** Is there locked content after these free questions? Drives the upsell. */
-  hasLockedContent: boolean;
+  /** Human label for the set, used in the results summary. */
+  setName: string;
+  /** Pass threshold for this exam as a ratio (e.g. 0.75 UK, 0.6 SERU). */
+  passRatio: number;
+  appSlug: string;
   appName: string;
-  appStoreUrl: string | null;
-  playStoreUrl: string | null;
+  /** Where the Pro upsell leads (the silo's pricing page). */
+  pricingHref: string;
+  /** Optional "keep going" link shown on the results screen. */
+  next?: { href: string; label: string };
+  /** Extra results-screen content (e.g. the email capture form). */
+  children?: ReactNode;
 };
 
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 
-function correctIndex(q: QuizQuestion): number {
-  return Array.isArray(q.answer) ? q.answer[0] : q.answer;
+function correctSet(q: QuizQuestion): number[] {
+  return Array.isArray(q.answer) ? q.answer : [q.answer];
+}
+
+function isCorrect(q: QuizQuestion, picked: number[]): boolean {
+  const correct = correctSet(q);
+  return picked.length === correct.length && correct.every((i) => picked.includes(i));
 }
 
 export default function QuizPanel({
   questions,
-  chapterName,
-  hasLockedContent,
+  setName,
+  passRatio,
+  appSlug,
   appName,
-  appStoreUrl,
-  playStoreUrl,
+  pricingHref,
+  next,
+  children,
 }: Props) {
   const total = questions.length;
   const [index, setIndex] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number[]>([]);
   const [checked, setChecked] = useState(false);
-  const [correctCount, setCorrectCount] = useState(0);
+  // Every answer given, so the results screen can review the misses.
+  const [answers, setAnswers] = useState<number[][]>([]);
   const [finished, setFinished] = useState(false);
+  const started = useRef(false);
 
   const question = questions[index];
-  const answer = question ? correctIndex(question) : 0;
+  const correct = question ? correctSet(question) : [];
+  const multi = correct.length > 1;
   const isLast = index === total - 1;
 
-  const check = useCallback(() => {
-    if (selected === null || checked) return;
-    setChecked(true);
-    if (selected === answer) setCorrectCount((c) => c + 1);
-  }, [selected, checked, answer]);
+  const pick = useCallback(
+    (i: number) => {
+      if (checked) return;
+      setSelected((prev) => {
+        if (!multi) return [i];
+        if (prev.includes(i)) return prev.filter((x) => x !== i);
+        // "Choose two": keep the most recent picks up to the required count.
+        return [...prev, i].slice(-correct.length);
+      });
+    },
+    [checked, multi, correct.length],
+  );
 
-  const next = useCallback(() => {
+  const check = useCallback(() => {
+    if (checked || selected.length !== correct.length) return;
+    if (!started.current) {
+      started.current = true;
+      track("quiz_start", { app: appSlug, set: setName });
+    }
+    setChecked(true);
+    setAnswers((prev) => [...prev, selected]);
+  }, [checked, selected, correct.length, appSlug, setName]);
+
+  const correctCount = useMemo(
+    () => answers.filter((picked, i) => questions[i] && isCorrect(questions[i], picked)).length,
+    [answers, questions],
+  );
+
+  const advance = useCallback(() => {
     if (isLast) {
       setFinished(true);
+      const score = total ? correctCount / total : 0;
+      track("quiz_complete", {
+        app: appSlug,
+        set: setName,
+        score: Math.round(score * 100),
+        passed: score >= passRatio,
+      });
       return;
     }
     setIndex((i) => i + 1);
-    setSelected(null);
+    setSelected([]);
     setChecked(false);
-  }, [isLast]);
+  }, [isLast, total, correctCount, appSlug, setName, passRatio]);
 
-  // Keyboard shortcuts: 1-4 / A-D to pick, Enter to check then advance.
+  // Keyboard shortcuts: 1-9 / A-F to pick, Enter to check then advance.
   useEffect(() => {
     if (finished) return;
     function onKey(e: KeyboardEvent) {
       const key = e.key.toLowerCase();
       const letterIdx = LETTERS.findIndex((l) => l.toLowerCase() === key);
       const numIdx = /^[1-9]$/.test(key) ? Number(key) - 1 : -1;
-      const pick = letterIdx >= 0 ? letterIdx : numIdx;
-      if (pick >= 0 && pick < (question?.options.length ?? 0)) {
-        if (!checked) setSelected(pick);
+      const choice = letterIdx >= 0 ? letterIdx : numIdx;
+      if (choice >= 0 && choice < (question?.options.length ?? 0)) {
+        pick(choice);
         e.preventDefault();
         return;
       }
       if (e.key === "Enter") {
         e.preventDefault();
         if (!checked) check();
-        else next();
+        else advance();
       }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [question, checked, finished, check, next]);
+  }, [question, checked, finished, pick, check, advance]);
 
   const restart = () => {
     setIndex(0);
-    setSelected(null);
+    setSelected([]);
     setChecked(false);
-    setCorrectCount(0);
+    setAnswers([]);
     setFinished(false);
   };
 
-  const progressPct = useMemo(
-    () => (finished ? 100 : Math.round((index / Math.max(total, 1)) * 100)),
-    [finished, index, total],
-  );
+  const progressPct = finished ? 100 : Math.round((index / Math.max(total, 1)) * 100);
 
   if (total === 0) {
     return (
       <div className="rounded-2xl border border-black/10 bg-white p-8 text-center dark:border-white/10 dark:bg-white/5">
-        <p className="opacity-70">Practice questions for this chapter are coming soon.</p>
+        <p className="opacity-70">Practice questions for this set are coming soon.</p>
       </div>
     );
   }
 
   if (finished) {
-    const passed = correctCount / total >= 0.75;
+    const score = correctCount / total;
+    const passed = score >= passRatio;
+    const passPct = Math.round(passRatio * 100);
+    const misses = questions
+      .map((q, i) => ({ q, picked: answers[i] ?? [] }))
+      .filter(({ q, picked }) => !isCorrect(q, picked));
+
     return (
-      <div className="rounded-2xl border border-black/10 bg-white p-8 text-center dark:border-white/10 dark:bg-white/5">
-        {/* Stamp-press completion moment (the one bold animation). */}
-        <div
-          className={`mx-auto flex h-24 w-24 items-center justify-center rounded-full border-4 text-3xl font-black uppercase ${
-            passed ? "stamp-press" : ""
-          }`}
-          style={{
-            borderColor: passed ? "var(--accent)" : "#9CA3AF",
-            color: passed ? "var(--accent)" : "#9CA3AF",
-          }}
-          aria-hidden
-        >
-          {passed ? "✓" : "↻"}
+      <div className="rounded-2xl border border-black/10 bg-white p-6 dark:border-white/10 dark:bg-white/5 sm:p-8">
+        <div className="text-center">
+          {/* Stamp-press completion moment (the one bold animation). */}
+          <div
+            className={`mx-auto flex h-24 w-24 items-center justify-center rounded-full border-4 text-3xl font-black uppercase ${
+              passed ? "stamp-press" : ""
+            }`}
+            style={{
+              borderColor: passed ? "var(--accent)" : "#9CA3AF",
+              color: passed ? "var(--accent)" : "#9CA3AF",
+            }}
+            aria-hidden
+          >
+            {passed ? "✓" : "↻"}
+          </div>
+          <h3 className="mt-6 text-2xl font-bold">
+            {correctCount} / {total} correct · {Math.round(score * 100)}%
+          </h3>
+          <p className="mt-2 opacity-75">
+            {passed
+              ? `That's above the ${passPct}% pass mark on this ${setName} set.`
+              : `The real pass mark is ${passPct}%. Review what you missed below, then try again.`}
+          </p>
         </div>
-        <h3 className="mt-6 text-2xl font-bold">
-          {correctCount} / {total} correct
-        </h3>
-        <p className="mt-2 opacity-75">
-          {passed
-            ? `Nicely done — that's a pass on this ${chapterName} set.`
-            : "Not quite 75% this time. Review the explanations and give it another go."}
-        </p>
+
+        {/* The upsell sits at peak intent: right after the score. */}
+        <div
+          className="mt-8 rounded-2xl p-6 text-white"
+          style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dark))" }}
+        >
+          <p className="text-lg font-extrabold">
+            {passed ? "Ready for the real thing?" : "Close the gaps before test day"}
+          </p>
+          <p className="mt-1 text-sm text-white/85">
+            Free sets are short. {appName} Pro gives you the full question bank, full-length timed
+            mock tests at real exam length, and a saved history of every mistake.
+          </p>
+          <Link
+            href={pricingHref}
+            onClick={() => track("go_pro_click", { app: appSlug, location: "quiz_results" })}
+            className="mt-4 inline-block rounded-full bg-white px-6 py-3 text-sm font-bold text-[color:var(--accent-dark)] transition hover:opacity-90"
+          >
+            See {appName} Pro plans
+          </Link>
+        </div>
 
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <button
             onClick={restart}
-            className="rounded-full px-6 py-3 text-sm font-bold text-white"
-            style={{ backgroundColor: "var(--accent)" }}
+            className="rounded-full border-2 px-6 py-2.5 text-sm font-bold"
+            style={{ borderColor: "var(--accent)", color: "var(--accent)" }}
           >
             Try again
           </button>
+          {next && (
+            <Link
+              href={next.href}
+              className="rounded-full px-6 py-2.5 text-sm font-bold text-white"
+              style={{ backgroundColor: "var(--accent)" }}
+            >
+              {next.label} →
+            </Link>
+          )}
         </div>
 
-        {hasLockedContent && (
-          <div className="mt-8 rounded-xl border border-dashed border-black/15 bg-black/[0.02] p-5 text-left dark:border-white/15 dark:bg-white/5">
-            <p className="text-sm font-bold">🔒 More practice in {appName}</p>
-            <p className="mt-1 text-sm opacity-75">
-              You&rsquo;ve finished the free questions for this chapter. The full question bank,
-              saved progress across devices, and mistake review unlock in the app.
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {appStoreUrl && (
-                <a
-                  href={appStoreUrl}
-                  {...EXTERNAL_LINK_PROPS}
-                  className="rounded-lg px-4 py-2 text-xs font-bold text-white"
-                  style={{ backgroundColor: "var(--accent-dark)" }}
+        {children}
+
+        {misses.length > 0 && (
+          <div className="mt-10">
+            <h4 className="text-lg font-bold">Review your mistakes</h4>
+            <ol className="mt-4 space-y-4">
+              {misses.map(({ q, picked }) => (
+                <li
+                  key={q.id}
+                  className="rounded-xl border border-black/10 p-4 text-sm dark:border-white/10"
                 >
-                  App Store
-                </a>
-              )}
-              {playStoreUrl && (
-                <a
-                  href={playStoreUrl}
-                  {...EXTERNAL_LINK_PROPS}
-                  className="rounded-lg px-4 py-2 text-xs font-bold text-white"
-                  style={{ backgroundColor: "var(--accent-dark)" }}
-                >
-                  Google Play
-                </a>
-              )}
-            </div>
+                  <p className="font-semibold">{q.prompt}</p>
+                  <p className="mt-2 text-red-600 dark:text-red-400">
+                    Your answer: {picked.map((i) => q.options[i]).join("; ") || "—"}
+                  </p>
+                  <p className="mt-1 text-green-700 dark:text-green-400">
+                    Correct: {correctSet(q).map((i) => q.options[i]).join("; ")}
+                  </p>
+                  <p className="mt-2 opacity-75">{q.explanation}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         )}
-        {/* Free-tier boundary is honest: progress isn't saved between sessions on the web. */}
-        <p className="mt-6 text-xs opacity-50">
-          Progress on the web isn&rsquo;t saved between sessions — sign in to the app to keep it.
-        </p>
       </div>
     );
   }
+
+  const answeredRight = checked && isCorrect(question, selected);
 
   return (
     <div className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/5 sm:p-8">
@@ -191,11 +262,16 @@ export default function QuizPanel({
       </div>
 
       <h2 className="mt-6 text-xl font-bold leading-snug sm:text-2xl">{question.prompt}</h2>
+      {multi && (
+        <p className="mt-2 text-sm font-semibold" style={{ color: "var(--accent)" }}>
+          Choose {correct.length} answers
+        </p>
+      )}
 
       <ul className="mt-6 space-y-3">
         {question.options.map((option, i) => {
-          const isSelected = selected === i;
-          const isAnswer = i === answer;
+          const isSelected = selected.includes(i);
+          const isAnswer = correct.includes(i);
           let stateClass =
             "border-black/10 hover:border-[var(--accent)] dark:border-white/15 dark:hover:border-[var(--accent)]";
           if (checked && isAnswer) stateClass = "border-green-500 bg-green-500/10";
@@ -207,7 +283,8 @@ export default function QuizPanel({
               <button
                 type="button"
                 disabled={checked}
-                onClick={() => setSelected(i)}
+                aria-pressed={isSelected}
+                onClick={() => pick(i)}
                 className={`flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-left transition-colors ${stateClass}`}
               >
                 <span
@@ -230,8 +307,8 @@ export default function QuizPanel({
 
       {checked && (
         <div className="mt-5 rounded-xl border border-black/10 bg-black/[0.02] p-4 text-sm dark:border-white/10 dark:bg-white/5">
-          <p className="font-bold" style={{ color: selected === answer ? "#16a34a" : "#dc2626" }}>
-            {selected === answer ? "Correct" : "Not quite"}
+          <p className="font-bold" style={{ color: answeredRight ? "#16a34a" : "#dc2626" }}>
+            {answeredRight ? "Correct" : "Not quite"}
           </p>
           <p className="mt-1 opacity-80">{question.explanation}</p>
         </div>
@@ -245,7 +322,7 @@ export default function QuizPanel({
         {!checked ? (
           <button
             onClick={check}
-            disabled={selected === null}
+            disabled={selected.length !== correct.length}
             className="ml-auto rounded-full px-7 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-40"
             style={{ backgroundColor: "var(--accent)" }}
           >
@@ -253,11 +330,11 @@ export default function QuizPanel({
           </button>
         ) : (
           <button
-            onClick={next}
+            onClick={advance}
             className="ml-auto rounded-full px-7 py-3 text-sm font-bold text-white"
             style={{ backgroundColor: "var(--accent)" }}
           >
-            {isLast ? "Finish" : "Next question"}
+            {isLast ? "See my score" : "Next question"}
           </button>
         )}
       </div>

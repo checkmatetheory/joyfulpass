@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
+import ArticleCta from "@/components/blog/ArticleCta";
+import Breadcrumbs from "@/components/blog/Breadcrumbs";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import FaqAccordion from "@/components/FaqAccordion";
+import { faqJsonLd } from "@/lib/faqs";
 import { buildMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { apps, getAppByExamSlug } from "@/lib/apps";
-import { getPost, getPostSlugs } from "@/lib/blog";
+import { getPost, getPostSlugs, getRelatedPosts } from "@/lib/blog";
 import JsonLd from "@/components/JsonLd";
 import { blogIndex, blogPost, examHub } from "@/lib/urls";
 import { articleJsonLd, breadcrumbJsonLd } from "@/lib/schema";
@@ -57,9 +62,11 @@ export default async function ExamBlogPostPage({
     description: post.description,
     path: blogPost(app, slug),
     datePublished: post.date,
+    dateModified: post.updated,
     author: post.author,
     image: post.coverImage,
   });
+  const related = getRelatedPosts(app.blogCategory, slug);
 
   const breadcrumb = breadcrumbJsonLd([
     { name: "Joyful", path: "/" },
@@ -72,6 +79,14 @@ export default async function ExamBlogPostPage({
     <article className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
       <JsonLd data={article} />
       <JsonLd data={breadcrumb} />
+      {post.faqs && <JsonLd data={faqJsonLd(post.faqs)} />}
+      <Breadcrumbs
+        crumbs={[
+          { name: app.name, href: examHub(app) },
+          { name: "Guides", href: blogIndex(app) },
+          { name: post.title },
+        ]}
+      />
       <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-2xl">
         <Image
           src={post.coverImage}
@@ -88,6 +103,16 @@ export default async function ExamBlogPostPage({
           month: "long",
           day: "numeric",
         })}
+        {post.updated && (
+          <>
+            {" · Updated "}
+            {new Date(post.updated).toLocaleDateString("en-GB", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </>
+        )}
         {" · "}
         {post.readingMinutes} min read
       </p>
@@ -98,6 +123,22 @@ export default async function ExamBlogPostPage({
       <div
         className="prose prose-neutral mt-10 max-w-none dark:prose-invert"
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+      />
+      {post.faqs && (
+        <section className="mt-12">
+          <h2 className="text-2xl font-bold">Frequently asked questions</h2>
+          <div className="mt-4">
+            <FaqAccordion faqs={post.faqs} accent={app.theme.accent} />
+          </div>
+        </section>
+      )}
+      <ArticleCta app={app} apps={apps} />
+      <RelatedPosts
+        posts={related.map((p) => ({
+          title: p.title,
+          description: p.description,
+          href: blogPost(app, p.slug),
+        }))}
       />
     </article>
   );

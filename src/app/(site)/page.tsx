@@ -11,6 +11,7 @@ import Testimonials from "@/components/home/Testimonials";
 import CommitmentCta from "@/components/home/CommitmentCta";
 import { apps } from "@/lib/apps";
 import { getAllPosts } from "@/lib/blog";
+import { practicePath } from "@/lib/urls";
 
 export const metadata: Metadata = buildMetadata({
   title: "Free Citizenship Test & SERU Practice | Joyful",
@@ -27,8 +28,8 @@ export default function HomePage() {
     <>
       <Hero
         eyebrow="A family of focused exam-prep apps"
-        headline="Pass your citizenship test with confidence"
-        subheadline="Joyful builds one focused study app per exam — with practice questions straight from the official handbook, so you learn exactly what's tested and nothing you don't need."
+        headline="Pass your citizenship or licensing test first time"
+        subheadline="Free practice questions for the Life in the UK Test, Canadian citizenship test, German Einbürgerungstest and TfL SERU assessment — straight from the official material, so you learn exactly what's tested."
         gradientFrom="#7C3AED"
         gradientTo="#2E1065"
         media={{
@@ -36,19 +37,37 @@ export default function HomePage() {
           url: "https://657cm7lxu0.ufs.sh/f/0rylvrjOEnN1LuHGI5VQaYokTvKbhGgEjf0tpBqVMArZeSOc",
         }}
       >
-        <a
-          href="#apps"
-          className="rounded-full bg-white px-6 py-3 text-sm font-bold uppercase tracking-wide text-[#4C1D95] shadow"
-        >
-          Find your exam
-        </a>
-        <Link
-          href="/about/"
-          className="rounded-full border border-white/40 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white"
-        >
-          Our story
-        </Link>
+        {/* One click from the homepage into a real, playable practice test. */}
+        <div className="w-full">
+          <p className="text-sm font-bold uppercase tracking-wide text-white/80">
+            Start a free practice test
+          </p>
+          <ul className="mt-3 flex flex-wrap justify-center gap-3">
+            {apps.map((app) => (
+              <li key={app.slug}>
+                <Link
+                  href={practicePath(app)}
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-[#4C1D95] shadow transition hover:-translate-y-0.5"
+                >
+                  <span aria-hidden>{app.flagEmoji}</span>
+                  {app.examName}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 text-sm text-white/75">
+            No sign-up needed.{" "}
+            <Link href="/about/" className="font-semibold underline underline-offset-4">
+              Our story
+            </Link>
+          </p>
+        </div>
       </Hero>
+
+      {/* App directory — pick your exam, right under the hero */}
+      <section id="apps" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6">
+        <AppDirectory apps={apps} />
+      </section>
 
       {/* Outcome-focused feature section */}
       <FeatureBullets />
@@ -56,10 +75,6 @@ export default function HomePage() {
       {/* Impact / reassurance band */}
       <ImpactStats />
 
-      {/* App directory — pick your exam */}
-      <section id="apps" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <AppDirectory apps={apps} />
-      </section>
 
       {/* How it works */}
       <HowItWorks />

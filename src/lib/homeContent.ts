@@ -4,6 +4,8 @@
 // test-takers: reduce anxiety, emphasise official sources, show a clear
 // path, and let real outcomes do the persuading.
 
+import { apps } from "@/lib/apps";
+
 export type Feature = {
   mockup: "quiz" | "progress" | "content";
   title: string;
@@ -80,7 +82,7 @@ export const howItWorks: HowItWorksStep[] = [
 export const impactStats: ImpactStat[] = [
   { value: "1,800+", label: "Practice questions across our apps", verified: true },
   { value: "95%", label: "Average mock-test pass rate", verified: true },
-  { value: "3", label: "Official exams covered (more on the way)", verified: true },
+  { value: String(apps.length), label: "Official exams covered (more on the way)", verified: true },
   { value: "10,000+", label: "5-star app reviews", verified: false },
 ];
 

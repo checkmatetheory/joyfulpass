@@ -49,9 +49,9 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
 
   const primary: Item[] = [
     { label: "Overview", href: hub, Icon: OverviewIcon },
-    { label: "Mock Tests", href: practicePath(app), Icon: MockTestIcon },
+    { label: "Practice Tests", href: practicePath(app), Icon: MockTestIcon },
     { label: "Topics", href: topicsPath(app), Icon: TopicsIcon },
-    { label: "Mistakes", href: mistakesPath(app), Icon: MistakesIcon, muted: true },
+    { label: "Mistakes", href: mistakesPath(app), Icon: MistakesIcon },
     { label: "Study guide", href: studyGuidePath(app), Icon: StudyGuideIcon },
     { label: "Revision notes", href: revisionNotesPath(app), Icon: RevisionIcon },
     { label: "Cheat sheet", href: cheatSheetPath(app), Icon: MockTestIcon },

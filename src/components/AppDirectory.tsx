@@ -29,7 +29,7 @@ export default function AppDirectory({ apps }: { apps: AppRecord[] }) {
         />
       </div>
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {filtered.map((app) => (
           <AppCard key={app.slug} app={app} />
         ))}

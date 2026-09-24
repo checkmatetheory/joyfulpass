@@ -75,11 +75,13 @@ export default function Header() {
               Our apps
               <span aria-hidden>▾</span>
             </button>
-            {switcherOpen && (
-              <div
-                id="app-switcher-menu"
-                className="absolute left-1/2 top-full w-72 -translate-x-1/2 rounded-xl border border-black/10 bg-white p-2 text-black shadow-xl"
-              >
+            {/* Always rendered (hidden when closed) so the app links are in the
+                server HTML and crawlable, not only after a hover. */}
+            <div
+              id="app-switcher-menu"
+              hidden={!switcherOpen}
+              className="absolute left-1/2 top-full w-72 -translate-x-1/2 rounded-xl border border-black/10 bg-white p-2 text-black shadow-xl"
+            >
                 {apps.map((app) => (
                   <Link
                     key={app.slug}
@@ -96,8 +98,7 @@ export default function Header() {
                     </span>
                   </Link>
                 ))}
-              </div>
-            )}
+            </div>
           </div>
           <Link href="/tools/" className="rounded-md py-2 transition-opacity hover:opacity-75 focus-visible:ring-2 focus-visible:ring-white">
             Tools
@@ -110,14 +111,15 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* Far right: Get started (desktop) / menu button (mobile) */}
+        {/* Far right: primary CTA + menu button (mobile) */}
         <div className="col-start-3 flex items-center justify-self-end">
           <Link
             href="/#apps"
-            className="hidden rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-white lg:inline-block"
+            className="mr-1 inline-block whitespace-nowrap rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-lg transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-white sm:px-6 sm:py-2.5 sm:text-sm lg:mr-0"
             style={{ backgroundColor: "var(--accent)" }}
           >
-            Get started
+            <span className="sm:hidden">Free test</span>
+            <span className="hidden sm:inline">Free practice test</span>
           </Link>
           <button
             type="button"
@@ -158,7 +160,7 @@ export default function Header() {
             style={{ backgroundColor: "var(--accent)" }}
             onClick={() => setMenuOpen(false)}
           >
-            Get started
+            Start a free practice test
           </Link>
         </nav>
       )}

@@ -69,7 +69,13 @@ export type Curriculum = {
   /** Real exam facts, rendered as the "official record" stats strip. */
   facts: { questions: string; toPass: string; timeLimit: string };
   /** Full-length mock test config surfaced on Template A. */
-  fullTest: { questionCount: number; passMark: number; minutes: number };
+  fullTest: {
+    questionCount: number;
+    passMark: number;
+    minutes: number;
+    /** Official pass percentage when it isn't a whole number of questions (SERU: 60%). */
+    passPercent?: number;
+  };
   chapters: Chapter[];
   /** Long-form "About the test" prose for Template A (rewritten per app, never templated). */
   about: string;
@@ -877,7 +883,7 @@ const serupass: Curriculum = {
   intro:
     "Free TfL SERU practice, organised around the real assessment — safety, safeguarding, equality, and the regulations London private-hire drivers are tested on. Work through a topic, see your score, and know when you're ready to book.",
   facts: { questions: "~36 questions", toPass: "60% to pass", timeLimit: "~60 minutes" },
-  fullTest: { questionCount: 36, passMark: 22, minutes: 60 },
+  fullTest: { questionCount: 36, passMark: 22, minutes: 60, passPercent: 60 },
   chapters: [
     {
       slug: "passenger-and-road-safety",
@@ -1380,4 +1386,11 @@ export function resolveTopic(
   const chapter = curriculum.chapters.find((ch) => ch.slug === topicSlug);
   if (chapter) return { kind: "chapter", curriculum, chapter };
   return null;
+}
+
+/** The real exam's pass threshold as a ratio (e.g. 18/24 = 0.75, SERU 0.6). */
+export function passRatio(curriculum: Curriculum): number {
+  const { passMark, questionCount, passPercent } = curriculum.fullTest;
+  if (passPercent !== undefined) return passPercent / 100;
+  return questionCount > 0 ? passMark / questionCount : 0.75;
 }

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import type { AppRecord } from "@/lib/apps";
 import type { Chapter, Curriculum } from "@/lib/curriculum";
-import { freeQuestions } from "@/lib/curriculum";
+import { freeQuestions, passRatio } from "@/lib/curriculum";
 import QuizPanel from "@/components/practice/QuizPanel";
 import CtaBanner from "@/components/CtaBanner";
-import { chapterPath, examHub, topicsPath } from "@/lib/urls";
-import { EXTERNAL_LINK_PROPS } from "@/lib/site";
+import ProLink from "@/components/ProLink";
+import { chapterPath, examHub, practicePath, pricingPath, topicsPath } from "@/lib/urls";
 
 type Props = {
   app: AppRecord;
@@ -20,7 +20,6 @@ type Props = {
  */
 export default function TemplateBChapter({ app, curriculum, chapter }: Props) {
   const questions = freeQuestions(chapter);
-  const hasLockedContent = chapter.cores.some((c) => c.locked);
   const idx = curriculum.chapters.findIndex((c) => c.slug === chapter.slug);
   const prev = curriculum.chapters[idx - 1];
   const next = curriculum.chapters[idx + 1];
@@ -57,40 +56,35 @@ export default function TemplateBChapter({ app, curriculum, chapter }: Props) {
       <div className="mt-8">
         <QuizPanel
           questions={questions}
-          chapterName={chapter.shortLabel}
-          hasLockedContent={hasLockedContent}
+          setName={chapter.shortLabel}
+          passRatio={passRatio(curriculum)}
+          appSlug={app.slug}
           appName={app.name}
-          appStoreUrl={app.appStoreUrl}
-          playStoreUrl={app.playStoreUrl}
+          pricingHref={pricingPath(app)}
+          next={
+            next
+              ? { href: chapterPath(app, next.slug), label: `Next topic: ${next.shortLabel}` }
+              : { href: practicePath(app), label: "Try a mixed practice test" }
+          }
         />
       </div>
 
-      {/* In-context app-download banner */}
+      {/* In-context Pro upsell: web checkout is the primary sale. */}
       <CtaBanner
         app={app}
         variant="split"
         className="mt-8"
-        heading="Keep practising on the go"
-        body={`Full question bank, saved progress, and mistake review in ${app.name}.`}
+        heading={`Practise the whole ${curriculum.testName} with Pro`}
+        body={`The full ${curriculum.testName} question bank, full-length timed mock tests at real exam length, and your mistake history — in your browser.`}
       >
-        {app.appStoreUrl && (
-          <a
-            href={app.appStoreUrl}
-            {...EXTERNAL_LINK_PROPS}
-            className="rounded-lg bg-white px-4 py-2 text-sm font-bold text-black"
-          >
-            App Store
-          </a>
-        )}
-        {app.playStoreUrl && (
-          <a
-            href={app.playStoreUrl}
-            {...EXTERNAL_LINK_PROPS}
-            className="rounded-lg border border-white/40 px-4 py-2 text-sm font-bold"
-          >
-            Google Play
-          </a>
-        )}
+        <ProLink
+          href={pricingPath(app)}
+          appSlug={app.slug}
+          location="chapter_banner"
+          className="rounded-lg bg-white px-5 py-2.5 text-sm font-bold text-black"
+        >
+          See Pro plans
+        </ProLink>
       </CtaBanner>
 
       {/* Sibling navigation */}

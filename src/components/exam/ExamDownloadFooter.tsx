@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { AppRecord } from "@/lib/apps";
 import StoreBadges from "@/components/StoreBadges";
 import CookieSettingsButton from "@/components/CookieSettingsButton";
@@ -9,15 +12,12 @@ import { SITE_NAME } from "@/lib/site";
  * screen (web + mobile), with the coloured app-store badges, plus the legal
  * row (privacy, terms, cookie settings) the exam shell otherwise lacks.
  */
-export default function ExamDownloadFooter({
-  app,
-  showDownload = true,
-}: {
-  app: AppRecord;
-  /** Hide the store prompt (e.g. on pricing, where it pulls buyers away). */
-  showDownload?: boolean;
-}) {
+export default function ExamDownloadFooter({ app }: { app: AppRecord }) {
+  const pathname = usePathname();
   const hasStores = Boolean(app.appStoreUrl || app.playStoreUrl);
+  // On pricing and checkout pages the store prompt pulls buyers away from the
+  // web checkout — keep just the legal row there.
+  const showDownload = !/\/pricing(\/|$)/.test(pathname ?? "");
 
   return (
     <footer className="mt-10 border-t border-black/10 px-5 py-10 text-center dark:border-white/10">

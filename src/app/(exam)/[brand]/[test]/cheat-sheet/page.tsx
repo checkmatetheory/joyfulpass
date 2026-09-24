@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import JsonLd from "@/components/JsonLd";
-import { cheatSheetPath, examHub, revisionNotesPath, studyGuidePath } from "@/lib/urls";
+import { cheatSheetPath, examHub, practicePath, revisionNotesPath, studyGuidePath } from "@/lib/urls";
 import { breadcrumbJsonLd, learningResourceJsonLd } from "@/lib/schema";
 
 export const dynamicParams = false;
@@ -116,7 +116,7 @@ export default async function CheatSheetPage({
         <p className="font-bold">Think you&rsquo;ve got it?</p>
         <p className="mt-1 text-sm text-white/80">Put the cheat sheet to the test with a real quiz.</p>
         <Link
-          href={examHub(app)}
+          href={practicePath(app)}
           className="mt-4 inline-block rounded-full bg-white px-6 py-2.5 text-sm font-bold text-black"
         >
           Take a practice quiz

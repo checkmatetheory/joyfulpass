@@ -3,7 +3,13 @@ import { buildMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
-import { getPost, getPostSlugs } from "@/lib/blog";
+import { getPost, getPostSlugs, getRelatedPosts } from "@/lib/blog";
+import { apps } from "@/lib/apps";
+import ArticleCta from "@/components/blog/ArticleCta";
+import Breadcrumbs from "@/components/blog/Breadcrumbs";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import FaqAccordion from "@/components/FaqAccordion";
+import { faqJsonLd } from "@/lib/faqs";
 import { articleJsonLd, breadcrumbJsonLd } from "@/lib/schema";
 
 export function generateStaticParams() {
@@ -41,9 +47,11 @@ export default async function HubBlogPostPage({
     description: post.description,
     path: `/blog/${slug}/`,
     datePublished: post.date,
+    dateModified: post.updated,
     author: post.author,
     image: post.coverImage,
   });
+  const related = getRelatedPosts("hub", slug);
 
   const breadcrumb = breadcrumbJsonLd([
     { name: "Joyful", path: "/" },
@@ -55,6 +63,8 @@ export default async function HubBlogPostPage({
     <article className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
       <JsonLd data={article} />
       <JsonLd data={breadcrumb} />
+      {post.faqs && <JsonLd data={faqJsonLd(post.faqs)} />}
+      <Breadcrumbs crumbs={[{ name: "Guides", href: "/blog/" }, { name: post.title }]} />
       <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-2xl">
         <Image
           src={post.coverImage}
@@ -71,6 +81,16 @@ export default async function HubBlogPostPage({
           month: "long",
           day: "numeric",
         })}
+        {post.updated && (
+          <>
+            {" · Updated "}
+            {new Date(post.updated).toLocaleDateString("en-GB", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </>
+        )}
         {" · "}
         {post.readingMinutes} min read
       </p>
@@ -81,6 +101,22 @@ export default async function HubBlogPostPage({
       <div
         className="prose prose-neutral mt-10 max-w-none dark:prose-invert"
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+      />
+      {post.faqs && (
+        <section className="mt-12">
+          <h2 className="text-2xl font-bold">Frequently asked questions</h2>
+          <div className="mt-4">
+            <FaqAccordion faqs={post.faqs} accent="#7C3AED" />
+          </div>
+        </section>
+      )}
+      <ArticleCta apps={apps} />
+      <RelatedPosts
+        posts={related.map((p) => ({
+          title: p.title,
+          description: p.description,
+          href: `/blog/${p.slug}/`,
+        }))}
       />
     </article>
   );

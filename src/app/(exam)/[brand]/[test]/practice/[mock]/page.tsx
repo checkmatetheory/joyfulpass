@@ -3,11 +3,11 @@ import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { apps, getAppByExamSlug } from "@/lib/apps";
-import { getCurriculum } from "@/lib/curriculum";
+import { getCurriculum, passRatio } from "@/lib/curriculum";
 import { getMockTest, getMockTests } from "@/lib/mockTests";
 import QuizPanel from "@/components/practice/QuizPanel";
 import JsonLd from "@/components/JsonLd";
-import { examHub, practicePath, practiceTestPath } from "@/lib/urls";
+import { examHub, practicePath, practiceTestPath, pricingPath } from "@/lib/urls";
 import { breadcrumbJsonLd, quizJsonLd } from "@/lib/schema";
 
 export const dynamicParams = false;
@@ -31,8 +31,8 @@ export async function generateMetadata({
   const app = getAppByExamSlug(test);
   if (!app) return {};
   return buildMetadata({
-    title: `${app.examName} Mock Test ${mock} — Free Practice`,
-    description: `Free ${app.examName} mock test ${mock} — play it now, scored instantly with an explanation for every answer.`,
+    title: `${app.examName} Practice Test ${mock} — Free Mock Questions`,
+    description: `Free ${app.examName} practice test ${mock} — play it now, scored against the real pass mark with an explanation for every answer.`,
     path: practiceTestPath(app, mock),
     brand: app.name,
   });
@@ -49,6 +49,8 @@ export default async function MockTestPage({
   const curriculum = getCurriculum(app.slug);
   const mock = getMockTest(app, mockSlug);
   if (!curriculum || !mock) notFound();
+  const mocks = getMockTests(app);
+  const nextMock = mocks[mocks.findIndex((m) => m.slug === mock.slug) + 1];
 
   const quiz = quizJsonLd({
     name: `${curriculum.testName} Practice Test ${mock.number}`,
@@ -67,7 +69,7 @@ export default async function MockTestPage({
             { name: "Joyful", path: "/" },
             { name: curriculum.testName, path: examHub(app) },
             { name: "Practice tests", path: practicePath(app) },
-            { name: `Mock Test ${mock.number}`, path: practiceTestPath(app, mock.slug) },
+            { name: `Practice Test ${mock.number}`, path: practiceTestPath(app, mock.slug) },
           ])}
         />
 
@@ -79,33 +81,40 @@ export default async function MockTestPage({
               </Link>
             </li>
             <li aria-hidden>/</li>
-            <li className="font-semibold opacity-90">Mock Test {mock.number}</li>
+            <li className="font-semibold opacity-90">Practice Test {mock.number}</li>
           </ol>
         </nav>
 
         <h1 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">
-          {curriculum.testName} Mock Test {mock.number}
+          {curriculum.testName} Practice Test {mock.number}
         </h1>
         <p className="mt-3 opacity-75">
-          A free {curriculum.testName} practice test — {mock.questions.length} questions, scored
-          instantly with an explanation for every answer. No sign-up needed.
+          A free, short {curriculum.testName} practice set — {mock.questions.length} questions,
+          scored instantly against the real {Math.round(passRatio(curriculum) * 100)}% pass mark,
+          with an explanation for every answer. No sign-up needed. The real test has{" "}
+          {curriculum.facts.questions}; full-length timed mocks are part of {app.name} Pro.
         </p>
 
         <div className="mt-8">
           <QuizPanel
             questions={mock.questions}
-            chapterName={`Mock Test ${mock.number}`}
-            hasLockedContent={false}
+            setName={`Practice Test ${mock.number}`}
+            passRatio={passRatio(curriculum)}
+            appSlug={app.slug}
             appName={app.name}
-            appStoreUrl={app.appStoreUrl}
-            playStoreUrl={app.playStoreUrl}
+            pricingHref={pricingPath(app)}
+            next={
+              nextMock
+                ? { href: practiceTestPath(app, nextMock.slug), label: `Practice Test ${nextMock.number}` }
+                : { href: practicePath(app), label: "All practice tests" }
+            }
           />
         </div>
 
         <p className="mt-8 text-sm opacity-70">
           Want another go?{" "}
           <Link href={practicePath(app)} className="font-semibold hover:underline">
-            Take a different mock test →
+            Try a different practice test →
           </Link>
         </p>
       </div>

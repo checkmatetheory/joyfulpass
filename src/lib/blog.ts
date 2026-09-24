@@ -7,6 +7,8 @@ import remarkHtml from "remark-html";
 
 const CONTENT_ROOT = path.join(process.cwd(), "src", "content", "blog");
 
+export type PostFaq = { question: string; answer: string };
+
 export type PostMeta = {
   slug: string;
   scope: string;
@@ -17,6 +19,10 @@ export type PostMeta = {
   authorCredential: string;
   readingMinutes: number;
   coverImage: string;
+  /** Last substantive update (frontmatter `updated`), used for dateModified. */
+  updated?: string;
+  /** Optional on-page FAQ (frontmatter `faqs`), rendered + emitted as FAQPage. */
+  faqs?: PostFaq[];
 };
 
 // Placeholder cover images (Lorem Picsum — free, royalty-free photos meant for
@@ -56,21 +62,42 @@ function estimateReadingMinutes(content: string): number {
   return Math.max(1, Math.round(words / 200));
 }
 
+function parseFaqs(value: unknown): PostFaq[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const faqs = value
+    .filter(
+      (f): f is PostFaq =>
+        typeof f === "object" &&
+        f !== null &&
+        typeof (f as PostFaq).question === "string" &&
+        typeof (f as PostFaq).answer === "string",
+    )
+    .map((f) => ({ question: f.question, answer: f.answer }));
+  return faqs.length > 0 ? faqs : undefined;
+}
+
+/** Frontmatter → metadata, shared by the index listing and the single post. */
+function metaFrom(scope: string, slug: string, data: Record<string, unknown>, content: string): PostMeta {
+  return {
+    slug,
+    scope,
+    title: data.title as string,
+    description: data.description as string,
+    date: data.date as string,
+    author: data.author as string,
+    authorCredential: data.authorCredential as string,
+    readingMinutes: estimateReadingMinutes(content),
+    coverImage: coverImageFor(slug, data),
+    updated: typeof data.updated === "string" ? data.updated : undefined,
+    faqs: parseFaqs(data.faqs),
+  };
+}
+
 export function getAllPosts(scope: string): PostMeta[] {
   return getPostSlugs(scope)
     .map((slug) => {
       const { data, content } = readFrontmatter(scope, slug);
-      return {
-        slug,
-        scope,
-        title: data.title as string,
-        description: data.description as string,
-        date: data.date as string,
-        author: data.author as string,
-        authorCredential: data.authorCredential as string,
-        readingMinutes: estimateReadingMinutes(content),
-        coverImage: coverImageFor(slug, data),
-      };
+      return metaFrom(scope, slug, data, content);
     })
     .sort((a, b) => (a.date < b.date ? 1 : -1));
 }
@@ -90,18 +117,14 @@ export async function getPost(scope: string, slug: string): Promise<Post | null>
     .toString()
     .replace(/<a href="(https?:\/\/[^"]*)"/g, '<a href="$1" target="_blank" rel="noopener noreferrer"');
 
-  return {
-    slug,
-    scope,
-    title: data.title as string,
-    description: data.description as string,
-    date: data.date as string,
-    author: data.author as string,
-    authorCredential: data.authorCredential as string,
-    readingMinutes: estimateReadingMinutes(content),
-    coverImage: coverImageFor(slug, data),
-    contentHtml,
-  };
+  return { ...metaFrom(scope, slug, data, content), contentHtml };
+}
+
+/** Other posts in the same scope, newest first — for "Related guides". */
+export function getRelatedPosts(scope: string, slug: string, limit = 3): PostMeta[] {
+  return getAllPosts(scope)
+    .filter((post) => post.slug !== slug)
+    .slice(0, limit);
 }
 
 export function getAllScopes(): string[] {

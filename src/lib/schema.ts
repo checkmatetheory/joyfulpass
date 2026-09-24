@@ -24,6 +24,7 @@ export function articleJsonLd(opts: {
   description: string;
   path: string;
   datePublished: string;
+  dateModified?: string;
   author: string;
   image?: string;
 }) {
@@ -33,7 +34,7 @@ export function articleJsonLd(opts: {
     headline: opts.title,
     description: opts.description,
     datePublished: opts.datePublished,
-    dateModified: opts.datePublished,
+    dateModified: opts.dateModified ?? opts.datePublished,
     author: { "@type": "Person", name: opts.author },
     image: [opts.image ?? OG_IMAGE.url],
     publisher: {

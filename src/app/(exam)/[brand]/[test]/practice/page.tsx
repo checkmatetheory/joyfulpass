@@ -6,6 +6,7 @@ import { apps, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import { getMockTests } from "@/lib/mockTests";
 import FaqAccordion from "@/components/FaqAccordion";
+import ProLink from "@/components/ProLink";
 import JsonLd from "@/components/JsonLd";
 import { faqJsonLd, practiceFaqs } from "@/lib/faqs";
 import { EXTERNAL_LINK_PROPS } from "@/lib/site";
@@ -14,6 +15,7 @@ import {
   examHub,
   practicePath,
   practiceTestPath,
+  pricingPath,
   revisionNotesPath,
   studyGuidePath,
 } from "@/lib/urls";
@@ -85,14 +87,14 @@ export default async function PracticePage({
           Free {curriculum.testName} Practice Tests
         </h1>
         <p className="mt-4 max-w-2xl text-lg opacity-75">
-          Free {curriculum.testName} mock tests that mirror the real exam — {questionCount}{" "}
-          questions, {passMark} to pass, {minutes} minutes. Play any test below right now, no
-          sign-up. Every question comes with an explanation.
+          Short, free {curriculum.testName} practice sets built from the official material — play
+          any of them right now, no sign-up, with an explanation for every answer. The real test is{" "}
+          {questionCount} questions, {passMark} to pass, in {minutes} minutes.
         </p>
 
         {/* Genuine mock tests, immediately playable */}
         <section className="mt-8">
-          <h2 className="text-2xl font-bold">Mock tests</h2>
+          <h2 className="text-2xl font-bold">Free practice tests</h2>
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {mocks.map((mock) => (
               <Link
@@ -102,9 +104,7 @@ export default async function PracticePage({
               >
                 <div className="min-w-0">
                   <p className="font-mono text-xs opacity-50">Test {mock.number}</p>
-                  <p className="mt-1 font-bold">
-                    {curriculum.testName} {mock.number}
-                  </p>
+                  <p className="mt-1 font-bold">Practice test {mock.number}</p>
                   <p className="mt-0.5 text-xs opacity-60">{mock.questions.length} questions</p>
                 </div>
                 <span
@@ -116,10 +116,24 @@ export default async function PracticePage({
               </Link>
             ))}
           </div>
-          <p className="mt-4 text-sm opacity-60">
-            More full-length mock tests are added regularly — the whole bank is also in the{" "}
-            {app.name} app.
-          </p>
+          <div className="mt-6 flex flex-col items-start gap-4 rounded-2xl border border-black/10 p-6 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
+            <div>
+              <p className="font-bold">Practise at real exam length</p>
+              <p className="mt-1 text-sm opacity-70">
+                {app.name} Pro adds full {questionCount}-question mock tests against a {minutes}-minute
+                timer, the complete question bank, and a saved history of your mistakes.
+              </p>
+            </div>
+            <ProLink
+              href={pricingPath(app)}
+              appSlug={app.slug}
+              location="practice_index"
+              className="shrink-0 rounded-full px-5 py-2.5 text-sm font-bold text-white"
+              style={{ backgroundColor: "var(--accent)" }}
+            >
+              See Pro plans
+            </ProLink>
+          </div>
         </section>
 
         {/* Explanatory content */}
@@ -127,7 +141,7 @@ export default async function PracticePage({
           <h2 className="text-2xl font-bold">How the {curriculum.testName} works</h2>
           <p className="mt-4 opacity-80">{curriculum.about}</p>
           <p className="mt-4 opacity-80">
-            The best way to prepare is to take mock tests under real conditions until you&rsquo;re
+            The best way to prepare is to practise under real conditions until you&rsquo;re
             consistently above the pass mark. Each test here is scored instantly and explains every
             answer, so you learn as you go.
           </p>

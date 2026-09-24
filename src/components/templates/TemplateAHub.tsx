@@ -5,6 +5,9 @@ import FaqAccordion from "@/components/FaqAccordion";
 import StoreBadges from "@/components/StoreBadges";
 import CtaBanner from "@/components/CtaBanner";
 import AppTestimonials from "@/components/AppTestimonials";
+import ProLink from "@/components/ProLink";
+import { getAllPosts } from "@/lib/blog";
+import { anchorTier, currencyFor, perDay, PRO_FEATURES } from "@/lib/pricing";
 import DashboardCard from "@/components/dashboard/DashboardCard";
 import { EXTERNAL_LINK_PROPS } from "@/lib/site";
 import {
@@ -16,12 +19,17 @@ import {
 } from "@/components/dashboard/icons";
 import { HomeIcon } from "@/components/dashboard/icons";
 import {
+  blogIndex,
+  blogPost,
   cheatSheetPath,
   chapterPath,
   mistakesPath,
   practicePath,
+  pricingPath,
   revisionNotesPath,
   studyGuidePath,
+  testCentresPath,
+  toolPath,
   topicsPath,
 } from "@/lib/urls";
 
@@ -32,11 +40,16 @@ type Props = {
 
 /**
  * The exam Overview — the silo's landing page, rendered inside the shared shell
- * (the layout provides the sidebar). A route-picker of six cards linking deeper
- * into each subcategory, then the informative, app-store-driving SEO content
- * (About the test, how to prepare, FAQ) below.
+ * (the layout provides the sidebar). Real exam facts, a route-picker into
+ * practice, the Pro upsell, study materials and the latest guides, then the
+ * crawlable reference content (About the test, how to prepare, FAQ), with the
+ * app download banner last.
  */
 export default function TemplateAHub({ app, curriculum }: Props) {
+  const guides = getAllPosts(app.blogCategory).slice(0, 3);
+  const plan = anchorTier();
+  const fromPerDay = `${currencyFor(app.slug)}${perDay(plan).toFixed(2)}`;
+
   return (
     <div className="px-5 py-8 sm:px-10">
       <div className="mx-auto max-w-5xl">
@@ -56,18 +69,30 @@ export default function TemplateAHub({ app, curriculum }: Props) {
         <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
           {app.name}: {curriculum.testName}
         </h1>
-        <p className="mt-2 max-w-2xl opacity-70">
-          Free practice organised the way the official handbook is. Pick how you want to study —
-          every route below is built from the official material.
-        </p>
+        <p className="mt-2 max-w-2xl opacity-75">{curriculum.intro}</p>
+
+        {/* The real exam at a glance — facts searchers want, in crawlable text. */}
+        <ul className="mt-5 flex flex-wrap gap-2 text-sm font-semibold">
+          {[curriculum.facts.questions, curriculum.facts.toPass, curriculum.facts.timeLimit].map(
+            (fact) => (
+              <li
+                key={fact}
+                className="rounded-full px-3 py-1"
+                style={{ backgroundColor: "var(--accent-soft)", color: "var(--accent-dark)" }}
+              >
+                {fact}
+              </li>
+            ),
+          )}
+        </ul>
 
         {/* Practice — the primary route picker */}
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           <DashboardCard
             icon={<MockTestIcon />}
-            title="Mock Test"
-            description="Sit the real format against the clock — the best indicator of test-day readiness."
-            ctaLabel="View mock tests"
+            title="Practice Tests"
+            description="Free, instantly scored practice sets with an explanation for every answer."
+            ctaLabel="Start practising"
             href={practicePath(app)}
           />
           <DashboardCard
@@ -85,6 +110,38 @@ export default function TemplateAHub({ app, curriculum }: Props) {
             href={mistakesPath(app)}
           />
         </div>
+
+        {/* Pro upsell — directly under the route picker, above the fold on desktop. */}
+        <section
+          className="mt-8 flex flex-col gap-5 rounded-3xl p-6 text-white sm:p-8 md:flex-row md:items-center md:justify-between"
+          style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dark))" }}
+        >
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-white/75">{app.name} Pro</p>
+            <h2 className="mt-1 text-2xl font-extrabold">Walk in ready, not hopeful</h2>
+            <ul className="mt-3 grid gap-1.5 text-sm text-white/90 sm:grid-cols-2">
+              {PRO_FEATURES.slice(0, 4).map((feature) => (
+                <li key={feature} className="flex gap-2">
+                  <span aria-hidden>✓</span>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="shrink-0 text-left md:text-right">
+            <p className="text-sm text-white/80">
+              From <span className="text-xl font-extrabold text-white">{fromPerDay}</span>/day
+            </p>
+            <ProLink
+              href={pricingPath(app)}
+              appSlug={app.slug}
+              location="hub_card"
+              className="mt-2 inline-block rounded-full bg-white px-6 py-3 text-sm font-bold text-[color:var(--accent-dark)] transition hover:opacity-90"
+            >
+              See Pro plans
+            </ProLink>
+          </div>
+        </section>
 
         {/* Study materials */}
         <div className="mt-12">
@@ -117,17 +174,31 @@ export default function TemplateAHub({ app, curriculum }: Props) {
           </div>
         </div>
 
-        {/* Branded, per-app download banner */}
-        <section id="download" className="mt-12 scroll-mt-6">
-          <CtaBanner app={app} heading={`Download ${app.name}`}>
-            <StoreBadges app={app} />
-          </CtaBanner>
-        </section>
+        {guides.length > 0 && (
+          <section className="mt-12">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <h2 className="text-2xl font-bold">{curriculum.testName} guides</h2>
+              <Link href={blogIndex(app)} className="text-sm font-semibold hover:underline" style={{ color: "var(--accent)" }}>
+                All guides →
+              </Link>
+            </div>
+            <ul className="mt-5 grid gap-4 md:grid-cols-3">
+              {guides.map((post) => (
+                <li key={post.slug}>
+                  <Link
+                    href={blogPost(app, post.slug)}
+                    className="block h-full rounded-2xl border border-black/10 p-5 transition-colors hover:border-[var(--accent)] dark:border-white/10"
+                  >
+                    <p className="font-bold leading-snug">{post.title}</p>
+                    <p className="mt-2 line-clamp-2 text-sm opacity-65">{post.description}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {/* Social proof — people who passed thanks to the app */}
-        <AppTestimonials app={app} />
-
-        {/* Informative content below the CTA — SEO + app-store direction */}
+        {/* Informative content — the crawlable body of the hub */}
         <section className="mt-12 max-w-3xl">
           <h2 className="text-2xl font-bold">About the {curriculum.testName}</h2>
           <p className="mt-4 opacity-80">{curriculum.about}</p>
@@ -172,6 +243,28 @@ export default function TemplateAHub({ app, curriculum }: Props) {
             </Link>{" "}
             are all free to read.
           </p>
+          {(app.hasTestCenters || app.tools.length > 0) && (
+            <p className="mt-4 opacity-80">
+              {app.hasTestCenters && (
+                <>
+                  Find an approved{" "}
+                  <Link href={testCentresPath(app)} className="font-semibold hover:underline">
+                    {curriculum.testName} test centre
+                  </Link>
+                  .{" "}
+                </>
+              )}
+              {app.tools.map((tool) => (
+                <span key={tool.slug}>
+                  Try the free{" "}
+                  <Link href={toolPath(app, tool.slug)} className="font-semibold hover:underline">
+                    {tool.name}
+                  </Link>
+                  .{" "}
+                </span>
+              ))}
+            </p>
+          )}
 
           <h2 className="mt-10 text-2xl font-bold">Frequently asked questions</h2>
           <div className="mt-6">
@@ -184,6 +277,16 @@ export default function TemplateAHub({ app, curriculum }: Props) {
             </a>
           </p>
         </section>
+
+        {/* Branded, per-app download banner */}
+        <section id="download" className="mt-12 scroll-mt-6">
+          <CtaBanner app={app} heading={`Download ${app.name}`}>
+            <StoreBadges app={app} />
+          </CtaBanner>
+        </section>
+
+        {/* Social proof — people who passed thanks to the app */}
+        <AppTestimonials app={app} />
       </div>
     </div>
   );
