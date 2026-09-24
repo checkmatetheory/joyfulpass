@@ -63,3 +63,64 @@ export function learningResourceJsonLd(opts: {
     isAccessibleForFree: true,
   };
 }
+
+/**
+ * Quiz schema with each visible question and its accepted answer, so search
+ * engines and AI assistants can read the practice content (only pass questions
+ * that are actually rendered on the page).
+ */
+export function quizJsonLd(opts: {
+  name: string;
+  about: string;
+  testName: string;
+  path: string;
+  questions: { prompt: string; options: string[]; answer: number | number[]; explanation: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Quiz",
+    name: opts.name,
+    about: opts.about,
+    educationalLevel: `${opts.testName} preparation`,
+    url: `${SITE_URL}${opts.path}`,
+    hasPart: opts.questions.map((q) => {
+      const correct = Array.isArray(q.answer) ? q.answer : [q.answer];
+      return {
+        "@type": "Question",
+        eduQuestionType: "Multiple choice",
+        text: q.prompt,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: correct.map((i) => q.options[i]).join("; "),
+          answerExplanation: { "@type": "Comment", text: q.explanation },
+        },
+      };
+    }),
+  };
+}
+
+/** MobileApplication schema for an app's store listings (hub page). */
+export function mobileAppJsonLd(app: {
+  name: string;
+  metaDescription: string;
+  iconUrl?: string;
+  appStoreUrl: string | null;
+  playStoreUrl: string | null;
+}) {
+  const installUrl = app.appStoreUrl ?? app.playStoreUrl ?? undefined;
+  const os = [app.appStoreUrl && "iOS", app.playStoreUrl && "Android"].filter(Boolean).join(", ");
+  return {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    name: app.name,
+    description: app.metaDescription,
+    applicationCategory: "EducationalApplication",
+    operatingSystem: os,
+    ...(app.iconUrl && { image: app.iconUrl }),
+    ...(installUrl && { installUrl }),
+    sameAs: [app.appStoreUrl, app.playStoreUrl].filter(Boolean),
+    // The app is free to download; Pro is an optional in-app/web subscription.
+    offers: { "@type": "Offer", price: "0", priceCurrency: "GBP" },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  };
+}

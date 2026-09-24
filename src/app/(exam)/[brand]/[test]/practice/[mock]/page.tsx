@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { apps, getAppByExamSlug } from "@/lib/apps";
@@ -7,7 +8,7 @@ import { getMockTest, getMockTests } from "@/lib/mockTests";
 import QuizPanel from "@/components/practice/QuizPanel";
 import JsonLd from "@/components/JsonLd";
 import { examHub, practicePath, practiceTestPath } from "@/lib/urls";
-import { breadcrumbJsonLd } from "@/lib/schema";
+import { breadcrumbJsonLd, quizJsonLd } from "@/lib/schema";
 
 export const dynamicParams = false;
 
@@ -29,11 +30,12 @@ export async function generateMetadata({
   const { test, mock } = await params;
   const app = getAppByExamSlug(test);
   if (!app) return {};
-  return {
+  return buildMetadata({
     title: `${app.examName} Mock Test ${mock} — Free Practice`,
     description: `Free ${app.examName} mock test ${mock} — play it now, scored instantly with an explanation for every answer.`,
-    alternates: { canonical: practiceTestPath(app, mock) },
-  };
+    path: practiceTestPath(app, mock),
+    brand: app.name,
+  });
 }
 
 export default async function MockTestPage({
@@ -48,18 +50,18 @@ export default async function MockTestPage({
   const mock = getMockTest(app, mockSlug);
   if (!curriculum || !mock) notFound();
 
-  const quizJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Quiz",
-    name: `${curriculum.testName} Mock Test ${mock.number}`,
-    about: `A free practice mock test for the ${curriculum.testName}.`,
-    educationalLevel: "citizenship test preparation",
-  };
+  const quiz = quizJsonLd({
+    name: `${curriculum.testName} Practice Test ${mock.number}`,
+    about: `A free practice test for the ${curriculum.testName}.`,
+    testName: curriculum.testName,
+    path: practiceTestPath(app, mock.slug),
+    questions: mock.questions,
+  });
 
   return (
     <div className="px-5 py-8 sm:px-10">
       <div className="mx-auto max-w-3xl">
-        <JsonLd data={quizJsonLd} />
+        <JsonLd data={quiz} />
         <JsonLd
           data={breadcrumbJsonLd([
             { name: "Joyful", path: "/" },

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { getPost, getPostSlugs } from "@/lib/blog";
-import { OG_IMAGE } from "@/lib/site";
 import { articleJsonLd, breadcrumbJsonLd } from "@/lib/schema";
 
 export function generateStaticParams() {
@@ -18,19 +18,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPost("hub", slug);
   if (!post) return {};
-  return {
+  return buildMetadata({
     title: post.title,
     description: post.description,
-    alternates: { canonical: `/blog/${slug}/` },
-    openGraph: {
-      type: "article",
-      title: post.title,
-      description: post.description,
-      publishedTime: post.date,
-      authors: [post.author],
-      images: [OG_IMAGE],
-    },
-  };
+    path: `/blog/${slug}/`,
+    image: { url: post.coverImage, width: 800, height: 500, alt: post.title },
+    article: { publishedTime: post.date, authors: [post.author] },
+  });
 }
 
 export default async function HubBlogPostPage({

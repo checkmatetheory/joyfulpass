@@ -1,6 +1,9 @@
+"use client";
+
 import type { AppRecord } from "@/lib/apps";
 import type { ComponentProps } from "react";
 import { EXTERNAL_LINK_PROPS } from "@/lib/site";
+import { track } from "@/lib/track";
 
 /**
  * Official-style app-store badges (dark pill + coloured store logo). Reads on
@@ -16,6 +19,7 @@ export default function StoreBadges({ app, className = "" }: { app: AppRecord; c
         <a
           href={app.appStoreUrl}
           {...EXTERNAL_LINK_PROPS}
+          onClick={() => track("store_click", { app: app.slug, store: "app_store" })}
           aria-label={`Download ${app.name} on the App Store`}
           className="flex h-[52px] w-[180px] items-center gap-2.5 rounded-xl bg-black px-4 text-white ring-1 ring-white/15 transition hover:opacity-90"
         >
@@ -30,6 +34,7 @@ export default function StoreBadges({ app, className = "" }: { app: AppRecord; c
         <a
           href={app.playStoreUrl}
           {...EXTERNAL_LINK_PROPS}
+          onClick={() => track("store_click", { app: app.slug, store: "google_play" })}
           aria-label={`Get ${app.name} on Google Play`}
           className="flex h-[52px] w-[180px] items-center gap-2.5 rounded-xl bg-black px-4 text-white ring-1 ring-white/15 transition hover:opacity-90"
         >

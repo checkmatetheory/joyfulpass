@@ -12,6 +12,8 @@ export default function ImpactStats() {
         src={BACKGROUND_IMAGE}
         alt=""
         aria-hidden
+        loading="lazy"
+        decoding="async"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
       />
       <div

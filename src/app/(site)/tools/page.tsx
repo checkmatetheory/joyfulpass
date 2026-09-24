@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { apps } from "@/lib/apps";
 import ToolCard from "@/components/ToolCard";
 import { toolPath } from "@/lib/urls";
 import { SITE_NAME } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Tools",
   description: `Free calculators and tools from every ${SITE_NAME} app, in one directory.`,
-  alternates: { canonical: "/tools/" },
-};
+  path: "/tools/",
+});
 
 export default function ToolsIndexPage() {
   const appsWithTools = apps.filter((app) => app.tools.length > 0);

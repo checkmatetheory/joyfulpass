@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { AppRecord } from "@/lib/apps";
 import { pricingPath } from "@/lib/urls";
+import { track } from "@/lib/track";
 
 function Crown({ className = "" }: { className?: string }) {
   return (
@@ -27,6 +28,7 @@ export default function GoProButton({ app }: { app: AppRecord }) {
   return (
     <Link
       href={href}
+      onClick={() => track("go_pro_click", { app: app.slug, location: "header" })}
       className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full py-2 pl-2.5 pr-4 text-sm font-semibold text-white shadow-lg shadow-black/10 ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:shadow-xl"
       style={{ backgroundColor: "var(--accent)" }}
     >

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { apps } from "@/lib/apps";
 import { examHub } from "@/lib/urls";
@@ -7,11 +8,11 @@ import { FILM_PHOTOS } from "@/lib/photos";
 import InstaxPhoto from "@/components/InstaxPhoto";
 import AppIconBadge from "@/components/AppIconBadge";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "About",
   description: `${SITE_NAME} builds independent, source-cited exam-prep apps for the tests that decide immigration, certification, and career outcomes.`,
-  alternates: { canonical: "/about/" },
-};
+  path: "/about/",
+});
 
 export default function AboutPage() {
   return (

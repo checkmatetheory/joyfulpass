@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
+import { faqJsonLd } from "@/lib/faqs";
 import TemplateAHub from "@/components/templates/TemplateAHub";
 import JsonLd from "@/components/JsonLd";
 import { examHub } from "@/lib/urls";
-import { breadcrumbJsonLd } from "@/lib/schema";
+import { breadcrumbJsonLd, mobileAppJsonLd } from "@/lib/schema";
 import { SITE_URL } from "@/lib/site";
 
 export const dynamicParams = false;
@@ -22,12 +24,15 @@ export async function generateMetadata({
   const { test } = await params;
   const app = getAppByExamSlug(test);
   if (!app) return {};
-  return {
-    // Keyword-first, brand second — ranks for the test name and the brand.
-    title: `${app.examName} Practice — Free Questions & Mock Tests`,
+  return buildMetadata({
+    // This page shares its segment with the layout, so the layout's "%s | {App}"
+    // template doesn't reach it — set the full title explicitly.
+    title: `${app.examName} — Free Practice & Study Guide | ${app.name}`,
+    absoluteTitle: true,
     description: app.metaDescription,
-    alternates: { canonical: examHub(app) },
-  };
+    path: examHub(app),
+    brand: app.name,
+  });
 }
 
 export default async function ExamHubPage({
@@ -41,15 +46,6 @@ export default async function ExamHubPage({
   const curriculum = getCurriculum(app.slug);
   if (!curriculum) notFound();
 
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: app.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
 
   const courseJsonLd = {
     "@context": "https://schema.org",
@@ -66,8 +62,9 @@ export default async function ExamHubPage({
 
   return (
     <>
-      <JsonLd data={faqJsonLd} />
+      <JsonLd data={faqJsonLd(app.faqs)} />
       <JsonLd data={courseJsonLd} />
+      <JsonLd data={mobileAppJsonLd(app)} />
       <JsonLd data={breadcrumb} />
       <TemplateAHub app={app} curriculum={curriculum} />
     </>

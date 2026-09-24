@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { examPathParams, getAppByExamSlug } from "@/lib/apps";
@@ -21,11 +22,12 @@ export async function generateMetadata({
   const { test } = await params;
   const app = getAppByExamSlug(test);
   if (!app) return {};
-  return {
+  return buildMetadata({
     title: `${app.examName} Cheat Sheet — Key Facts on One Page`,
     description: `The ${app.examName} on one page: the highest-yield facts, grouped by chapter, for a last-minute cram before your test.`,
-    alternates: { canonical: cheatSheetPath(app) },
-  };
+    path: cheatSheetPath(app),
+    brand: app.name,
+  });
 }
 
 export default async function CheatSheetPage({

@@ -88,7 +88,6 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
           height={110}
           className="hidden h-9 w-auto dark:block"
           style={{ width: "auto" }}
-          priority
         />
       </Link>
 

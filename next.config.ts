@@ -34,6 +34,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       { source: "/germanpass", destination: "/germanpass/einbuergerungstest/", permanent: true },
+      { source: "/serupass", destination: "/serupass/seru-assessment/", permanent: true },
     ];
   },
   // Production security headers. SEO-safe hardening: these strengthen the

@@ -73,7 +73,6 @@ export default function MobileExamHeader({
             height={110}
             className="hidden h-7 w-auto dark:block"
             style={{ width: "auto" }}
-            priority
           />
         </Link>
 

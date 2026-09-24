@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { AppRecord } from "@/lib/apps";
 import { detectPlatform, storeUrlForPlatform } from "@/lib/platform";
+import { track } from "@/lib/track";
 import StoreBadges from "@/components/StoreBadges";
 
 function DownloadGlyph({ className = "" }: { className?: string }) {
@@ -41,6 +42,7 @@ export default function GetAppButton({
 
   const handleClick = () => {
     const platform = detectPlatform();
+    track("get_app_click", { app: app.slug, platform });
     if (platform === "desktop") {
       setOpen(true);
       return;

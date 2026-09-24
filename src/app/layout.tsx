@@ -2,10 +2,20 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import Analytics from "@/components/Analytics";
+import ConsentBanner from "@/components/ConsentBanner";
 import JsonLd from "@/components/JsonLd";
 import StyledComponentsRegistry from "@/components/StyledComponentsRegistry";
 import ThemeProvider from "@/components/ThemeProvider";
-import { FAVICON_URL, OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/site";
+import {
+  FAVICON_URL,
+  LOGO_PURPLE_URL,
+  OG_IMAGE,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TAGLINE,
+  SITE_URL,
+  SOCIAL_LINKS,
+} from "@/lib/site";
 
 // Applies the saved (or OS-preferred) theme before first paint so there's no
 // flash of the wrong theme. Kept tiny and inlined; runs before hydration.
@@ -18,9 +28,8 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
-  alternates: {
-    canonical: "/",
-  },
+  // No site-wide canonical: every indexable page sets its own via buildMetadata,
+  // and a root canonical of "/" would leak onto pages that don't (noindex ones).
   icons: {
     icon: FAVICON_URL,
     shortcut: FAVICON_URL,
@@ -48,7 +57,8 @@ const organizationJsonLd = {
   name: SITE_NAME,
   url: SITE_URL,
   description: SITE_DESCRIPTION,
-  sameAs: [],
+  logo: LOGO_PURPLE_URL,
+  sameAs: SOCIAL_LINKS.map((social) => social.href),
 };
 
 // WebSite schema helps search engines and AI assistants understand the site as
@@ -78,6 +88,7 @@ export default function RootLayout({
             <JsonLd data={organizationJsonLd} />
             <JsonLd data={websiteJsonLd} />
             <Analytics />
+            <ConsentBanner />
             {/* Marketing chrome lives in (site); the dashboard in (app) brings its
                 own shell — both share this single root (html/body/providers). */}
             {children}

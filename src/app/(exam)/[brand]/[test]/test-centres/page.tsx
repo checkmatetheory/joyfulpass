@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { apps, getAppByExamSlug } from "@/lib/apps";
 import { getTestCenters } from "@/lib/testCenters";
@@ -24,11 +25,12 @@ export async function generateMetadata({
   const { test } = await params;
   const app = getAppByExamSlug(test);
   if (!app) return {};
-  return {
-    title: "Test Centres",
+  return buildMetadata({
+    title: `${app.examName.replace(/ Test$/, "")} Test Centres — Find a Location Near You`,
     description: `Find official ${app.examName} test locations across ${app.country}.`,
-    alternates: { canonical: testCentresPath(app) },
-  };
+    path: testCentresPath(app),
+    brand: app.name,
+  });
 }
 
 export default async function ExamTestCentresPage({

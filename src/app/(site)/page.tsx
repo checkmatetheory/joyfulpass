@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { buildMetadata } from "@/lib/seo";
 import Hero from "@/components/Hero";
 import AppDirectory from "@/components/AppDirectory";
 import BlogCard from "@/components/BlogCard";
@@ -9,6 +11,14 @@ import Testimonials from "@/components/home/Testimonials";
 import CommitmentCta from "@/components/home/CommitmentCta";
 import { apps } from "@/lib/apps";
 import { getAllPosts } from "@/lib/blog";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Free Citizenship Test & SERU Practice | Joyful",
+  absoluteTitle: true,
+  description:
+    "Free practice tests and study guides for the Life in the UK Test, Canadian citizenship test, German Einbürgerungstest and TfL SERU assessment — built from the official material.",
+  path: "/",
+});
 
 export default function HomePage() {
   const hubPosts = getAllPosts("hub").slice(0, 4);

@@ -1,14 +1,28 @@
+"use client";
+
 import Script from "next/script";
+import { useSyncExternalStore } from "react";
+import { CONSENT_EVENT, readConsent } from "@/lib/consent";
 
 // Single, domain-level attribution layer shared by every app silo. Each app
-// does NOT set up its own pixels — this is what the scalability checklist
-// means by "analytics auto-extends to new apps via the existing shared
-// layer." IDs are environment config, not code.
+// does NOT set up its own pixels — analytics auto-extends to new apps via this
+// shared layer. IDs are environment config, not code.
+//
+// Nothing here loads until the visitor opts in via the consent banner (UK/EU
+// PECR + GDPR): no GA4, Meta or TikTok script is requested before consent.
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 const TIKTOK_PIXEL_ID = process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID;
 
+function subscribe(onChange: () => void) {
+  window.addEventListener(CONSENT_EVENT, onChange);
+  return () => window.removeEventListener(CONSENT_EVENT, onChange);
+}
+
 export default function Analytics() {
+  const consent = useSyncExternalStore(subscribe, readConsent, () => null);
+  if (consent !== "granted") return null;
+
   return (
     <>
       {GA_ID && (
@@ -21,6 +35,10 @@ export default function Analytics() {
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                ad_storage: 'granted', analytics_storage: 'granted',
+                ad_user_data: 'granted', ad_personalization: 'granted'
+              });
               gtag('js', new Date());
               gtag('config', '${GA_ID}');
             `}

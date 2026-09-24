@@ -16,7 +16,7 @@ export default function HeroBackground({
     <div className="absolute inset-0 overflow-hidden">
       {media?.type === "image" && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={media.url} alt="" className="h-full w-full object-cover" />
+        <img src={media.url} alt="" fetchPriority="high" className="h-full w-full object-cover" />
       )}
       {media?.type === "video" && (
         <video

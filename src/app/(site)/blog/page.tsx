@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import BlogCard from "@/components/BlogCard";
 import { apps } from "@/lib/apps";
@@ -6,11 +7,11 @@ import { getAllPosts } from "@/lib/blog";
 import { blogIndex } from "@/lib/urls";
 import { SITE_NAME } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Blog",
+export const metadata: Metadata = buildMetadata({
+  title: "Citizenship, Settlement & Licensing Test Guides",
   description: `Cross-app guidance from ${SITE_NAME} — comparisons, editorial standards, and how we build exam-prep content.`,
-  alternates: { canonical: "/blog/" },
-};
+  path: "/blog/",
+});
 
 export default function HubBlogIndexPage() {
   const posts = getAllPosts("hub");

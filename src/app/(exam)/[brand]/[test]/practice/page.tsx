@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { apps, getAppByExamSlug } from "@/lib/apps";
@@ -6,6 +7,7 @@ import { getCurriculum } from "@/lib/curriculum";
 import { getMockTests } from "@/lib/mockTests";
 import FaqAccordion from "@/components/FaqAccordion";
 import JsonLd from "@/components/JsonLd";
+import { faqJsonLd, practiceFaqs } from "@/lib/faqs";
 import { EXTERNAL_LINK_PROPS } from "@/lib/site";
 import {
   cheatSheetPath,
@@ -31,12 +33,12 @@ export async function generateMetadata({
   const { test } = await params;
   const app = getAppByExamSlug(test);
   if (!app) return {};
-  const year = new Date().getFullYear();
-  return {
-    title: `Free ${app.examName} Practice & Mock Tests ${year}`,
+  return buildMetadata({
+    title: `Free ${app.examName} Practice Tests — Play Instantly`,
     description: `Free ${app.examName} practice tests and mock exams that mirror the real format — play them right now, no sign-up. Plus revision notes and a study guide.`,
-    alternates: { canonical: practicePath(app) },
-  };
+    path: practicePath(app),
+    brand: app.name,
+  });
 }
 
 export default async function PracticePage({
@@ -52,20 +54,12 @@ export default async function PracticePage({
   const mocks = getMockTests(app);
   const { questionCount, passMark, minutes } = curriculum.fullTest;
 
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: app.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
+  const faqs = practiceFaqs(app, curriculum);
 
   return (
     <div className="px-5 py-8 sm:px-10">
       <div className="mx-auto max-w-4xl">
-        <JsonLd data={faqJsonLd} />
+        <JsonLd data={faqJsonLd(faqs)} />
         <JsonLd
           data={breadcrumbJsonLd([
             { name: "Joyful", path: "/" },
@@ -171,7 +165,7 @@ export default async function PracticePage({
         <section className="mt-12 max-w-3xl">
           <h2 className="text-2xl font-bold">Frequently asked questions</h2>
           <div className="mt-6">
-            <FaqAccordion faqs={app.faqs} accent={app.theme.accent} />
+            <FaqAccordion faqs={faqs} accent={app.theme.accent} />
           </div>
           <p className="mt-8 text-sm opacity-70">
             Official source:{" "}

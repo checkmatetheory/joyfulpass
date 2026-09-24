@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { examPathParams, getAppByExamSlug } from "@/lib/apps";
@@ -27,11 +28,12 @@ export async function generateMetadata({
   const { test } = await params;
   const app = getAppByExamSlug(test);
   if (!app) return {};
-  return {
+  return buildMetadata({
     title: `${app.examName} Revision Notes — Free Quick Recap`,
     description: `Condensed ${app.examName} revision notes — the key facts for every chapter in one place, for a fast recap before your test.`,
-    alternates: { canonical: revisionNotesPath(app) },
-  };
+    path: revisionNotesPath(app),
+    brand: app.name,
+  });
 }
 
 export default async function RevisionNotesPage({

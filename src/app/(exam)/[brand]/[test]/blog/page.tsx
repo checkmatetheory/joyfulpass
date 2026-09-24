@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getAllPosts } from "@/lib/blog";
@@ -19,11 +20,12 @@ export async function generateMetadata({
   const { test } = await params;
   const app = getAppByExamSlug(test);
   if (!app) return {};
-  return {
-    title: "Blog",
+  return buildMetadata({
+    title: `${app.examName} Guides & Study Tips`,
     description: `Guides and study tips for the ${app.examName}, from the ${app.name} team.`,
-    alternates: { canonical: blogIndex(app) },
-  };
+    path: blogIndex(app),
+    brand: app.name,
+  });
 }
 
 export default async function ExamBlogIndexPage({

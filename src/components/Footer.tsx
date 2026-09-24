@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { ComponentProps } from "react";
 import { apps } from "@/lib/apps";
+import CookieSettingsButton from "@/components/CookieSettingsButton";
 import { blogIndex, examHub, testCentresPath } from "@/lib/urls";
 import { EXTERNAL_LINK_PROPS, LOGO_WHITE_URL, SITE_NAME, SOCIAL_LINKS, type SocialPlatform } from "@/lib/site";
 
@@ -114,6 +115,7 @@ export default function Footer() {
           <Link href="/site-map/" className="hover:text-white">
             Sitemap
           </Link>
+          <CookieSettingsButton className="hover:text-white" />
           <span>
             © {year} {SITE_NAME}. Not affiliated with any government body.
           </span>

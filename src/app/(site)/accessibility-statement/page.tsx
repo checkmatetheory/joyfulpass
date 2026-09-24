@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Accessibility Statement",
   description: `${SITE_NAME}'s commitment to an accessible website and apps.`,
-  alternates: { canonical: "/accessibility-statement/" },
-};
+  path: "/accessibility-statement/",
+});
 
 export default function AccessibilityStatementPage() {
   return (

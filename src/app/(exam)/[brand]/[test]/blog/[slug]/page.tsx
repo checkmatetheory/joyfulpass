@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { apps, getAppByExamSlug } from "@/lib/apps";
 import { getPost, getPostSlugs } from "@/lib/blog";
 import JsonLd from "@/components/JsonLd";
 import { blogIndex, blogPost, examHub } from "@/lib/urls";
-import { OG_IMAGE } from "@/lib/site";
 import { articleJsonLd, breadcrumbJsonLd } from "@/lib/schema";
 
 export const dynamicParams = false;
@@ -30,19 +30,14 @@ export async function generateMetadata({
   if (!app) return {};
   const post = await getPost(app.blogCategory, slug);
   if (!post) return {};
-  return {
+  return buildMetadata({
     title: post.title,
     description: post.description,
-    alternates: { canonical: blogPost(app, slug) },
-    openGraph: {
-      type: "article",
-      title: post.title,
-      description: post.description,
-      publishedTime: post.date,
-      authors: [post.author],
-      images: [OG_IMAGE],
-    },
-  };
+    path: blogPost(app, slug),
+    brand: app.name,
+    image: { url: post.coverImage, width: 800, height: 500, alt: post.title },
+    article: { publishedTime: post.date, authors: [post.author] },
+  });
 }
 
 export default async function ExamBlogPostPage({

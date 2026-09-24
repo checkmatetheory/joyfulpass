@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { apps, getAppByExamSlug } from "@/lib/apps";
-import { getCurriculum, getChapter } from "@/lib/curriculum";
+import { getCurriculum, getChapter, freeQuestions } from "@/lib/curriculum";
 import { toolComponents } from "@/components/tools/registry";
 import TemplateBChapter from "@/components/templates/TemplateBChapter";
 import JsonLd from "@/components/JsonLd";
-import { chapterPath, examHub, toolPath } from "@/lib/urls";
-import { breadcrumbJsonLd } from "@/lib/schema";
+import { chapterPath, examHub, toolPath, topicsPath } from "@/lib/urls";
+import { breadcrumbJsonLd, quizJsonLd } from "@/lib/schema";
 import { SITE_URL } from "@/lib/site";
 
 export const dynamicParams = false;
@@ -41,20 +42,22 @@ export async function generateMetadata({
 
   const chapter = getChapter(app.slug, topic);
   if (chapter) {
-    return {
-      title: `${chapter.name} — ${app.examName} Practice`,
+    return buildMetadata({
+      title: `${chapter.shortLabel}: ${app.examName} Practice Questions`,
       description: chapter.intro,
-      alternates: { canonical: chapterPath(app, topic) },
-    };
+      path: chapterPath(app, topic),
+      brand: app.name,
+    });
   }
 
   const tool = app.tools.find((t) => t.slug === topic);
   if (tool) {
-    return {
+    return buildMetadata({
       title: tool.name,
       description: tool.shortDescription,
-      alternates: { canonical: toolPath(app, topic) },
-    };
+      path: toolPath(app, topic),
+      brand: app.name,
+    });
   }
   return {};
 }
@@ -72,21 +75,22 @@ export default async function ExamTopicPage({
   // Template B — chapter practice
   const chapter = curriculum ? getChapter(app.slug, topic) : undefined;
   if (curriculum && chapter) {
-    const quizJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "Quiz",
+    const quiz = quizJsonLd({
       name: `${chapter.name} — ${curriculum.testName} practice`,
       about: chapter.intro,
-      educationalLevel: "citizenship test preparation",
-    };
+      testName: curriculum.testName,
+      path: chapterPath(app, chapter.slug),
+      questions: freeQuestions(chapter),
+    });
     const breadcrumb = breadcrumbJsonLd([
       { name: "Joyful", path: "/" },
       { name: curriculum.testName, path: examHub(app) },
+      { name: "Topics", path: topicsPath(app) },
       { name: chapter.shortLabel, path: chapterPath(app, chapter.slug) },
     ]);
     return (
       <>
-        <JsonLd data={quizJsonLd} />
+        <JsonLd data={quiz} />
         <JsonLd data={breadcrumb} />
         <TemplateBChapter app={app} curriculum={curriculum} chapter={chapter} />
       </>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { examPathParams, getAppByExamSlug } from "@/lib/apps";
@@ -28,11 +29,12 @@ export async function generateMetadata({
   const { test } = await params;
   const app = getAppByExamSlug(test);
   if (!app) return {};
-  return {
+  return buildMetadata({
     title: `${app.examName} Study Guide — Free Online Notes`,
     description: `A free, chaptered ${app.examName} study guide covering every topic on the test, with a practice quiz on each chapter. Read online — no sign-up.`,
-    alternates: { canonical: studyGuidePath(app) },
-  };
+    path: studyGuidePath(app),
+    brand: app.name,
+  });
 }
 
 export default async function StudyGuidePage({

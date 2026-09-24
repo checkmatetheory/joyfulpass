@@ -68,24 +68,19 @@ export default function CtaBanner({
       style={{ backgroundImage: `linear-gradient(120deg, ${accent}, ${accentDark})` }}
     >
       {bg && (
-        <>
-          {/* Mobile (4:3) art. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+        // <picture> so the browser downloads only the art for its breakpoint
+        // (two <img>s with display:none both download). Lazy: below the fold.
+        <picture>
+          <source media="(min-width: 640px)" srcSet={bg} />
           <img
             src={bgMobile}
             alt=""
             aria-hidden
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center sm:hidden"
+            loading="lazy"
+            decoding="async"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
           />
-          {/* Desktop (2:1) art. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={bg}
-            alt=""
-            aria-hidden
-            className="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-center sm:block"
-          />
-        </>
+        </picture>
       )}
       {/* Soft corner scrim so the bottom-right buttons stay legible. */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-tl from-black/60 via-black/10 to-transparent" />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { apps } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
@@ -20,11 +21,11 @@ import {
 } from "@/lib/urls";
 import { SITE_NAME } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Sitemap",
   description: `Every page on ${SITE_NAME} in one place — browse all exam guides, practice tests, study materials and articles.`,
-  alternates: { canonical: "/site-map/" },
-};
+  path: "/site-map/",
+});
 
 type LinkItem = { label: string; href: string };
 
