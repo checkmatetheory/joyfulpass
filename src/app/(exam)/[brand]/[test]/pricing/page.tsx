@@ -3,6 +3,11 @@ import { notFound } from "next/navigation";
 import { examPathParams, getAppByExamSlug } from "@/lib/apps";
 import { getCurriculum } from "@/lib/curriculum";
 import DashboardBreadcrumb from "@/components/dashboard/DashboardBreadcrumb";
+import FaqAccordion from "@/components/FaqAccordion";
+import PlanButton from "@/components/pricing/PlanButton";
+import { checkoutEnabled } from "@/lib/env";
+import { checkoutCurrency } from "@/lib/billing";
+import { pricingFaqs } from "@/lib/faqs";
 import {
   PRICING_TIERS,
   PRO_FEATURES,
@@ -13,7 +18,7 @@ import {
 } from "@/lib/pricing";
 
 export const dynamicParams = false;
-export const metadata: Metadata = { robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Pro plans", robots: { index: false, follow: false } };
 
 export function generateStaticParams() {
   return examPathParams();
@@ -27,7 +32,17 @@ function Crown({ className = "" }: { className?: string }) {
   );
 }
 
-function TierCard({ tier, currency }: { tier: PricingTier; currency: string }) {
+function TierCard({
+  tier,
+  currency,
+  appSlug,
+  enabled,
+}: {
+  tier: PricingTier;
+  currency: string;
+  appSlug: string;
+  enabled: boolean;
+}) {
   const highlighted = tier.highlighted;
   const day = perDay(tier).toFixed(2);
   const total = tier.price.toFixed(2);
@@ -89,14 +104,15 @@ function TierCard({ tier, currency }: { tier: PricingTier; currency: string }) {
         {total} · billed every {tier.period}
       </p>
 
-      <button
-        className={`mt-6 w-full rounded-xl py-3 text-sm font-bold transition hover:opacity-90 ${
-          highlighted ? "bg-white text-[color:var(--accent-dark)]" : "text-white"
-        }`}
-        style={highlighted ? undefined : { backgroundColor: "var(--accent)" }}
-      >
-        {tier.freeTrialDays > 0 ? "Start free trial" : "Get started"}
-      </button>
+      <PlanButton
+        appSlug={appSlug}
+        tierId={tier.id}
+        price={tier.price}
+        currency={checkoutCurrency(appSlug).toUpperCase()}
+        label={tier.freeTrialDays > 0 ? `Start ${tier.freeTrialDays}-day free trial` : "Get started"}
+        highlighted={tier.highlighted}
+        enabled={enabled}
+      />
     </div>
   );
 }
@@ -129,15 +145,16 @@ export default async function PricingPage({
           </span>
         </p>
         <p className="mx-auto mt-4 max-w-xl text-sm opacity-70">
-          Core practice stays free. Pro unlocks depth and convenience — and buying on the web means
-          no app-store cut, so it&rsquo;s the same Pro at a lower price.
+          Core practice stays free. Pro unlocks the full question bank, full-length timed mock tests
+          at real exam length and your mistake history — right here in your browser, on any device
+          you sign in on.
         </p>
       </div>
 
       {/* Three tiers — per-day framing, yearly as best value */}
       <div className="mt-12 grid items-center gap-5 md:grid-cols-3">
         {PRICING_TIERS.map((tier) => (
-          <TierCard key={tier.id} tier={tier} currency={currency} />
+          <TierCard key={tier.id} tier={tier} currency={currency} appSlug={app.slug} enabled={checkoutEnabled} />
         ))}
       </div>
 
@@ -164,7 +181,7 @@ export default async function PricingPage({
             ))}
           </ul>
           <p className="mt-5 text-xs opacity-60">
-            Bought Pro in the {app.name} app? It unlocks here automatically.
+            Web Pro is for {app.name} on this website. The mobile app has its own in-app plans.
           </p>
         </div>
 
@@ -186,14 +203,24 @@ export default async function PricingPage({
 
       {/* Trust row */}
       <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-medium opacity-70">
-        <span>✓ Cancel anytime</span>
-        <span>✓ Same Pro as the app</span>
-        <span>✓ No app-store markup</span>
+        <span>✓ Cancel anytime in two clicks</span>
+        <span>✓ Secure checkout by Stripe</span>
+        <span>✓ No password — sign in by email</span>
       </div>
 
-      <p className="mt-8 text-center text-xs opacity-45">
-        Prices shown are illustrative for this preview. {testName} content is drawn from official
-        material; {app.name} is an independent study app.
+      {/* Billing questions — answered before they become reasons not to buy */}
+      <section className="mx-auto mt-14 max-w-3xl">
+        <h2 className="text-2xl font-bold">Questions about Pro</h2>
+        <div className="mt-6">
+          <FaqAccordion faqs={pricingFaqs(app.name)} accent={app.theme.accent} />
+        </div>
+      </section>
+
+      <p className="mt-10 text-center text-xs opacity-45">
+        {checkoutEnabled
+          ? "The final price, including any tax, is confirmed at checkout."
+          : "Web checkout is opening soon. Prices shown are indicative."}{" "}
+        {testName} content is drawn from official material; {app.name} is an independent study app.
       </p>
     </div>
   );

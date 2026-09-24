@@ -38,3 +38,33 @@ export function faqJsonLd(faqs: AppFaq[]) {
     })),
   };
 }
+
+/** Billing FAQs for the pricing page (noindex — for buyers, not search). */
+export function pricingFaqs(appName: string): AppFaq[] {
+  return [
+    {
+      question: "How does the free trial work?",
+      answer: `Plans with a free trial start with full ${appName} Pro access. You won't be charged until the trial ends, and you can cancel before then from your account at no cost.`,
+    },
+    {
+      question: "Can I cancel anytime?",
+      answer:
+        "Yes. Go to your account and choose Manage billing — you can cancel in a couple of clicks. You keep Pro until the end of the period you've paid for, and you won't be charged again.",
+    },
+    {
+      question: "Which plan should I choose?",
+      answer:
+        "If your test is more than a few weeks away, the yearly plan is the lowest price per day. If it's next week, the weekly plan gets you full access for a last push.",
+    },
+    {
+      question: "Do I need an account?",
+      answer:
+        "Yes — Pro is tied to your email so your scores and mistakes are saved. There's no password: we email you a one-time sign-in link.",
+    },
+    {
+      question: "Is payment secure?",
+      answer:
+        "Payments are handled by Stripe, a PCI-certified payment provider. We never see or store your card details.",
+    },
+  ];
+}

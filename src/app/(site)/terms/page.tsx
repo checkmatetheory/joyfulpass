@@ -48,17 +48,37 @@ export default function TermsPage() {
 
         <h2 className="text-xl font-bold">Purchases, subscriptions, and refunds</h2>
         <p>
-          Premium features may be available through one-time purchases, subscriptions, or free
-          trials. The relevant Apple App Store or Google Play Store displays the price, billing
-          period, trial terms, and renewal terms before you confirm a purchase. Payments are
-          processed by the relevant app store, not by {SITE_NAME}.
+          Premium features (&ldquo;Pro&rdquo;) are available as subscriptions, sometimes with a
+          free trial. You can buy Pro in two ways, each with its own billing:
         </p>
         <p>
-          Subscriptions renew automatically unless cancelled through your Apple ID or Google Play
-          account settings before the applicable renewal date. Cancellation normally takes effect
-          at the end of the current paid period. Refund requests are subject to the relevant
-          app-store policy and must be made through Apple or Google where applicable. We may change
-          prices or offers prospectively, subject to any notice required by the app store or law.
+          <strong>On our website.</strong> Web Pro is sold by {SITE_NAME} and payments are
+          processed securely by Stripe; we never see or store your full card details. The price,
+          billing period, any trial, and renewal terms are shown before you confirm. Web
+          subscriptions renew automatically at the end of each period until you cancel. You can
+          cancel at any time from your account (&ldquo;Manage billing&rdquo;); cancellation takes
+          effect at the end of the current paid period and you keep access until then. If a plan
+          includes a free trial, you won&rsquo;t be charged if you cancel before the trial ends.
+          Web Pro unlocks features on this website only; the mobile apps have separate in-app
+          plans.
+        </p>
+        <p>
+          <strong>Your cancellation right (UK and EU consumers).</strong> You normally have 14 days
+          from purchase to cancel a contract for digital services. When you start Pro straight away
+          you ask us to begin providing it during that period; if you then cancel within 14 days,
+          we will refund what you paid less a proportionate amount for the time you had access. To
+          cancel within this period, contact us at the address below. This does not affect your
+          other statutory rights.
+        </p>
+        <p>
+          <strong>In the mobile apps.</strong> In-app purchases are processed by Apple or Google.
+          The relevant store shows the price and terms, renews them automatically, and handles
+          cancellation (through your Apple ID or Google Play settings) and refunds under its own
+          policies.
+        </p>
+        <p>
+          We may change prices prospectively. For existing web subscriptions we will tell you
+          before a change takes effect, and you can cancel before it applies.
         </p>
 
         <h2 className="text-xl font-bold">Accounts and access</h2>

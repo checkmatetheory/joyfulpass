@@ -31,24 +31,37 @@ export default function PrivacyPolicyPage() {
           progress, crash reports, and diagnostic data.
         </p>
         <p>
-          We use cookies and similar technologies on our website where needed to operate the site,
-          remember preferences, understand usage, and measure marketing performance. You can
-          control cookies through your browser or device settings. Disabling cookies may affect
-          some parts of the Services.
+          We use essential cookies to run the website and keep you signed in. With your consent
+          (asked for when you first visit, and changeable any time via &ldquo;Cookie
+          settings&rdquo; in the footer) we also use analytics and advertising cookies from Google,
+          Meta and TikTok to understand usage and measure marketing. We don&rsquo;t load those
+          until you opt in.
+        </p>
+
+        <h2 className="text-xl font-bold">Web accounts, purchases and emails</h2>
+        <p>
+          If you create a web account we store your email address, your subscription status, and
+          your practice results (scores, answers and mistakes) so we can save your progress. Sign-in
+          uses one-time email links. If you buy Web Pro, payment is processed by Stripe; we receive
+          confirmation, subscription status and billing details such as country, but never your
+          full card number. If you ask us to email you (for example your score or a free cheat
+          sheet), we store your email and, only if you tick the box, your consent to occasional
+          study tips — which you can withdraw with the unsubscribe link in any email.
+        </p>
+        <p>
+          We use these service providers to do this: Supabase (account data and practice history),
+          Stripe (payments and billing) and Resend (sending emails). They process data on our
+          behalf under contracts that protect it.
         </p>
 
         <h2 className="text-xl font-bold">App Store and Google Play purchases</h2>
         <p>
-          If you purchase or subscribe to premium app features, payment is processed by Apple or
-          Google through the Apple App Store or Google Play Store. We do not receive or store your
-          full payment-card details. We may receive purchase confirmation, transaction identifiers,
-          subscription status, and the features you have unlocked so that we can provide and
-          restore access to paid features.
-        </p>
-        <p>
-          Prices, free trials, billing periods, renewals, cancellations, and refunds are displayed
-          by the relevant app store before purchase and are governed by that store&rsquo;s terms and
-          policies.
+          If you purchase or subscribe to premium features inside a mobile app, payment is
+          processed by Apple or Google. We do not receive or store your full payment-card details.
+          We may receive purchase confirmation, transaction identifiers, subscription status, and
+          the features you have unlocked so that we can provide and restore access to paid
+          features. Prices, trials, renewals, cancellations, and refunds for in-app purchases are
+          governed by the relevant store&rsquo;s terms and policies.
         </p>
 
         <h2 className="text-xl font-bold">How we use information</h2>
