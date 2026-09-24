@@ -85,6 +85,20 @@ export function getAppPath(app: AppRecord): string {
   return `/get/${app.slug}/`;
 }
 
+// Pro (signed-in, noindex) pages.
+/** Pro dashboard: …/pro/ */
+export function proPath(app: AppRecord): string {
+  return `${root(app)}/pro/`;
+}
+/** A fresh full-length timed mock: …/pro/mock/ */
+export function proMockPath(app: AppRecord): string {
+  return `${root(app)}/pro/mock/`;
+}
+/** Full question bank for one chapter: …/pro/topic/history/ */
+export function proTopicPath(app: AppRecord, chapterSlug: string): string {
+  return `${root(app)}/pro/topic/${chapterSlug}/`;
+}
+
 // App-flow pages — same silo, but noindex.
 /** Mistakes review: …/mistakes/ */
 export function mistakesPath(app: AppRecord): string {

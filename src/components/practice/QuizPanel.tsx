@@ -4,6 +4,16 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { QuizQuestion } from "@/lib/curriculum";
 import { track } from "@/lib/track";
+import { correctOptions, isCorrect } from "@/lib/scoring";
+
+export type QuizResult = {
+  /** The options picked for each question, in order ([] = unanswered). */
+  answers: number[][];
+  correct: number;
+  total: number;
+  seconds: number;
+  timedOut: boolean;
+};
 
 type Props = {
   questions: QuizQuestion[];
@@ -15,6 +25,17 @@ type Props = {
   appName: string;
   /** Where the Pro upsell leads (the silo's pricing page). */
   pricingHref: string;
+  /**
+   * "practice" checks each answer as you go; "exam" mirrors the real test —
+   * no feedback until the end, then a full review.
+   */
+  mode?: "practice" | "exam";
+  /** Countdown in seconds; the test submits itself when it reaches zero. */
+  timeLimitSeconds?: number;
+  /** Hide the Pro upsell (the visitor already has Pro). */
+  hideUpsell?: boolean;
+  /** Called once when the set is finished (e.g. to save the attempt). */
+  onComplete?: (result: QuizResult) => void;
   /** Optional "keep going" link shown on the results screen. */
   next?: { href: string; label: string };
   /** Extra results-screen content (e.g. the email capture form). */
@@ -23,13 +44,11 @@ type Props = {
 
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 
-function correctSet(q: QuizQuestion): number[] {
-  return Array.isArray(q.answer) ? q.answer : [q.answer];
-}
+const correctSet = correctOptions;
 
-function isCorrect(q: QuizQuestion, picked: number[]): boolean {
-  const correct = correctSet(q);
-  return picked.length === correct.length && correct.every((i) => picked.includes(i));
+function formatClock(seconds: number): string {
+  const s = Math.max(0, seconds);
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
 
 export default function QuizPanel({
@@ -39,26 +58,87 @@ export default function QuizPanel({
   appSlug,
   appName,
   pricingHref,
+  mode = "practice",
+  timeLimitSeconds,
+  hideUpsell = false,
+  onComplete,
   next,
   children,
 }: Props) {
   const total = questions.length;
+  const exam = mode === "exam";
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number[]>([]);
   const [checked, setChecked] = useState(false);
   // Every answer given, so the results screen can review the misses.
   const [answers, setAnswers] = useState<number[][]>([]);
   const [finished, setFinished] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
+  const [remaining, setRemaining] = useState(timeLimitSeconds ?? 0);
   const started = useRef(false);
+  const startedAt = useRef<number | null>(null);
 
   const question = questions[index];
   const correct = question ? correctSet(question) : [];
   const multi = correct.length > 1;
   const isLast = index === total - 1;
 
+  const markStarted = useCallback(() => {
+    if (started.current) return;
+    started.current = true;
+    startedAt.current = Date.now();
+    track("quiz_start", { app: appSlug, set: setName, mode });
+  }, [appSlug, setName, mode]);
+
+  /** End the set: pad unanswered questions, score, report. */
+  const finish = useCallback(
+    (given: number[][], didTimeOut: boolean) => {
+      const padded = questions.map((_, i) => given[i] ?? []);
+      const score = padded.filter((picked, i) => isCorrect(questions[i], picked)).length;
+      const seconds = startedAt.current ? Math.round((Date.now() - startedAt.current) / 1000) : 0;
+      setAnswers(padded);
+      setTimedOut(didTimeOut);
+      setFinished(true);
+      track("quiz_complete", {
+        app: appSlug,
+        set: setName,
+        mode,
+        score: total ? Math.round((score / total) * 100) : 0,
+        passed: total ? score / total >= passRatio : false,
+      });
+      onComplete?.({ answers: padded, correct: score, total, seconds, timedOut: didTimeOut });
+    },
+    [questions, total, appSlug, setName, mode, passRatio, onComplete],
+  );
+
+  // Latest values for the timer callback (which must not re-subscribe each tick).
+  const answersRef = useRef(answers);
+  const finishRef = useRef(finish);
+  useEffect(() => {
+    answersRef.current = answers;
+    finishRef.current = finish;
+  }, [answers, finish]);
+
+  // Countdown. State updates happen in the interval callback, never in the
+  // effect body; at zero the test submits itself with whatever was answered.
+  useEffect(() => {
+    if (!timeLimitSeconds || finished) return;
+    let left = timeLimitSeconds;
+    const id = setInterval(() => {
+      left -= 1;
+      setRemaining(left);
+      if (left <= 0) {
+        clearInterval(id);
+        finishRef.current(answersRef.current, true);
+      }
+    }, 1000);
+    return () => clearInterval(id);
+  }, [timeLimitSeconds, finished]);
+
   const pick = useCallback(
     (i: number) => {
       if (checked) return;
+      markStarted();
       setSelected((prev) => {
         if (!multi) return [i];
         if (prev.includes(i)) return prev.filter((x) => x !== i);
@@ -66,42 +146,35 @@ export default function QuizPanel({
         return [...prev, i].slice(-correct.length);
       });
     },
-    [checked, multi, correct.length],
+    [checked, multi, correct.length, markStarted],
   );
 
+  /** Practice mode: reveal the answer. */
   const check = useCallback(() => {
     if (checked || selected.length !== correct.length) return;
-    if (!started.current) {
-      started.current = true;
-      track("quiz_start", { app: appSlug, set: setName });
-    }
+    markStarted();
     setChecked(true);
     setAnswers((prev) => [...prev, selected]);
-  }, [checked, selected, correct.length, appSlug, setName]);
+  }, [checked, selected, correct.length, markStarted]);
 
-  const correctCount = useMemo(
-    () => answers.filter((picked, i) => questions[i] && isCorrect(questions[i], picked)).length,
-    [answers, questions],
-  );
-
+  /** Practice: move on after checking. Exam: record the pick and move on. */
   const advance = useCallback(() => {
+    let given = answers;
+    if (exam) {
+      if (selected.length !== correct.length) return;
+      given = [...answers, selected];
+      setAnswers(given);
+    }
     if (isLast) {
-      setFinished(true);
-      const score = total ? correctCount / total : 0;
-      track("quiz_complete", {
-        app: appSlug,
-        set: setName,
-        score: Math.round(score * 100),
-        passed: score >= passRatio,
-      });
+      finish(given, false);
       return;
     }
     setIndex((i) => i + 1);
     setSelected([]);
     setChecked(false);
-  }, [isLast, total, correctCount, appSlug, setName, passRatio]);
+  }, [exam, answers, selected, correct.length, isLast, finish]);
 
-  // Keyboard shortcuts: 1-9 / A-F to pick, Enter to check then advance.
+  // Keyboard shortcuts: 1-9 / A-F to pick, Enter to check/advance.
   useEffect(() => {
     if (finished) return;
     function onKey(e: KeyboardEvent) {
@@ -116,13 +189,13 @@ export default function QuizPanel({
       }
       if (e.key === "Enter") {
         e.preventDefault();
-        if (!checked) check();
+        if (!exam && !checked) check();
         else advance();
       }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [question, checked, finished, pick, check, advance]);
+  }, [question, checked, finished, exam, pick, check, advance]);
 
   const restart = () => {
     setIndex(0);
@@ -130,7 +203,16 @@ export default function QuizPanel({
     setChecked(false);
     setAnswers([]);
     setFinished(false);
+    setTimedOut(false);
+    setRemaining(timeLimitSeconds ?? 0);
+    started.current = false;
+    startedAt.current = null;
   };
+
+  const correctCount = useMemo(
+    () => answers.filter((picked, i) => questions[i] && isCorrect(questions[i], picked)).length,
+    [answers, questions],
+  );
 
   const progressPct = finished ? 100 : Math.round((index / Math.max(total, 1)) * 100);
 
@@ -169,6 +251,7 @@ export default function QuizPanel({
           <h3 className="mt-6 text-2xl font-bold">
             {correctCount} / {total} correct · {Math.round(score * 100)}%
           </h3>
+          {timedOut && <p className="mt-1 text-sm font-semibold text-red-600">Time&rsquo;s up — unanswered questions count as wrong.</p>}
           <p className="mt-2 opacity-75">
             {passed
               ? `That's above the ${passPct}% pass mark on this ${setName} set.`
@@ -177,25 +260,27 @@ export default function QuizPanel({
         </div>
 
         {/* The upsell sits at peak intent: right after the score. */}
-        <div
-          className="mt-8 rounded-2xl p-6 text-white"
-          style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dark))" }}
-        >
-          <p className="text-lg font-extrabold">
-            {passed ? "Ready for the real thing?" : "Close the gaps before test day"}
-          </p>
-          <p className="mt-1 text-sm text-white/85">
-            Free sets are short. {appName} Pro gives you the full question bank, full-length timed
-            mock tests at real exam length, and a saved history of every mistake.
-          </p>
-          <Link
-            href={pricingHref}
-            onClick={() => track("go_pro_click", { app: appSlug, location: "quiz_results" })}
-            className="mt-4 inline-block rounded-full bg-white px-6 py-3 text-sm font-bold text-[color:var(--accent-dark)] transition hover:opacity-90"
+        {!hideUpsell && (
+          <div
+            className="mt-8 rounded-2xl p-6 text-white"
+            style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dark))" }}
           >
-            See {appName} Pro plans
-          </Link>
-        </div>
+            <p className="text-lg font-extrabold">
+              {passed ? "Ready for the real thing?" : "Close the gaps before test day"}
+            </p>
+            <p className="mt-1 text-sm text-white/85">
+              Free sets are short. {appName} Pro gives you the full question bank, full-length timed
+              mock tests at real exam length, and a saved history of every mistake.
+            </p>
+            <Link
+              href={pricingHref}
+              onClick={() => track("go_pro_click", { app: appSlug, location: "quiz_results" })}
+              className="mt-4 inline-block rounded-full bg-white px-6 py-3 text-sm font-bold text-[color:var(--accent-dark)] transition hover:opacity-90"
+            >
+              See {appName} Pro plans
+            </Link>
+          </div>
+        )}
 
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <button
@@ -229,7 +314,7 @@ export default function QuizPanel({
                 >
                   <p className="font-semibold">{q.prompt}</p>
                   <p className="mt-2 text-red-600 dark:text-red-400">
-                    Your answer: {picked.map((i) => q.options[i]).join("; ") || "—"}
+                    Your answer: {picked.map((i) => q.options[i]).join("; ") || "— (not answered)"}
                   </p>
                   <p className="mt-1 text-green-700 dark:text-green-400">
                     Correct: {correctSet(q).map((i) => q.options[i]).join("; ")}
@@ -245,10 +330,11 @@ export default function QuizPanel({
   }
 
   const answeredRight = checked && isCorrect(question, selected);
+  const ready = selected.length === correct.length;
 
   return (
     <div className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/5 sm:p-8">
-      {/* Progress bar */}
+      {/* Progress bar + optional countdown */}
       <div className="flex items-center gap-3">
         <div className="h-2 flex-1 overflow-hidden rounded-full bg-black/10 dark:bg-white/10">
           <div
@@ -259,6 +345,16 @@ export default function QuizPanel({
         <span className="font-mono text-xs tabular-nums opacity-60">
           {index + 1} / {total}
         </span>
+        {timeLimitSeconds ? (
+          <span
+            className={`rounded-full px-2.5 py-0.5 font-mono text-xs font-bold tabular-nums ${
+              remaining <= 60 ? "bg-red-500/15 text-red-600" : "bg-black/5 dark:bg-white/10"
+            }`}
+            aria-label="Time remaining"
+          >
+            {formatClock(remaining)}
+          </span>
+        ) : null}
       </div>
 
       <h2 className="mt-6 text-xl font-bold leading-snug sm:text-2xl">{question.prompt}</h2>
@@ -317,12 +413,21 @@ export default function QuizPanel({
       <div className="mt-6 flex items-center justify-between">
         <p className="hidden font-mono text-xs opacity-45 sm:block">
           Keys: A–{LETTERS[question.options.length - 1]} to choose · Enter to{" "}
-          {checked ? "continue" : "check"}
+          {exam || checked ? "continue" : "check"}
         </p>
-        {!checked ? (
+        {exam ? (
+          <button
+            onClick={advance}
+            disabled={!ready}
+            className="ml-auto rounded-full px-7 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-40"
+            style={{ backgroundColor: "var(--accent)" }}
+          >
+            {isLast ? "Finish test" : "Next"}
+          </button>
+        ) : !checked ? (
           <button
             onClick={check}
-            disabled={selected.length !== correct.length}
+            disabled={!ready}
             className="ml-auto rounded-full px-7 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-40"
             style={{ backgroundColor: "var(--accent)" }}
           >

@@ -1,5 +1,7 @@
 import "server-only";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { connection } from "next/server";
+import { createSupabaseServerClient, getCurrentUser } from "@/lib/supabase/server";
+import { accountsEnabled } from "@/lib/env";
 import { ACTIVE_STATUSES } from "@/lib/billing";
 
 export type ProSubscription = {
@@ -29,4 +31,21 @@ export async function hasPro(appSlug: string): Promise<boolean> {
       (ACTIVE_STATUSES as readonly string[]).includes(s.status) &&
       (!s.current_period_end || new Date(s.current_period_end).getTime() > now),
   );
+}
+
+export type ProAccess =
+  | { state: "unavailable" } // accounts not configured yet
+  | { state: "signed-out" }
+  | { state: "no-pro"; email: string }
+  | { state: "pro"; email: string; userId: string };
+
+/** Everything a Pro page needs to decide what to render. */
+export async function getProAccess(appSlug: string): Promise<ProAccess> {
+  // Always render gated pages per request — never prerender an access state.
+  await connection();
+  if (!accountsEnabled) return { state: "unavailable" };
+  const user = await getCurrentUser();
+  if (!user) return { state: "signed-out" };
+  const email = user.email ?? "";
+  return (await hasPro(appSlug)) ? { state: "pro", email, userId: user.id } : { state: "no-pro", email };
 }

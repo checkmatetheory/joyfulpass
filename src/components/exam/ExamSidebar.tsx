@@ -28,6 +28,7 @@ import {
   revisionNotesPath,
   studyGuidePath,
   topicsPath,
+  proPath,
 } from "@/lib/urls";
 
 type Item = {
@@ -50,6 +51,7 @@ export default function ExamSidebar({ app }: { app: AppRecord }) {
   const primary: Item[] = [
     { label: "Overview", href: hub, Icon: OverviewIcon },
     { label: "Practice Tests", href: practicePath(app), Icon: MockTestIcon },
+    { label: "Pro mock tests", href: proPath(app), Icon: PricingIcon },
     { label: "Topics", href: topicsPath(app), Icon: TopicsIcon },
     { label: "Mistakes", href: mistakesPath(app), Icon: MistakesIcon },
     { label: "Study guide", href: studyGuidePath(app), Icon: StudyGuideIcon },

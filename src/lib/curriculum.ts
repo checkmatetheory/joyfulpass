@@ -75,6 +75,8 @@ export type Curriculum = {
     minutes: number;
     /** Official pass percentage when it isn't a whole number of questions (SERU: 60%). */
     passPercent?: number;
+    /** Fixed question counts per chapter in a full mock (GermanPass: 3 state questions). */
+    fixedPerChapter?: Record<string, number>;
   };
   chapters: Chapter[];
   /** Long-form "About the test" prose for Template A (rewritten per app, never templated). */
@@ -651,7 +653,7 @@ const germanpass: Curriculum = {
   intro:
     "Free Einbürgerungstest practice, organised by theme — politics and democracy, history, society, and your federal state. Every page has a real quiz, so you can see exactly where you stand before you book your test.",
   facts: { questions: "33 questions", toPass: "17 to pass", timeLimit: "60 minutes" },
-  fullTest: { questionCount: 33, passMark: 17, minutes: 60 },
+  fullTest: { questionCount: 33, passMark: 17, minutes: 60, fixedPerChapter: { "federal-states": 3 } },
   chapters: [
     {
       slug: "politics-and-democracy",
